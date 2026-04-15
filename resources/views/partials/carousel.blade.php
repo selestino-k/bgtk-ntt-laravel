@@ -1,4 +1,6 @@
 <section id="home" class="relative w-screen mb-5 mt-16">
+
+
     @if(count($carouselPhotos) > 0)
 
         {{-- Radio inputs MUST be siblings of .slides-wrapper and .carousel-controls --}}
@@ -40,11 +42,8 @@
 
     @else
         {{-- Fallback gradient banner when no carousel photos are set --}}
-        <div class="w-full h-[50vh] md:h-[70vh] bg-linear-to-br from-primary to-blue-500 flex items-center justify-center">
-            <div class="text-center text-white px-4">
-                <h1 class="font-montserrat font-bold text-4xl md:text-6xl mb-4 drop-shadow">BGTK NTT</h1>
-                <p class="font-montserrat text-xl md:text-2xl opacity-90">Balai Guru dan Tenaga Kependidikan NTT</p>
-            </div>
+        <div class="w-full h-[50vh] md:h-[70vh]  flex items-center justify-center">
+            <img src="/images/assets/carousel-home-light.png" alt="BGTK NTT" class="w-full h-full object-cover">
         </div>
     @endif
 </section>
