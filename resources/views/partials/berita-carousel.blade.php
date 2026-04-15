@@ -22,7 +22,7 @@
                                 <img src="{{ $post['featured_image'] }}" alt="{{ $post['title'] }}"
                                      class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
                             @else
-                                <div class="w-full h-40 bg-gradient-to-br from-blue-50 to-blue-100"></div>
+                                <div class="w-full h-40 bg-linear-to-br from-blue-50 to-blue-100"></div>
                             @endif
                             <div class="p-4 flex flex-col flex-1">
                                 @if(!empty($post['tags'][0]['tag']['name']))
@@ -92,7 +92,7 @@
                         <img src="{{ $post['featured_image'] }}" alt="{{ $post['title'] }}"
                              class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
                     @else
-                        <div class="w-full h-40 bg-gradient-to-br from-blue-50 to-blue-100"></div>
+                        <div class="w-full h-40 bg-linear-to-br from-blue-50 to-blue-100"></div>
                     @endif
                     <div class="p-4 flex flex-col flex-1">
                         @if(!empty($post['tags'][0]['tag']['name']))

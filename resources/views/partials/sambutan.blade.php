@@ -5,16 +5,13 @@
             {{-- Photo + Text --}}
             <div class="flex-1 mb-6 xl:mb-0">
                 <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 lg:px-8">
-                    <img src="/images/foto-pak-kepala+textbox.png"
+                    <img src="/images/assets/foto-pak-kepala+textbox.png"
                          alt="Kepala BGTK NTT"
                          width="400"
                          height="400"
-                         class="rounded-lg w-[50vw] md:w-[20vw] h-auto object-cover flex-shrink-0"
+                         class="rounded-lg w-[50vw] md:w-[20vw] h-auto object-cover shrink-0"
                          loading="eager">
                     <div class="text-left">
-                        <h2 class="text-2xl md:text-3xl font-semibold font-montserrat text-primary mb-4">
-                            Kata Sambutan
-                        </h2>
                         <div class="font-inter text-gray-700 leading-relaxed text-sm md:text-base space-y-3">
                             <p>
                                 Selamat datang di website resmi Balai Guru Penggerak Provinsi Nusa Tenggara Timur.
@@ -29,7 +26,7 @@
             </div>
 
             {{-- YouTube Embed --}}
-            <div class="flex justify-center items-start mb-6 xl:w-2/5 xl:ml-2 xl:flex-shrink-0">
+            <div class="flex justify-center items-start mb-6 xl:w-2/5 xl:ml-2 xl:shrink-0">
                 <div class="rounded-lg overflow-hidden shadow-lg">
                     <iframe
                         src="https://www.youtube.com/embed/kWEl6wepuO4"

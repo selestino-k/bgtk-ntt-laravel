@@ -18,7 +18,7 @@
                          class="w-full h-full object-cover"
                          loading="{{ $i === 0 ? 'eager' : 'lazy' }}">
                     @if(!empty($photo['caption']))
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6 md:p-10">
+                        <div class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/60 to-transparent p-6 md:p-10">
                             <p class="text-white font-montserrat font-semibold text-lg md:text-2xl">
                                 {{ $photo['caption'] }}
                             </p>
@@ -40,10 +40,10 @@
 
     @else
         {{-- Fallback gradient banner when no carousel photos are set --}}
-        <div class="w-full h-[50vh] md:h-[70vh] bg-gradient-to-br from-primary to-blue-500 flex items-center justify-center">
+        <div class="w-full h-[50vh] md:h-[70vh] bg-linear-to-br from-primary to-blue-500 flex items-center justify-center">
             <div class="text-center text-white px-4">
                 <h1 class="font-montserrat font-bold text-4xl md:text-6xl mb-4 drop-shadow">BGTK NTT</h1>
-                <p class="font-inter text-xl md:text-2xl opacity-90">Balai Guru Penggerak Provinsi NTT</p>
+                <p class="font-montserrat text-xl md:text-2xl opacity-90">Balai Guru dan Tenaga Kependidikan NTT</p>
             </div>
         </div>
     @endif
