@@ -9,7 +9,7 @@ Route::get('/', function () {
     $documents      = [];
     $pengumuman     = [];
 
-    return view('(home).home', compact('carouselPhotos', 'latestPosts', 'documents', 'pengumuman'));
+    return view('home.home', compact('carouselPhotos', 'latestPosts', 'documents', 'pengumuman'));
 });
 
 // Admin routes (views pending)

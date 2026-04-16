@@ -78,6 +78,12 @@
 
         </div>
 
+        <div id="dark-mode-toggle" class="mt-8 pt-8 items-center flex gap-2">
+            <i class="fa-solid fa-sun text-white"></i>
+            <input type="checkbox" checked="unchecked" class="toggle toggle-sm" />
+            <i class="fa-solid fa-moon text-white"></i>
+        </div>
+
         <div class="lg:hidden mt-8 pt-8 justify-items-center text-sm text-white grid grid-cols-2 gap-4 md:flex md:items-center md:justify-between">
             <img src="/images/assets/ramah-ori-bordered.webp" alt="Kemendikdasmen Ramah" width="120" height="40">
             <img src="/images/assets/pendidikan-ori-bordered.webp" alt="Pendidikan Bermutu Untuk Semua" width="120" height="40">

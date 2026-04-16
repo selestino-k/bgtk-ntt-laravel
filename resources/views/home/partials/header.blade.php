@@ -1,7 +1,7 @@
-@include('(home).partials.nav-mobile')
+@include('home.partials.nav-mobile')
 
 {{-- Main navbar --}}
-<header class="fixed top-0 left-0 right-0 z-30 w-full py-2 bg-white/85 backdrop-blur-sm shadow-sm">
+<header class="fixed top-0 left-0 right-0 z-30 w-full py-2 bg-white/85 dark:bg-black/85 backdrop-blur-sm shadow-sm">
     <div class="flex h-16 max-w-screen items-center xl:justify-between px-4">
 
         {{-- Hamburger button (mobile only) --}}
@@ -12,8 +12,12 @@
         </div>
 
         {{-- Logo --}}
-        <a href="/" class="flex items-center xl:px-2 px-6">
+        <a href="/" class="flex items-center xl:px-2 px-6 dark:hidden">
             <img src="/images/assets/logo-web-bgtk-ntt.webp" alt="Balai GTK Logo" class="h-10 w-auto"
+                onerror="this.style.display='none'">
+        </a>
+        <a href="/" class="items-center xl:px-2 px-6 dark:flex hidden">
+            <img src="/images/assets/logo-web-bgtk-ntt-light.webp" alt="Balai GTK Logo" class="h-10 w-auto"
                 onerror="this.style.display='none'">
         </a>
 

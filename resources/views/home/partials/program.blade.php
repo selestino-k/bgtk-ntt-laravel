@@ -50,7 +50,7 @@
                  class="carousel carousel-center w-full gap-4 scroll-smooth snap-x snap-mandatory overflow-x-auto px-4 scroll-pl-4 scroll-pr-4">
                 @foreach($programs as $index => $program)
                     <div id="program-slide-{{ $index }}"
-                         class="carousel-item w-full max-w-xs basis-1/1 sm:basis-1/2 md:basis-1/3 xl:basis-1/4 shrink-0 snap-start place-items-center rounded border border-primary/30 h-64 flex items-center justify-center bg-white shadow-md">
+                         class="carousel-item w-full max-w-xs basis-1/1 sm:basis-1/2 md:basis-1/3 xl:basis-1/4 shrink-0 snap-start place-items-center rounded border border-primary/30 h-64 flex items-center justify-center bg-white dark:bg-black shadow-md">
                         <a href="{{ $program['link'] ?? '#' }}"
                            class="rounded-xl shadow-md hover:shadow-xl flex flex-col w-full group h-64 items-center justify-center p-4">
                             @if(!empty($program['image']))
@@ -58,8 +58,8 @@
                                      alt="{{ $program['title'] }}"
                                      class="w-44 h-44 object-cover mx-auto group-hover:scale-105 transition-transform duration-300">
                             @else
-                                <div class="w-44 h-44 bg-linear-to-br from-blue-50 to-blue-100 flex items-center justify-center">
-                                    <span class="text-gray-500 text-lg font-inter">No Image Available</span>
+                                <div class="w-44 h-44 bg-linear-to-br from-blue-50 to-blue-100 dark:from-gray-800 dark:to-gray-900 flex items-center justify-center">
+                                    <span class="text-gray-500 dark:text-gray-400 text-lg font-inter">No Image Available</span>
                                 </div>
                             @endif
                            

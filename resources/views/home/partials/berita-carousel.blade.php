@@ -66,7 +66,7 @@
 
             {{-- Pengumuman sidebar (1/4) --}}
             <div class="w-1/4">
-                @include('(home).partials.pengumuman-sidebar', ['pengumuman' => $pengumuman])
+                @include('home.partials.pengumuman-sidebar', ['pengumuman' => $pengumuman])
             </div>
 
         </div>
@@ -124,7 +124,7 @@
         </div>
 
         <div class="mt-6">
-            @include('(home).partials.pengumuman-sidebar', ['pengumuman' => $pengumuman])
+            @include('home.partials.pengumuman-sidebar', ['pengumuman' => $pengumuman])
         </div>
     </div>
 </section>

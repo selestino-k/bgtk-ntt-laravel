@@ -13,7 +13,7 @@
 <div id="nav-overlay" class="fixed inset-0 bg-black/40 z-40 hidden xl:hidden" onclick="closeNavSheet()"></div>
 
 {{-- Mobile slide-in sheet --}}
-<div id="nav-sheet" class="fixed top-0 left-0 h-full w-72 bg-white z-50 shadow-xl overflow-y-auto transform -translate-x-full transition-transform duration-300 xl:hidden">
+<div id="nav-sheet" class="fixed top-0 left-0 h-full w-72 bg-white dark:bg-black z-50 shadow-xl overflow-y-auto transform -translate-x-full transition-transform duration-300 xl:hidden">
     <div class="flex items-center justify-between px-4 py-4">
         <img src="/images/assets/logo-web-bgtk-ntt.webp" alt="Balai GTK Logo" class="h-10 w-auto"
             onerror="this.style.display='none'">
@@ -21,7 +21,7 @@
             <i class="fa-solid fa-xmark text-lg"></i>
         </button>
     </div>
-    <ul class="menu w-full font-montserrat text-sm font-medium text-black px-2 py-4 gap-4">
+    <ul class="menu w-full font-montserrat text-sm font-medium text-primary dark:text-primary px-2 py-4 gap-4">
         <li>
             <details>
                 <summary class="font-semibold text-primary">Profil</summary>
