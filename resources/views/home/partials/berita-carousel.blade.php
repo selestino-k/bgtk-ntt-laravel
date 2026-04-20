@@ -10,31 +10,31 @@
                 <h2 class="text-5xl font-semibold font-montserrat text-primary mb-3">
                     Berita Terkini
                 </h2>
-                <p class="text-lg text-gray-500 mb-6 font-inter">
+                <p class="text-lg text-gray-500 dark:text-gray-400 mb-6 font-inter">
                     Dapatkan informasi terbaru seputar kegiatan, program, dan inovasi BGTK Provinsi NTT.
                 </p>
 
                 <div class="grid grid-cols-3 gap-4">
                     @forelse($latestPosts as $post)
-                        <a href="/berita/{{ $post['slug'] ?? '#' }}"
+                        <a href="{{ route('publikasi.berita.show', $post->slug) }}"
                            class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white border border-gray-100 flex flex-col group">
-                            @if(!empty($post['featured_image']))
-                                <img src="{{ $post['featured_image'] }}" alt="{{ $post['title'] }}"
+                            @if($post->gambar)
+                                <img src="{{ $post->gambar }}" alt="{{ $post->judul }}"
                                      class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
                             @else
                                 <div class="w-full h-40 bg-linear-to-br from-blue-50 to-blue-100"></div>
                             @endif
                             <div class="p-4 flex flex-col flex-1">
-                                @if(!empty($post['tags'][0]['tag']['name']))
+                                @if($post->tags->first())
                                     <span class="text-xs font-montserrat font-semibold text-blue-600 uppercase tracking-wide mb-2">
-                                        {{ $post['tags'][0]['tag']['name'] }}
+                                        {{ $post->tags->first()->tagline }}
                                     </span>
                                 @endif
                                 <h3 class="font-montserrat font-semibold text-sm text-gray-900 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                                    {{ $post['title'] }}
+                                    {{ $post->judul }}
                                 </h3>
                                 <p class="font-inter text-gray-400 text-xs mt-auto">
-                                    {{ \Carbon\Carbon::parse($post['created_at'])->locale('id')->isoFormat('D MMMM YYYY') }}
+                                    {{ \Carbon\Carbon::parse($post->created_at)->locale('id')->isoFormat('D MMMM YYYY') }}
                                 </p>
                             </div>
                         </a>
@@ -86,25 +86,25 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             @forelse($latestPosts as $post)
-                <a href="/berita/{{ $post['slug'] ?? '#' }}"
+                <a href="{{ route('publikasi.berita.show', $post->slug) }}"
                    class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white border border-gray-100 flex flex-col group">
-                    @if(!empty($post['featured_image']))
-                        <img src="{{ $post['featured_image'] }}" alt="{{ $post['title'] }}"
+                    @if($post->gambar)
+                        <img src="{{ $post->gambar }}" alt="{{ $post->judul }}"
                              class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
                     @else
                         <div class="w-full h-40 bg-linear-to-br from-blue-50 to-blue-100"></div>
                     @endif
                     <div class="p-4 flex flex-col flex-1">
-                        @if(!empty($post['tags'][0]['tag']['name']))
+                        @if($post->tags->first())
                             <span class="text-xs font-montserrat font-semibold text-blue-600 uppercase tracking-wide mb-2">
-                                {{ $post['tags'][0]['tag']['name'] }}
+                                {{ $post->tags->first()->tagline }}
                             </span>
                         @endif
                         <h3 class="font-montserrat font-semibold text-sm text-gray-900 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                            {{ $post['title'] }}
+                            {{ $post->judul }}
                         </h3>
                         <p class="font-inter text-gray-400 text-xs mt-auto">
-                            {{ \Carbon\Carbon::parse($post['created_at'])->locale('id')->isoFormat('D MMMM YYYY') }}
+                            {{ \Carbon\Carbon::parse($post->created_at)->locale('id')->isoFormat('D MMMM YYYY') }}
                         </p>
                     </div>
                 </a>

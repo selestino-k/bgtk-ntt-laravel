@@ -1,0 +1,164 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Profile;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
+class ProfileController extends Controller
+{
+    private function routePrefix(): string
+    {
+        return request()->segment(1) === 'admin' ? 'admin' : 'operator';
+    }
+
+    private function viewPath(string $view): string
+    {
+        return 'admin.profil.' . $view;
+    }
+
+    private function routeName(string $name): string
+    {
+        return $this->routePrefix() . '.profiles.' . $name;
+    }
+
+    private function authorizeRole(): void
+    {
+        if (Auth::user()->role !== $this->routePrefix()) {
+            abort(403);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $this->authorizeRole();
+
+        $profiles = Profile::latest()->paginate(10);
+
+        return view($this->viewPath('index'), [
+            'profiles' => $profiles,
+            'routePrefix' => $this->routePrefix(),
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $this->authorizeRole();
+
+        return view($this->viewPath('create'), [
+            'routePrefix' => $this->routePrefix(),
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $this->authorizeRole();
+
+        $validated = $request->validate([
+            'judul' => 'required|string|max:255',
+            'sub_judul' => 'nullable|string|max:255',
+            'isi_konten' => 'required|string',
+            'gambar' => 'nullable|string|max:255',
+            'gambar_file' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ]);
+
+        $gambar = $validated['gambar'] ?? null;
+
+        if ($request->hasFile('gambar_file')) {
+            $gambar = $request->file('gambar_file')->store('profiles', 'public');
+        }
+
+        Profile::create([
+            'judul' => $validated['judul'],
+            'sub_judul' => $validated['sub_judul'] ?? null,
+            'isi_konten' => $validated['isi_konten'],
+            'gambar' => $gambar,
+        ]);
+
+        return redirect()->route($this->routeName('index'))->with('status', 'Profil berhasil dibuat.');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Profile $profile)
+    {
+        return view('profile.show', compact('profile'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Profile $profile)
+    {
+        $this->authorizeRole();
+
+        return view($this->viewPath('edit'), [
+            'profile' => $profile,
+            'routePrefix' => $this->routePrefix(),
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Profile $profile)
+    {
+        $this->authorizeRole();
+
+        $validated = $request->validate([
+            'judul' => 'required|string|max:255',
+            'sub_judul' => 'nullable|string|max:255',
+            'isi_konten' => 'required|string',
+            'gambar' => 'nullable|string|max:255',
+            'gambar_file' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ]);
+
+        $gambar = $validated['gambar'] ?? $profile->gambar;
+
+        if ($request->hasFile('gambar_file')) {
+            if ($profile->gambar && !Str::startsWith($profile->gambar, ['http://', 'https://']) && Storage::disk('public')->exists($profile->gambar)) {
+                Storage::disk('public')->delete($profile->gambar);
+            }
+
+            $gambar = $request->file('gambar_file')->store('profiles', 'public');
+        }
+
+        $profile->update([
+            'judul' => $validated['judul'],
+            'sub_judul' => $validated['sub_judul'] ?? null,
+            'isi_konten' => $validated['isi_konten'],
+            'gambar' => $gambar,
+        ]);
+
+        return redirect()->route($this->routeName('index'))->with('status', 'Profil berhasil diperbarui.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Profile $profile)
+    {
+        $this->authorizeRole();
+
+        if ($profile->gambar && !Str::startsWith($profile->gambar, ['http://', 'https://']) && Storage::disk('public')->exists($profile->gambar)) {
+            Storage::disk('public')->delete($profile->gambar);
+        }
+
+        $profile->delete();
+
+        return redirect()->route($this->routeName('index'))->with('status', 'Profil berhasil dihapus.');
+    }
+}

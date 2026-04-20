@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="text-justify">
-                        <div class="font-inter text-gray-700 leading-relaxed text-sm md:text-base space-y-3">
+                        <div class="font-inter text-gray-700 dark:text-gray-200 leading-relaxed text-sm md:text-base space-y-3">
                             <p>
                                 Selamat datang di laman resmi Balai Guru dan Tenaga Kependidikan (BGTK) Provinsi Nusa
                                 Tenggara Timur (NTT). Sebagai wujud komitmen kami dalam mendukung peningkatan kualitas

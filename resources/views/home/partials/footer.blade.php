@@ -1,4 +1,4 @@
-<footer class="bg-primary w-full">
+<footer class="bg-primary dark:bg-base-300 w-full">
     <div class="container mx-auto px-4 py-12 md:px-6 max-w-7xl font-montserrat">
         <div class="grid sm:grid-cols-1 gap-8 md:grid-cols-3 place-items-center md:place-items-start">
 
@@ -78,7 +78,7 @@
 
         </div>
 
-        <div id="dark-mode-toggle" class="mt-8 pt-8 items-center flex gap-2">
+        <div id="dark-mode-toggle" class="mt-8 pt-8 items-center lg:flex gap-2 hidden">
             <i class="fa-solid fa-sun text-white"></i>
             <input type="checkbox" checked="unchecked" class="toggle toggle-sm" />
             <i class="fa-solid fa-moon text-white"></i>

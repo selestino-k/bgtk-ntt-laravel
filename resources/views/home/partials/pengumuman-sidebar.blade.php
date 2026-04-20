@@ -4,13 +4,13 @@
     </h3>
 
     @forelse($pengumuman ?? [] as $item)
-        <a href="{{ $item['url'] ?? '#' }}"
+        <a href="{{ route('publikasi.berita.show', $item->slug) }}"
            class="block mb-4 pb-4 border-b border-gray-50 last:border-0 last:mb-0 last:pb-0 hover:text-primary transition-colors group">
             <p class="font-inter text-sm text-gray-800 line-clamp-2 mb-1 group-hover:text-primary transition-colors">
-                {{ $item['title'] }}
+                {{ $item->judul }}
             </p>
             <p class="font-inter text-xs text-gray-400">
-                {{ \Carbon\Carbon::parse($item['created_at'])->locale('id')->isoFormat('D MMMM YYYY') }}
+                {{ \Carbon\Carbon::parse($item->created_at)->locale('id')->isoFormat('D MMMM YYYY') }}
             </p>
         </a>
     @empty
