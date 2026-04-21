@@ -27,8 +27,8 @@
                     @isset($tags)
                         @foreach($tags as $tag)
                             <a href="/publikasi/berita-terkini?tag={{ $tag->id }}"
-                               class="badge {{ request('tag') == $tag->id ? 'badge-neutral' : 'badge-soft badge-neutral' }} px-2 py-1 text-xs font-semibold hover:opacity-80 cursor-pointer">
-                                {{ $tag->name }}
+                               class="badge text-gray-800 dark:text-gray-100 px-2 py-1 text-xs font-semibold hover:opacity-80 cursor-pointer">
+                                {{ $tag->tagline }}
                             </a>
                         @endforeach
                     @endisset

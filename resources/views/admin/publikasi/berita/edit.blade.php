@@ -51,8 +51,24 @@
 
                 <div class="form-control">
                     <label class="label"><span class="label-text font-medium">Gambar (URL atau upload)</span></label>
+                    @if($berita->gambar)
+                        @php
+                            $currentGambar = \Illuminate\Support\Str::startsWith($berita->gambar, ['http://', 'https://'])
+                                ? $berita->gambar
+                                : asset('storage/' . $berita->gambar);
+                        @endphp
+                        <div class="mb-3">
+                            <img src="{{ $currentGambar }}" alt="Gambar saat ini"
+                                 class="h-40 rounded-lg object-cover border border-base-300">
+                            <label class="flex items-center gap-2 mt-2 cursor-pointer">
+                                <input type="checkbox" name="remove_gambar" value="1" class="checkbox checkbox-sm checkbox-error" />
+                                <span class="text-sm text-error">Hapus gambar saat ini</span>
+                            </label>
+                        </div>
+                    @endif
                     <input type="text" name="gambar" value="{{ old('gambar', $berita->gambar) }}" placeholder="URL gambar" class="input input-bordered w-full" />
                     <input type="file" name="gambar_file" accept="image/*" class="file-input file-input-bordered w-full mt-2" />
+                    <p class="text-xs text-base-content/50 mt-1">Upload file akan mengutamakan daripada URL. Format: jpg, jpeg, png, webp, gif — maks 2MB.</p>
                     @error('gambar')<p class="mt-1 text-sm text-error">{{ $message }}</p>@enderror
                     @error('gambar_file')<p class="mt-1 text-sm text-error">{{ $message }}</p>@enderror
                 </div>

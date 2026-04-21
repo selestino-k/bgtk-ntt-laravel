@@ -72,6 +72,10 @@ class ProfileController extends Controller
             'isi_konten' => 'required|string',
             'gambar' => 'nullable|string|max:255',
             'gambar_file' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ], [
+            'gambar_file.max' => 'Ukuran gambar tidak boleh melebihi 2MB.',
+            'gambar_file.image' => 'File harus berupa gambar.',
+            'gambar_file.mimes' => 'Format gambar harus jpeg, png, jpg, gif, atau webp.',
         ]);
 
         $gambar = $validated['gambar'] ?? null;
@@ -95,7 +99,7 @@ class ProfileController extends Controller
      */
     public function show(Profile $profile)
     {
-        return view('profile.show', compact('profile'));
+        return view('home.profil.show', compact('profile'));
     }
 
     /**
@@ -124,6 +128,10 @@ class ProfileController extends Controller
             'isi_konten' => 'required|string',
             'gambar' => 'nullable|string|max:255',
             'gambar_file' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ], [
+            'gambar_file.max' => 'Ukuran gambar tidak boleh melebihi 2MB.',
+            'gambar_file.image' => 'File harus berupa gambar.',
+            'gambar_file.mimes' => 'Format gambar harus jpeg, png, jpg, gif, atau webp.',
         ]);
 
         $gambar = $validated['gambar'] ?? $profile->gambar;

@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="robots" content="noindex, nofollow, nocache">
+    <link rel="icon" type="image/webp" href="{{ asset('images/assets/favicon.ico') }}">
+
 
     <title>@yield('title', 'Panel Admin') | Panel Admin Web BGTK NTT</title>
 
@@ -30,7 +32,7 @@
 
         {{-- Sidebar --}}
         <aside id="admin-sidebar"
-            class="flex-shrink-0 w-[250px] h-full flex flex-col bg-base-200 border-r border-base-300 transition-all duration-300 overflow-y-auto"
+            class="shrink-0 w-62.5 h-full flex flex-col bg-base-200 border-r border-base-300 transition-all duration-300 overflow-y-auto"
             aria-label="Sidebar navigasi admin">
             @include('admin.partials.sidebar')
         </aside>

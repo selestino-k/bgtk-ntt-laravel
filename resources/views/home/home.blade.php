@@ -1,6 +1,6 @@
 @extends('home.layouts.app')
 
-@section('title', 'Home')
+@section('title', 'Balai Guru dan Tenaga Kependidikan Provinsi NTT')
 
 @section('content')
 @include('home.partials.header')

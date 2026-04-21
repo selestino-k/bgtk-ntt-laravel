@@ -34,7 +34,15 @@ Route::get('/', function () {
     return view('home.home', compact('carouselPhotos', 'latestPosts', 'documents', 'pengumuman'));
 })->name('home');
 
-Route::get('/admin/profil/{profile}', [ProfileController::class, 'show'])->name('profile.show');
+Route::view('/ppid', 'home.ppid')->name('ppid');
+
+Route::get('/profil/{profile}', [ProfileController::class, 'show'])->name('profil.show');
+
+Route::get('/ult/sarana-prasarana', function () {
+    return view('home.sarana');
+})->name('ult.sarana-prasarana');
+
+Route::get('/admin/profil/{profile}', [ProfileController::class, 'show'])->name('profil.show');
 
 Route::view('/login', 'auth.login')->name('login');
 
@@ -66,9 +74,8 @@ Route::post('/logout', function (Request $request) {
 
 Route::middleware('auth')->get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 
-Route::get('/berita', [PublicationController::class, 'index'])->name('berita.index');
-Route::get('/pengumuman', [PublicationController::class, 'pengumumanPublic'])->name('pengumuman.index');
-Route::get('/dokumen', [PublicationController::class, 'dokumenIndex'])->name('dokumen.index');
+Route::get('/publikasi/pengumuman', [PublicationController::class, 'pengumumanPublic'])->name('pengumuman.index');
+Route::get('/publikasi/dokumen', [PublicationController::class, 'dokumenPublic'])->name('dokumen.index');
 
 Route::get('/publikasi/berita-terkini', [PublicationController::class, 'beritaTerkiniPublic'])->name('publikasi.berita.berita');
 Route::get('/publikasi/berita-terkini/{berita:slug}', [PublicationController::class, 'beritaTerkiniDetailPublic'])->name('publikasi.berita.show');
@@ -104,9 +111,9 @@ Route::middleware('auth')->prefix('admin/publikasi')->name('admin.publikasi.')->
 });
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('profiles', ProfileController::class)->except(['show']);
+    Route::resource('profil', ProfileController::class)->except(['show']);
 });
 
 Route::middleware('auth')->prefix('operator')->name('operator.')->group(function () {
-    Route::resource('profiles', ProfileController::class)->except(['show']);
+    Route::resource('profil', ProfileController::class)->except(['show']);
 });

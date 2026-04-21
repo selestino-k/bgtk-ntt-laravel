@@ -10,7 +10,7 @@
             <p class="text-sm text-base-content/60">Role: {{ ucfirst($routePrefix) }}</p>
             <h1 class="text-3xl sm:text-4xl font-bold text-primary">Kelola Profil</h1>
         </div>
-        <a href="{{ route($routePrefix . '.profiles.create') }}" class="btn btn-primary gap-2">
+        <a href="{{ route($routePrefix . '.profil.create') }}" class="btn btn-primary gap-2">
             <i class="fa-solid fa-plus"></i>
             <span class="hidden sm:inline">Buat Profil</span>
         </a>
@@ -49,8 +49,8 @@
                                 <td>{{ $profile->gambar ?: '-' }}</td>
                                 <td>
                                     <div class="flex gap-2">
-                                        <a href="{{ route($routePrefix . '.profiles.edit', $profile) }}" class="btn btn-sm btn-outline">Edit</a>
-                                        <form action="{{ route($routePrefix . '.profiles.destroy', $profile->id) }}" method="POST" onsubmit="return confirm('Hapus profil ini?');">
+                                        <a href="{{ route($routePrefix . '.profil.edit', $profile) }}" class="btn btn-sm btn-outline dark:outline-taupe-50">Edit</a>
+                                        <form action="{{ route($routePrefix . '.profil.destroy', $profile->id) }}" method="POST" onsubmit="return confirm('Hapus profil ini?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-error">Hapus</button>

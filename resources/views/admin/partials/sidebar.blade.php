@@ -62,7 +62,7 @@
     </a>
 
     {{-- Profil --}}
-    <a href="{{ route('admin.profiles.index') }}"
+    <a href="{{ route('admin.profil.index') }}"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
                {{ request()->routeIs('admin.profiles.*') ? 'bg-primary text-primary-content' : 'text-base-content hover:bg-base-300' }}">
         <i class="fa-solid fa-id-card w-4 text-center"></i>
@@ -75,7 +75,7 @@
 <div class="p-4 border-t border-base-300">
     <div class="flex items-center gap-3 mb-3">
         <div class="avatar placeholder">
-            <div class="bg-primary text-primary-content rounded-full w-9">
+            <div class="bg-primary text-primary-content rounded-full w-9 h-9 flex items-center justify-center">
                 <span class="text-sm font-bold">
                     {{ strtoupper(substr(Auth::user()->username ?? 'A', 0, 1)) }}
                 </span>

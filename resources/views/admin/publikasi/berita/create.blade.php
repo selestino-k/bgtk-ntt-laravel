@@ -11,7 +11,7 @@
             <p class="text-sm text-base-content/60">Publikasi: Berita Terkini</p>
             <h1 class="text-3xl sm:text-4xl font-bold text-primary">Tambah Berita</h1>
         </div>
-        <a href="{{ route('dashboard') }}" class="btn btn-outline gap-2">
+        <a href="{{ route('admin.dashboard') }}" class="btn btn-outline gap-2">
             <i class="fa-solid fa-arrow-left"></i>
             <span class="hidden sm:inline">Kembali</span>
         </a>
@@ -53,6 +53,7 @@
                     <label class="label"><span class="label-text font-medium">Gambar (URL atau upload)</span></label>
                     <input type="text" name="gambar" value="{{ old('gambar') }}" placeholder="URL gambar" class="input input-bordered w-full" />
                     <input type="file" name="gambar_file" accept="image/*" class="file-input file-input-bordered w-full mt-2" />
+                    <p class="text-xs text-base-content/50 mt-1">Upload file akan mengutamakan daripada URL. Format: jpg, jpeg, png, webp, gif — maks 2MB.</p>
                     @error('gambar')<p class="mt-1 text-sm text-error">{{ $message }}</p>@enderror
                     @error('gambar_file')<p class="mt-1 text-sm text-error">{{ $message }}</p>@enderror
                 </div>
@@ -93,7 +94,7 @@
 
                 <div class="flex flex-wrap gap-3 pt-2">
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                    <a href="{{ route('dashboard') }}" class="btn btn-outline">Batal</a>
+                    <a href="{{ route('admin.publikasi.berita.index') }}" class="btn btn-outline">Batal</a>
                 </div>
             </form>
         </div>

@@ -1,48 +1,88 @@
 @extends('home.layouts.app')
 
+@section('title', 'Pengumuman | BGTK Provinsi NTT')
+
 @section('content')
 @include('home.partials.header')
 
-<head>
-    <title>Pengumuman | BGTK Provinsi NTT</title>
-    <meta name="description" content="Halaman Pengumuman | BGTK Provinsi NTT">
-</head>
+<div id="pengumuman" class="mt-20 w-full px-4 md:px-10 font-montserrat">
+    <main class="relative z-10 py-10 w-full">
 
-<div id="pengumuman" class="mt-20 flex place-items-start w-full px-4 md:px-10">
-    <main class="relative z-10 p-4 md:p-8 w-full">
-
-        <h2 class="text-3xl md:text-5xl font-bold sm:tracking-tight mb-10 md:mb-8 font-montserrat text-primary">
+        <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-8 text-primary">
             Pengumuman
-        </h2>
+        </h1>
 
         @if($beritas->isEmpty())
-            <div class="text-center py-10">
-                <p class="text-gray-500 font-inter">Tidak ada pengumuman yang ditemukan.</p>
+            <div class="flex flex-col items-center justify-center py-20 text-base-content/50">
+                <i class="fa-solid fa-bullhorn text-5xl mb-4"></i>
+                <p class="text-lg">Tidak ada pengumuman yang ditemukan.</p>
             </div>
         @else
-            <div class="flex flex-col gap-4 w-full">
+            <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
                 @foreach($beritas as $berita)
+                    @php
+                        $gambarUrl = $berita->gambar
+                            ? (\Illuminate\Support\Str::startsWith($berita->gambar, ['http://', 'https://'])
+                                ? $berita->gambar
+                                : asset('storage/' . $berita->gambar))
+                            : null;
+                        $isiText = strip_tags($berita->isi);
+                        if (str_starts_with(ltrim($berita->isi), '{')) {
+                            try {
+                                $decoded = json_decode($berita->isi, true);
+                                $isiText = '';
+                                $extractText = function ($nodes) use (&$extractText, &$isiText) {
+                                    foreach ($nodes as $node) {
+                                        if (isset($node['text'])) {
+                                            $isiText .= $node['text'] . ' ';
+                                        }
+                                        if (isset($node['content'])) {
+                                            $extractText($node['content']);
+                                        }
+                                    }
+                                };
+                                if (isset($decoded['content'])) {
+                                    $extractText($decoded['content']);
+                                }
+                            } catch (\Throwable $e) {
+                                $isiText = strip_tags($berita->isi);
+                            }
+                        }
+                        $excerpt = \Illuminate\Support\Str::limit(trim($isiText), 120);
+                    @endphp
+
                     <a href="{{ route('publikasi.berita.show', $berita->slug) }}"
-                       class="flex gap-4 bg-white dark:bg-base-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 dark:border-base-300 p-4 group">
-                        @if($berita->gambar)
-                            <img src="{{ $berita->gambar }}"
-                                 alt="{{ $berita->judul }}"
-                                 class="w-24 h-24 object-cover rounded-lg flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                       class="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 group">
+                        @if($gambarUrl)
+                            <figure class="overflow-hidden h-44 bg-base-200">
+                                <img src="{{ $gambarUrl }}"
+                                     alt="{{ $berita->judul }}"
+                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                     loading="lazy">
+                            </figure>
                         @else
-                            <div class="w-24 h-24 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-base-300 dark:to-base-200 flex items-center justify-center rounded-lg flex-shrink-0">
-                                <i class="fa-solid fa-bullhorn text-2xl text-primary/30"></i>
-                            </div>
+                            <figure class="h-44 bg-base-200 flex items-center justify-center">
+                                <i class="fa-solid fa-bullhorn text-4xl text-base-content/20"></i>
+                            </figure>
                         @endif
-                        <div class="flex flex-col flex-1 min-w-0">
-                            <h3 class="font-montserrat font-semibold text-base text-gray-900 dark:text-base-content mb-1 line-clamp-2 group-hover:text-primary transition-colors">
+
+                        <div class="card-body p-5 gap-2">
+                            {{-- Title --}}
+                            <h2 class="font-bold text-base leading-snug text-base-content line-clamp-2 group-hover:text-primary transition-colors">
                                 {{ $berita->judul }}
-                            </h3>
-                            <div class="flex items-center gap-2 font-inter text-gray-400 text-xs mt-auto">
+                            </h2>
+
+                            {{-- Excerpt --}}
+                            <p class="text-sm text-base-content/60 line-clamp-3">{{ $excerpt }}</p>
+
+                            {{-- Meta --}}
+                            <div class="flex items-center justify-between mt-auto pt-3 border-t border-base-200">
                                 @if($berita->author)
-                                    <span>{{ $berita->author->username }}</span>
-                                    <span>&middot;</span>
+                                    <span class="text-xs text-base-content/50">{{ $berita->author->username }}</span>
                                 @endif
-                                <span>{{ \Carbon\Carbon::parse($berita->created_at)->locale('id')->isoFormat('D MMMM YYYY') }}</span>
+                                <span class="text-xs text-base-content/50">
+                                    {{ $berita->created_at->translatedFormat('d M Y') }}
+                                </span>
                             </div>
                         </div>
                     </a>
@@ -51,26 +91,24 @@
 
             {{-- Pagination --}}
             @if($beritas->lastPage() > 1)
-                <div class="flex justify-center gap-2 mt-8 font-montserrat font-semibold flex-wrap">
-                    @if(!$beritas->onFirstPage())
-                        <a href="{{ $beritas->previousPageUrl() }}"
-                           class="btn btn-sm btn-outline">
-                            Sebelumnya
-                        </a>
+                <div class="flex justify-center gap-2 mt-10 font-semibold flex-wrap">
+                    @if($beritas->onFirstPage())
+                        <button class="btn btn-sm btn-outline" disabled>Sebelumnya</button>
+                    @else
+                        <a href="{{ $beritas->previousPageUrl() }}" class="btn btn-sm btn-outline">Sebelumnya</a>
                     @endif
 
-                    @foreach($beritas->getUrlRange(1, $beritas->lastPage()) as $page => $url)
-                        <a href="{{ $url }}"
+                    @foreach(range(1, $beritas->lastPage()) as $page)
+                        <a href="{{ $beritas->url($page) }}"
                            class="btn btn-sm {{ $beritas->currentPage() === $page ? 'btn-primary' : 'btn-outline' }}">
                             {{ $page }}
                         </a>
                     @endforeach
 
                     @if($beritas->hasMorePages())
-                        <a href="{{ $beritas->nextPageUrl() }}"
-                           class="btn btn-sm btn-outline">
-                            Selanjutnya
-                        </a>
+                        <a href="{{ $beritas->nextPageUrl() }}" class="btn btn-sm btn-outline">Selanjutnya</a>
+                    @else
+                        <button class="btn btn-sm btn-outline" disabled>Selanjutnya</button>
                     @endif
                 </div>
             @endif

@@ -1,6 +1,6 @@
 ﻿@extends('home.layouts.app')
 
-@section('title', 'Berita Terkini | BGTK Provinsi NTT')
+@section('title', 'Berita Terkini')
 
 @section('content')
 @include('home.partials.header')
@@ -28,34 +28,10 @@
                                     ? $berita->gambar
                                     : asset('storage/' . $berita->gambar))
                                 : null;
-
-                            $isiText = strip_tags($berita->isi);
-                            // If isi is TipTap JSON, extract plain text
-                            if (str_starts_with(ltrim($berita->isi), '{')) {
-                                try {
-                                    $decoded = json_decode($berita->isi, true);
-                                    $isiText = '';
-                                    $extractText = function ($nodes) use (&$extractText, &$isiText) {
-                                        foreach ($nodes as $node) {
-                                            if (isset($node['text'])) {
-                                                $isiText .= $node['text'] . ' ';
-                                            }
-                                            if (isset($node['content'])) {
-                                                $extractText($node['content']);
-                                            }
-                                        }
-                                    };
-                                    if (isset($decoded['content'])) {
-                                        $extractText($decoded['content']);
-                                    }
-                                } catch (\Throwable $e) {
-                                    $isiText = strip_tags($berita->isi);
-                                }
-                            }
-                            $excerpt = \Illuminate\Support\Str::limit(trim($isiText), 120);
+                            $excerpt = \Illuminate\Support\Str::limit(trim(strip_tags($berita->isi)), 120);
                         @endphp
 
-                        <a href="{{ route('home.berita.show', $berita) }}"
+                        <a href="{{ route('publikasi.berita.show', $berita) }}"
                            class="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 group">
                             @if($gambarUrl)
                                 <figure class="overflow-hidden h-44 bg-base-200">
@@ -137,12 +113,12 @@
                 Tag Berita
             </h2>
             <div class="flex flex-wrap md:flex-col gap-2">
-                <a href="{{ route('home.berita.index') }}"
+                <a href="{{ route('publikasi.berita.berita') }}"
                    class="badge {{ !$tagId ? 'badge-primary' : 'badge-ghost' }} font-semibold py-3 px-3 cursor-pointer">
                     Semua
                 </a>
                 @foreach($tags as $tag)
-                    <a href="{{ route('home.berita.index', ['tag' => $tag->id]) }}"
+                    <a href="{{ route('publikasi.berita.berita', ['tag' => $tag->id]) }}"
                        class="badge {{ (int)$tagId === $tag->id ? 'badge-primary' : 'badge-ghost' }} font-semibold py-3 px-3 cursor-pointer">
                         {{ $tag->tagline }}
                     </a>

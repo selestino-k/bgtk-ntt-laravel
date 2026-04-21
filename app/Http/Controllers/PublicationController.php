@@ -7,13 +7,14 @@ use App\Models\Dokumen;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PublicationController extends Controller
 {
     protected function ensureAdminOrOperator()
     {
-        abort_if(! auth()->check() || ! in_array(auth()->user()->role, ['admin', 'operator']), 403);
+        abort_if(! Auth::check() || ! in_array(Auth::user()->role, ['admin', 'operator']), 403);
     }
 
     public function beritaIndex()
@@ -138,6 +139,13 @@ class PublicationController extends Controller
             ->get();
 
         return view('home.publikasi.berita.show', compact('berita', 'recentBeritas'));
+    }
+
+    public function dokumenPublic()
+    {
+        $dokumens = Dokumen::latest()->get();
+
+        return view('home.publikasi.dokumen', compact('dokumens'));
     }
 
     public function dokumenIndex()
@@ -288,7 +296,8 @@ class PublicationController extends Controller
             'judul' => 'required|string|max:255',
             'isi' => 'required|string',
             'gambar' => 'nullable|string|max:255',
-            'gambar_file' => 'nullable|image|max:2048',
+            'gambar_file' => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:2048',
+            'remove_gambar' => 'nullable|boolean',
             'dokumen' => 'nullable|string|max:255',
             'dokumen_file' => 'nullable|file|mimes:pdf,doc,docx,txt|max:5120',
             'published' => 'boolean',
@@ -296,8 +305,24 @@ class PublicationController extends Controller
             'tags.*' => 'integer|exists:tag,id',
         ]);
 
+        $isStoredFile = $berita->gambar && ! Str::startsWith($berita->gambar, ['http://', 'https://']);
+        $gambarPath = $berita->gambar;
+
         if ($request->hasFile('gambar_file')) {
-            $validated['gambar'] = $request->file('gambar_file')->store('berita', 'public');
+            if ($isStoredFile) {
+                Storage::disk('public')->delete($berita->gambar);
+            }
+            $gambarPath = $request->file('gambar_file')->store('berita', 'public');
+        } elseif ($request->filled('gambar')) {
+            if ($isStoredFile && $request->input('gambar') !== $berita->gambar) {
+                Storage::disk('public')->delete($berita->gambar);
+            }
+            $gambarPath = $request->input('gambar');
+        } elseif ($request->boolean('remove_gambar')) {
+            if ($isStoredFile) {
+                Storage::disk('public')->delete($berita->gambar);
+            }
+            $gambarPath = null;
         }
 
         if ($request->hasFile('dokumen_file')) {
@@ -321,7 +346,7 @@ class PublicationController extends Controller
             'judul' => $validated['judul'],
             'slug' => $slug,
             'isi' => $validated['isi'],
-            'gambar' => $validated['gambar'] ?? $berita->gambar,
+            'gambar' => $gambarPath,
             'dokumen' => $validated['dokumen'] ?? $berita->dokumen,
             'published' => $validated['published'] ?? false,
         ]);
@@ -334,6 +359,10 @@ class PublicationController extends Controller
     public function destroy(Berita $berita)
     {
         $this->ensureAdminOrOperator();
+
+        if ($berita->gambar && ! Str::startsWith($berita->gambar, ['http://', 'https://'])) {
+            Storage::disk('public')->delete($berita->gambar);
+        }
 
         $berita->tags()->detach();
         $berita->delete();
@@ -408,7 +437,7 @@ class PublicationController extends Controller
             'judul' => 'required|string|max:255',
             'isi' => 'required|string',
             'gambar' => 'nullable|string|max:255',
-            'gambar_file' => 'nullable|image|max:2048',
+            'gambar_file' => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:2048',
             'dokumen' => 'nullable|string|max:255',
             'dokumen_file' => 'nullable|file|mimes:pdf,doc,docx,txt|max:5120',
             'published' => 'boolean',
@@ -416,8 +445,11 @@ class PublicationController extends Controller
             'tags.*' => 'integer|exists:tag,id',
         ]);
 
+        $gambarPath = null;
         if ($request->hasFile('gambar_file')) {
-            $validated['gambar'] = $request->file('gambar_file')->store('berita', 'public');
+            $gambarPath = $request->file('gambar_file')->store('berita', 'public');
+        } elseif ($request->filled('gambar')) {
+            $gambarPath = $request->input('gambar');
         }
 
         if ($request->hasFile('dokumen_file')) {
@@ -441,7 +473,7 @@ class PublicationController extends Controller
             'judul' => $validated['judul'],
             'slug' => $slug,
             'isi' => $validated['isi'],
-            'gambar' => $validated['gambar'] ?? null,
+            'gambar' => $gambarPath,
             'dokumen' => $validated['dokumen'] ?? null,
             'published' => $validated['published'] ?? false,
             'author_id' => Auth::id(),
@@ -451,6 +483,6 @@ class PublicationController extends Controller
             $berita->tags()->sync($validated['tags']);
         }
 
-        return redirect()->route('admin.dashboard')->with('success', 'Berita berhasil dibuat.');
+        return redirect()->route('admin.publikasi.berita.index')->with('success', 'Berita berhasil dibuat.');
     }
 }
