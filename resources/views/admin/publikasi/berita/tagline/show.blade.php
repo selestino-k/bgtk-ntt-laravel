@@ -7,7 +7,6 @@
 
     <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <p class="text-sm text-base-content/60">Publikasi: Berita Terkini</p>
             <h1 class="text-3xl sm:text-4xl font-bold text-primary">Daftar Tag</h1>
         </div>
         <div class="flex flex-wrap gap-3">

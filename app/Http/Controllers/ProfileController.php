@@ -3,13 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profile;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+
 class ProfileController extends Controller
 {
+    private function generateUniqueSlug(string $judul, ?int $excludeId = null): string
+    {
+        $slug = Str::slug($judul);
+        if ($slug === '') {
+            $slug = 'profil';
+        }
+
+        $originalSlug = $slug;
+        $counter = 1;
+
+        while (Profile::where('slug', $slug)->when($excludeId, fn ($q) => $q->where('id', '!=', $excludeId))->exists()) {
+            $slug = $originalSlug . '-' . $counter++;
+        }
+
+        return $slug;
+    }
+
     private function routePrefix(): string
     {
         return request()->segment(1) === 'admin' ? 'admin' : 'operator';
@@ -84,11 +103,14 @@ class ProfileController extends Controller
             $gambar = $request->file('gambar_file')->store('profiles', 'public');
         }
 
+        $slug = $this->generateUniqueSlug($validated['judul']);
+
         Profile::create([
-            'judul' => $validated['judul'],
-            'sub_judul' => $validated['sub_judul'] ?? null,
+            'judul'      => $validated['judul'],
+            'slug'       => $slug,
+            'sub_judul'  => $validated['sub_judul'] ?? null,
             'isi_konten' => $validated['isi_konten'],
-            'gambar' => $gambar,
+            'gambar'     => $gambar,
         ]);
 
         return redirect()->route($this->routeName('index'))->with('status', 'Profil berhasil dibuat.');
@@ -99,7 +121,8 @@ class ProfileController extends Controller
      */
     public function show(Profile $profile)
     {
-        return view('home.profil.show', compact('profile'));
+        $tags = Tag::orderBy('tagline')->get();
+        return view('home.profil.show', compact('profile', 'tags'));
     }
 
     /**
@@ -144,11 +167,16 @@ class ProfileController extends Controller
             $gambar = $request->file('gambar_file')->store('profiles', 'public');
         }
 
+        $slug = $profile->judul !== $validated['judul']
+            ? $this->generateUniqueSlug($validated['judul'], $profile->id)
+            : $profile->slug;
+
         $profile->update([
-            'judul' => $validated['judul'],
-            'sub_judul' => $validated['sub_judul'] ?? null,
+            'judul'      => $validated['judul'],
+            'slug'       => $slug,
+            'sub_judul'  => $validated['sub_judul'] ?? null,
             'isi_konten' => $validated['isi_konten'],
-            'gambar' => $gambar,
+            'gambar'     => $gambar,
         ]);
 
         return redirect()->route($this->routeName('index'))->with('status', 'Profil berhasil diperbarui.');

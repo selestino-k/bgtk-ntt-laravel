@@ -51,9 +51,13 @@
 
                 <div class="form-control">
                     <label class="label"><span class="label-text font-medium">Gambar (URL atau upload)</span></label>
-                    <input type="text" name="gambar" value="{{ old('gambar') }}" placeholder="URL gambar" class="input input-bordered w-full" />
-                    <input type="file" name="gambar_file" accept="image/*" class="file-input file-input-bordered w-full mt-2" />
+                    <input type="text" id="gambar-url" name="gambar" value="{{ old('gambar') }}" placeholder="URL gambar" class="input input-bordered w-full" />
+                    <input type="file" id="gambar-file" name="gambar_file" accept="image/*" class="file-input file-input-bordered w-full mt-2" />
                     <p class="text-xs text-base-content/50 mt-1">Upload file akan mengutamakan daripada URL. Format: jpg, jpeg, png, webp, gif — maks 2MB.</p>
+                    <div id="gambar-preview-wrapper" class="mt-3 hidden">
+                        <p class="text-xs text-base-content/50 mb-1">Pratinjau gambar:</p>
+                        <img id="gambar-preview" src="" alt="Pratinjau" class="max-h-48 rounded-lg border border-base-300 object-contain" />
+                    </div>
                     @error('gambar')<p class="mt-1 text-sm text-error">{{ $message }}</p>@enderror
                     @error('gambar_file')<p class="mt-1 text-sm text-error">{{ $message }}</p>@enderror
                 </div>
@@ -73,7 +77,7 @@
                         <div class="collapse-content space-y-2 pt-2">
                             @forelse($tags as $tag)
                                 <label class="flex items-center gap-3 cursor-pointer">
-                                    <input type="checkbox" name="tags[]" value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }} class="checkbox checkbox-sm" />
+                                    <input type="checkbox" name="tags[]" value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }} class="checkbox checkbox-xs border-gray-800" />
                                     <span class="text-sm">{{ $tag->tagline }}</span>
                                 </label>
                             @empty
@@ -87,7 +91,7 @@
 
                 <div class="form-control">
                     <label class="label cursor-pointer justify-start gap-3">
-                        <input type="checkbox" name="published" value="1" {{ old('published') ? 'checked' : '' }} class="checkbox" />
+                        <input type="checkbox" name="published" value="1" {{ old('published') ? 'checked' : '' }} class="checkbox checked:text-success border-2 border-success" />
                         <span class="label-text">Terbitkan sekarang</span>
                     </label>
                 </div>
@@ -124,5 +128,45 @@
             slugPreview.textContent = value || 'Slug akan muncul di sini setelah mengisi judul.';
         });
     }
+
+    const gambarUrl = document.getElementById('gambar-url');
+    const gambarFile = document.getElementById('gambar-file');
+    const gambarPreview = document.getElementById('gambar-preview');
+    const gambarPreviewWrapper = document.getElementById('gambar-preview-wrapper');
+
+    function showPreview(src) {
+        if (src) {
+            gambarPreview.src = src;
+            gambarPreviewWrapper.classList.remove('hidden');
+        } else {
+            gambarPreview.src = '';
+            gambarPreviewWrapper.classList.add('hidden');
+        }
+    }
+
+    if (gambarFile) {
+        gambarFile.addEventListener('change', function () {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => showPreview(e.target.result);
+                reader.readAsDataURL(this.files[0]);
+            } else if (!gambarUrl.value.trim()) {
+                showPreview('');
+            }
+        });
+    }
+
+    if (gambarUrl) {
+        gambarUrl.addEventListener('input', function () {
+            if (!gambarFile.files || !gambarFile.files[0]) {
+                showPreview(this.value.trim());
+            }
+        });
+    }
+
+    // Show preview on page load if old URL value exists
+    @if(old('gambar'))
+    showPreview('{{ old('gambar') }}');
+    @endif
 </script>
 @endpush

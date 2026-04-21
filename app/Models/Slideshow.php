@@ -7,25 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class Profile extends Model
+class Slideshow extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'judul',
-        'slug',
-        'sub_judul',
-        'isi_konten',
+        'deskripsi',
         'gambar',
+        'urutan',
+        'is_active',
     ];
-
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
 
     public function getGambarUrlAttribute(): ?string
     {

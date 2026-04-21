@@ -15,38 +15,38 @@
                 </p>
 
                 <div class="grid grid-cols-3 gap-4">
-                    @forelse($latestPosts as $post)
-                        <a href="{{ route('publikasi.berita.show', $post->slug) }}"
-                           class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white border border-gray-100 flex flex-col group">
-                            @if($post->gambar)
-                                <img src="{{ $post->gambar }}" alt="{{ $post->judul }}"
+                    @forelse($latestPosts as $beritas)
+                        <a href="{{ route('publikasi.berita.show', $beritas->slug) }}"
+                           class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 flex flex-col group">
+                            @if($beritas->gambar_url)
+                                <img src="{{ $beritas->gambar_url }}" alt="{{ $beritas->judul }}"
                                      class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
                             @else
                                 <div class="w-full h-40 bg-linear-to-br from-blue-50 to-blue-100"></div>
                             @endif
                             <div class="p-4 flex flex-col flex-1">
-                                @if($post->tags->first())
+                                @if($beritas->tags->first())
                                     <span class="text-xs font-montserrat font-semibold text-blue-600 uppercase tracking-wide mb-2">
-                                        {{ $post->tags->first()->tagline }}
+                                        {{ $beritas->tags->first()->tagline }}
                                     </span>
                                 @endif
-                                <h3 class="font-montserrat font-semibold text-sm text-gray-900 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                                    {{ $post->judul }}
+                                <h3 class="font-montserrat font-semibold text-sm text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                                    {{ $beritas->judul }}
                                 </h3>
-                                <p class="font-inter text-gray-400 text-xs mt-auto">
-                                    {{ \Carbon\Carbon::parse($post->created_at)->locale('id')->isoFormat('D MMMM YYYY') }}
+                                <p class="font-inter text-gray-400 dark:text-gray-500 text-xs mt-auto">
+                                    {{ \Carbon\Carbon::parse($beritas->created_at)->locale('id')->isoFormat('D MMMM YYYY') }}
                                 </p>
                             </div>
                         </a>
                     @empty
                         {{-- Skeleton placeholders --}}
                         @for($i = 0; $i < 3; $i++)
-                            <div class="rounded-xl overflow-hidden bg-white border border-gray-100">
-                                <div class="w-full h-40 bg-gray-100 animate-pulse"></div>
+                            <div class="rounded-xl overflow-hidden bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
+                                <div class="w-full h-40 bg-gray-100 dark:bg-gray-700 animate-pulse"></div>
                                 <div class="p-4 space-y-2">
-                                    <div class="h-3 bg-gray-100 rounded w-1/3 animate-pulse"></div>
-                                    <div class="h-4 bg-gray-100 rounded w-full animate-pulse"></div>
-                                    <div class="h-4 bg-gray-100 rounded w-2/3 animate-pulse"></div>
+                                    <div class="h-3 bg-gray-100 dark:bg-gray-700 rounded w-1/3 animate-pulse"></div>
+                                    <div class="h-4 bg-gray-100 dark:bg-gray-700 rounded w-full animate-pulse"></div>
+                                    <div class="h-4 bg-gray-100 dark:bg-gray-700 rounded w-2/3 animate-pulse"></div>
                                 </div>
                             </div>
                         @endfor
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="mt-6">
-                    <a href="/berita"
+                    <a href="/publikasi/berita-terkini"
                        class="inline-flex items-center gap-2 text-primary font-montserrat font-semibold hover:underline text-sm">
                         Lihat Semua Berita
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -87,9 +87,9 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             @forelse($latestPosts as $post)
                 <a href="{{ route('publikasi.berita.show', $post->slug) }}"
-                   class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white border border-gray-100 flex flex-col group">
-                    @if($post->gambar)
-                        <img src="{{ $post->gambar }}" alt="{{ $post->judul }}"
+                   class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 flex flex-col group">
+                    @if($post->gambar_url)
+                        <img src="{{ $post->gambar_url }}" alt="{{ $post->judul }}"
                              class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
                     @else
                         <div class="w-full h-40 bg-linear-to-br from-blue-50 to-blue-100"></div>
@@ -100,16 +100,16 @@
                                 {{ $post->tags->first()->tagline }}
                             </span>
                         @endif
-                        <h3 class="font-montserrat font-semibold text-sm text-gray-900 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                        <h3 class="font-montserrat font-semibold text-sm text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
                             {{ $post->judul }}
                         </h3>
-                        <p class="font-inter text-gray-400 text-xs mt-auto">
+                        <p class="font-inter text-gray-400 dark:text-gray-500 text-xs mt-auto">
                             {{ \Carbon\Carbon::parse($post->created_at)->locale('id')->isoFormat('D MMMM YYYY') }}
                         </p>
                     </div>
                 </a>
             @empty
-                <p class="font-inter text-gray-400 text-center col-span-2 py-8">Belum ada berita.</p>
+                <p class="font-inter text-gray-400 dark:text-gray-500 text-center col-span-2 py-8">Belum ada berita.</p>
             @endforelse
         </div>
 

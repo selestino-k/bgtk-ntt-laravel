@@ -75,11 +75,11 @@
     <div class="card border border-base-300 shadow-sm bg-base-100">
         <div class="card-body p-6 space-y-6">
             @if($berita->gambar)
-                <div class="overflow-hidden rounded-xl border border-base-300">
-                    <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Gambar Berita" class="w-full object-cover">
-                </div>
+            <div class="mb-6 flex items-center justify-center">
+                    <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Gambar Berita" class="max-w-full h-full object-cover rounded-xl">
+            </div>
             @endif
-            <div class="prose max-w-none">
+            <div class="prose max-w-none font-inter text-base">
                 {!! nl2br(e($berita->isi)) !!}
             </div>
         </div>

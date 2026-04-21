@@ -5,14 +5,14 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicationController;
 use App\Models\Berita;
 use App\Models\Dokumen;
-use App\Models\Profile;
+use App\Models\Slideshow;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $carouselPhotos = [];
-    $documents      = Dokumen::latest()->take(5)->get();
+    $slideshowPhotos = Slideshow::where('is_active', true)->orderBy('urutan')->get();
+    $documents       = Dokumen::latest()->take(5)->get();
 
     $latestPosts = Berita::where('published', true)
         ->whereDoesntHave('tags', function ($q) {
@@ -31,18 +31,18 @@ Route::get('/', function () {
         ->take(5)
         ->get();
 
-    return view('home.home', compact('carouselPhotos', 'latestPosts', 'documents', 'pengumuman'));
+    return view('home.home', compact('slideshowPhotos', 'latestPosts', 'documents', 'pengumuman'));
 })->name('home');
 
 Route::view('/ppid', 'home.ppid')->name('ppid');
 
-Route::get('/profil/{profile}', [ProfileController::class, 'show'])->name('profil.show');
+Route::get('/profil/{profile:slug}', [ProfileController::class, 'show'])->name('profil.show');
 
 Route::get('/ult/sarana-prasarana', function () {
     return view('home.sarana');
 })->name('ult.sarana-prasarana');
 
-Route::get('/admin/profil/{profile}', [ProfileController::class, 'show'])->name('profil.show');
+Route::get('/admin/profil/{profile:slug}', [ProfileController::class, 'show'])->name('profil.show.admin');
 
 Route::view('/login', 'auth.login')->name('login');
 
@@ -116,4 +116,13 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
 Route::middleware('auth')->prefix('operator')->name('operator.')->group(function () {
     Route::resource('profil', ProfileController::class)->except(['show']);
+});
+
+Route::middleware('auth')->prefix('admin/slideshow')->name('admin.slideshow.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\SlideshowController::class, 'index'])->name('index');
+    Route::get('/create', [\App\Http\Controllers\SlideshowController::class, 'create'])->name('create');
+    Route::post('/', [\App\Http\Controllers\SlideshowController::class, 'store'])->name('store');
+    Route::get('/{slideshow}/edit', [\App\Http\Controllers\SlideshowController::class, 'edit'])->name('edit');
+    Route::patch('/{slideshow}', [\App\Http\Controllers\SlideshowController::class, 'update'])->name('update');
+    Route::delete('/{slideshow}', [\App\Http\Controllers\SlideshowController::class, 'destroy'])->name('destroy');
 });

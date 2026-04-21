@@ -138,14 +138,17 @@ class PublicationController extends Controller
             ->take(5)
             ->get();
 
-        return view('home.publikasi.berita.show', compact('berita', 'recentBeritas'));
+        $tags = Tag::whereRaw('LOWER(tagline) != ?', ['pengumuman'])->orderBy('tagline')->get();
+
+        return view('home.publikasi.berita.show', compact('berita', 'recentBeritas', 'tags'));
     }
 
     public function dokumenPublic()
     {
         $dokumens = Dokumen::latest()->get();
+        $tags = Tag::orderBy('tagline')->get();
 
-        return view('home.publikasi.dokumen', compact('dokumens'));
+        return view('home.publikasi.dokumen', compact('dokumens', 'tags'));
     }
 
     public function dokumenIndex()

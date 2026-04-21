@@ -46,7 +46,7 @@
                 @if ($berita->tags->isNotEmpty())
                     <div class="flex flex-wrap gap-2 mb-4">
                         @foreach ($berita->tags as $tag)
-                            <span class="badge badge-outline badge-primary text-xs">{{ $tag->tagline }}</span>
+                            <span class="badge badge-outline text-xs">{{ $tag->tagline }}</span>
                         @endforeach
                     </div>
                 @endif
@@ -74,13 +74,13 @@
                     @endphp
                     <div class="mb-8">
                         <img src="{{ $gambarUrl }}" alt="{{ $berita->judul }}"
-                             class="w-full max-h-96 object-cover rounded-xl shadow-md">
+                             class="w-full h-full object-cover rounded-xl shadow-md">
                     </div>
                 @endif
 
                 {{-- Content --}}
-                <div class="prose prose-lg max-w-none">
-                    {!! $berita->isi !!}
+                <div class="prose prose-lg max-w-none font-inter">
+                    {!! nl2br(e($berita->isi)) !!}
                 </div>
 
             </article>

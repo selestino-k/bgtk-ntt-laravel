@@ -51,7 +51,7 @@
                                 @if($berita->tags->isNotEmpty())
                                     <div class="flex flex-wrap gap-1 mb-1">
                                         @foreach($berita->tags->take(3) as $tag)
-                                            <span class="badge badge-sm badge-outline text-primary border-primary/40">{{ $tag->tagline }}</span>
+                                            <span class="badge badge-sm badge-outline">{{ $tag->tagline }}</span>
                                         @endforeach
                                     </div>
                                 @endif
@@ -112,7 +112,7 @@
             <h2 class="text-md md:text-xl font-semibold tracking-tight mb-4 text-primary">
                 Tag Berita
             </h2>
-            <div class="flex flex-wrap md:flex-col gap-2">
+            <div class="flex flex-wrap md:flex-col gap-3">
                 <a href="{{ route('publikasi.berita.berita') }}"
                    class="badge {{ !$tagId ? 'badge-primary' : 'badge-ghost' }} font-semibold py-3 px-3 cursor-pointer">
                     Semua

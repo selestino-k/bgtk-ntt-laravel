@@ -12,19 +12,19 @@
         <div class="overflow-x-auto font-inter">
             <table class="w-full text-sm border-collapse min-w-135">
                 <thead>
-                    <tr class="border-b-2 border-gray-200 bg-gray-50">
-                        <th class="py-3 px-4 text-left font-montserrat font-semibold text-gray-700 w-10">#</th>
-                        <th class="py-3 px-4 text-left font-montserrat font-semibold text-gray-700">Judul Dokumen</th>
-                        <th class="py-3 px-4 text-left font-montserrat font-semibold text-gray-700 whitespace-nowrap">Tanggal Unggah</th>
-                        <th class="py-3 px-4 text-left font-montserrat font-semibold text-gray-700">Aksi</th>
+                    <tr class="border-b-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+                        <th class="py-3 px-4 text-left font-montserrat font-semibold text-gray-700 dark:text-gray-300 w-10">No.</th>
+                        <th class="py-3 px-4 text-left font-montserrat font-semibold text-gray-700 dark:text-gray-300">Judul Dokumen</th>
+                        <th class="py-3 px-4 text-left font-montserrat font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap">Tanggal Unggah</th>
+                        <th class="py-3 px-4 text-left font-montserrat font-semibold text-gray-700 dark:text-gray-300">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($documents as $index => $doc)
-                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                            <td class="py-3 px-4 text-gray-400 font-inter">{{ $index + 1 }}</td>
-                            <td class="py-3 px-4 font-inter text-gray-800">{{ $doc['title'] }}</td>
-                            <td class="py-3 px-4 text-gray-500 whitespace-nowrap font-inter">
+                        <tr class="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                            <td class="py-3 px-4 text-gray-400 dark:text-gray-500 font-inter">{{ $index + 1 }}</td>
+                            <td class="py-3 px-4 font-inter text-gray-800 dark:text-gray-200">{{ $doc['judul'] }}</td>
+                            <td class="py-3 px-4 text-gray-500 dark:text-gray-400 whitespace-nowrap font-inter">
                                 {{ \Carbon\Carbon::parse($doc['created_at'])->locale('id')->isoFormat('D MMM YYYY') }}
                             </td>
                             <td class="py-3 px-4">
@@ -44,7 +44,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="py-10 text-center text-gray-400 font-inter">
+                            <td colspan="4" class="py-10 text-center text-gray-400 dark:text-gray-500 font-inter">
                                 Belum ada dokumen tersedia.
                             </td>
                         </tr>
@@ -54,7 +54,7 @@
         </div>
 
         @if(count($documents) > 0)
-            <div class="mt-4 text-right">
+            <div class="mt-4 text-left">
                 <a href="/publikasi/dokumen"
                    class="inline-flex items-center gap-2 text-primary font-montserrat font-semibold text-sm hover:underline">
                     Lihat Semua Dokumen

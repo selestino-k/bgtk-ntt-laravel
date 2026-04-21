@@ -44,34 +44,44 @@
                 <table class="table w-full text-sm border-collapse" id="dokumen-table">
                     <thead>
                         <tr class="border-b-2 border-base-300 bg-base-200">
-                            <th class="py-3 px-4 text-left font-montserrat font-semibold text-base-content w-10">#</th>
+                            <th class="py-3 px-4 text-left font-montserrat font-semibold text-base-content w-10">No.</th>
                             <th class="py-3 px-4 text-left font-montserrat font-semibold text-base-content">Judul Dokumen</th>
                             <th class="py-3 px-4 text-left font-montserrat font-semibold text-base-content whitespace-nowrap hidden sm:table-cell">Tanggal Unggah</th>
+                            <th class="py-3 px-4 text-left font-montserrat font-semibold text-base-content">Ukuran File</th>
+                            <th class="py-3 px-4 text-left font-montserrat font-semibold text-base-content">Kategori</th>
                             <th class="py-3 px-4 text-left font-montserrat font-semibold text-base-content">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="dokumen-tbody">
                         @forelse($dokumens as $index => $doc)
+                            @php
+                                $fileUrl = \Illuminate\Support\Str::startsWith($doc->file_url, ['http://', 'https://'])
+                                    ? $doc->file_url
+                                    : asset('storage/' . $doc->file_url);
+                                $bytes = $doc->file_size;
+                                $units = ['B', 'KB', 'MB', 'GB'];
+                                $i = 0;
+                                while ($bytes >= 1024 && $i < count($units) - 1) {
+                                    $bytes /= 1024;
+                                    $i++;
+                                }
+                                $fileSize = $doc->file_size ? round($bytes, 2) . ' ' . $units[$i] : '-';
+                            @endphp
                             <tr class="border-b border-base-200 hover:bg-base-100 transition-colors dokumen-row">
                                 <td class="py-3 px-4 text-base-content/50">{{ $index + 1 }}</td>
                                 <td class="py-3 px-4 text-base-content dokumen-judul">{{ $doc->judul }}</td>
                                 <td class="py-3 px-4 text-base-content/60 whitespace-nowrap hidden sm:table-cell">
                                     {{ \Carbon\Carbon::parse($doc->created_at)->locale('id')->isoFormat('D MMM YYYY') }}
                                 </td>
-                                <td class="py-3 px-4">
-                                    @if($doc->file_url)
-                                        <a href="{{ $doc->file_url }}"
-                                           target="_blank"
-                                           rel="noopener noreferrer"
-                                           class="inline-flex items-center gap-1 text-primary hover:underline font-medium">
-                                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                            </svg>
-                                            Unduh
-                                        </a>
-                                    @elseif($doc->file_name)
-                                        <a href="{{ asset('storage/' . $doc->file_name) }}"
+                                <td class="py-3 px-4 text-base-content/60 whitespace-nowrap hidden sm:table-cell">
+                                    {{ $fileSize }}
+                                </td>
+                                <td class="py-3 px-4 text-base-content/60 whitespace-nowrap hidden sm:table-cell">
+                                    {{ $doc->kategori ?? '-' }}
+                                </td>
+                                <td class="py-3 px-4 text-base-content/60 whitespace-nowrap hidden sm:table-cell">
+                                    @if($doc->file_url || $doc->file_name)
+                                        <a href="{{ $doc->file_url ? $fileUrl : asset('storage/' . $doc->file_name) }}"
                                            target="_blank"
                                            rel="noopener noreferrer"
                                            class="inline-flex items-center gap-1 text-primary hover:underline font-medium">

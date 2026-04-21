@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Masuk | Panel Admin CMS BGTK NTT</title>
+    <link rel="icon" type="image/webp" href="{{ asset('images/assets/favicon.ico') }}">
     <meta name="description"
         content="Selamat datang di panel admin CMS BGTK Provinsi NTT. Masuk untuk mengelola konten dan informasi terkait BGTK NTT dengan mudah dan efisien." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -40,7 +41,7 @@
         {{-- Dark mode toggle --}}
         <div id="dark-mode-toggle" class="absolute top-4 right-4 z-10 flex items-center gap-2">
             <i class="fa-solid fa-sun dark:text-white text-gray-900"></i>
-            
+
             <input type="checkbox" checked="unchecked" class="toggle toggle-sm" />
             <i class="fa-solid fa-moon dark:text-white text-gray-900"></i>
         </div>

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Profile;
+use App\Models\Tag;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('home.partials.header', function ($view) {
             $view->with('profiles', Profile::latest()->get());
+        });
+
+        View::composer('home.partials.footer', function ($view) {
+            $view->with('tags', Tag::whereRaw('LOWER(tagline) != ?', ['pengumuman'])->orderBy('tagline')->get());
         });
     }
 }

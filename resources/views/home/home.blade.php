@@ -25,7 +25,7 @@
 
 <div class="grid w-full overflow-x-hidden justify-items-center">
 
-    @include('home.partials.carousel')
+    @include('home.partials.slideshow')
 
     @include('home.partials.sambutan')
 

@@ -64,10 +64,19 @@
     {{-- Profil --}}
     <a href="{{ route('admin.profil.index') }}"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
-               {{ request()->routeIs('admin.profiles.*') ? 'bg-primary text-primary-content' : 'text-base-content hover:bg-base-300' }}">
+               {{ request()->routeIs('admin.profil.*') ? 'bg-primary text-primary-content' : 'text-base-content hover:bg-base-300' }}">
         <i class="fa-solid fa-id-card w-4 text-center"></i>
         <span>Profil</span>
     </a>
+
+    {{-- Slideshow --}}
+    <a href="{{ route('admin.slideshow.index') }}"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
+               {{ request()->routeIs('admin.slideshow.*') ? 'bg-primary text-primary-content' : 'text-base-content hover:bg-base-300' }}">
+        <i class="fa-solid fa-images w-4 text-center"></i>
+        <span>Slideshow</span>
+    </a>
+
 
 </nav>
 
