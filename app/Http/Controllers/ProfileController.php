@@ -41,7 +41,7 @@ class ProfileController extends Controller
 
     private function routeName(string $name): string
     {
-        return $this->routePrefix() . '.profiles.' . $name;
+        return $this->routePrefix() . '.profil.' . $name;
     }
 
     private function authorizeRole(): void
@@ -164,7 +164,7 @@ class ProfileController extends Controller
                 Storage::disk('public')->delete($profile->gambar);
             }
 
-            $gambar = $request->file('gambar_file')->store('profiles', 'public');
+            $gambar = $request->file('gambar_file')->store('profil', 'public');
         }
 
         $slug = $profile->judul !== $validated['judul']

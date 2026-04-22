@@ -143,7 +143,7 @@
             </div>
 
             {{-- ZI-WBK --}}
-            <a href="/zi-wbk"
+            <a href="/zi-wbk/area-perubahan"
                 class="btn btn-ghost btn-sm text-sm text-primary font-semibold hover:text-primary/70 transition-colors">ZI-WBK</a>
 
             {{-- SSD --}}

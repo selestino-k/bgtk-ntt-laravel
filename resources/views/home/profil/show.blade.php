@@ -9,14 +9,16 @@
     <main class="relative z-10 py-10 max-w-4xl mx-auto">
 
         {{-- Breadcrumb --}}
-        <div class="text-sm text-base-content/50 mb-6">
+        <div class="text-sm text-base-content/50 mb-4">
             <a href="/" class="hover:text-primary">Beranda</a>
-            <span class="mx-2">/</span>
+            <span class="mx-2">
+                <i class="fas fa-chevron-right text-xs"></i>
+            </span>
             <span class="text-primary">{{ $profile->judul }}</span>
         </div>
 
         {{-- Header --}}
-        <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-2 text-primary">
+        <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-primary">
             {{ $profile->judul }}
         </h1>
 
@@ -33,13 +35,13 @@
             @endphp
             <div class="mb-8">
                 <img src="{{ $gambarUrl }}" alt="{{ $profile->judul }}"
-                     class="w-full max-h-96 object-cover rounded-xl shadow-md">
+                     class="w-full h-full object-cover rounded-xl shadow-md">
             </div>
         @endif
 
         {{-- Content --}}
         <div class="prose prose-lg max-w-none">
-            {!! $profile->isi_konten !!}
+            {!! nl2br(e($profile->isi_konten)) !!}
         </div>
 
     </main>

@@ -76,7 +76,7 @@
                     </label>
                     <input id="username" type="text" name="username" value="{{ old('username') }}" required
                         autofocus autocomplete="username" placeholder="Masukkan username"
-                        class="input input-bordered w-full @error('username') input-error @enderror bg-white! dark:bg-gray-800" />
+                        class="input input-bordered w-full @error('username') input-error @enderror bg-white! dark:bg-gray-800! rounded-lg" />
                     @error('username')
                         <p class="text-sm text-error">{{ $message }}</p>
                     @enderror
@@ -89,14 +89,14 @@
                     </label>
                     <input id="password" type="password" name="password" required autocomplete="current-password"
                         placeholder="Masukkan password"
-                        class="input input-bordered w-full @error('password') input-error @enderror bg-white! dark:!bg-gray-800" />
+                        class="input input-bordered w-full @error('password') input-error @enderror bg-white! dark:bg-gray-800! rounded-lg" />
                     @error('password')
                         <p class="text-sm text-error">{{ $message }}</p>
                     @enderror
                 </div>
 
                 {{-- Submit --}}
-                <button type="submit" class="btn btn-primary w-full">
+                <button type="submit" class="btn btn-primary w-full mt-2">
                     Masuk
                 </button>
             </form>

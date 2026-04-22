@@ -34,13 +34,24 @@ Route::get('/', function () {
     return view('home.home', compact('slideshowPhotos', 'latestPosts', 'documents', 'pengumuman'));
 })->name('home');
 
-Route::view('/ppid', 'home.ppid')->name('ppid');
+Route::get('/ppid', function () {
+    $dokumens = Dokumen::orderBy('created_at', 'desc')->get()->groupBy('kategori');
+    return view('home.ppid', compact('dokumens'));
+})->name('ppid');
 
 Route::get('/profil/{profile:slug}', [ProfileController::class, 'show'])->name('profil.show');
 
 Route::get('/ult/sarana-prasarana', function () {
     return view('home.sarana');
 })->name('ult.sarana-prasarana');
+
+Route::get('/zi-wbk/area-perubahan', function () {
+    return view('home.zi-wbk');
+})->name('zi-wbk.area-perubahan');
+
+Route::get('/ssd', function () {
+    return view('home.ssd');
+})->name('ssd');
 
 Route::get('/admin/profil/{profile:slug}', [ProfileController::class, 'show'])->name('profil.show.admin');
 
@@ -111,11 +122,11 @@ Route::middleware('auth')->prefix('admin/publikasi')->name('admin.publikasi.')->
 });
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('profil', ProfileController::class)->except(['show']);
+    Route::resource('profil', ProfileController::class)->except(['show'])->parameters(['profil' => 'profile']);
 });
 
 Route::middleware('auth')->prefix('operator')->name('operator.')->group(function () {
-    Route::resource('profil', ProfileController::class)->except(['show']);
+    Route::resource('profil', ProfileController::class)->except(['show'])->parameters(['profil' => 'profile']);
 });
 
 Route::middleware('auth')->prefix('admin/slideshow')->name('admin.slideshow.')->group(function () {

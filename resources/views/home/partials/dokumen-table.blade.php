@@ -9,7 +9,7 @@
             </h2>
         </div>
 
-        <div class="overflow-x-auto font-inter">
+        <div class="overflow-x-auto font-inter rounded-xl border border-gray-200 dark:border-gray-700">
             <table class="w-full text-sm border-collapse min-w-135">
                 <thead>
                     <tr class="border-b-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
@@ -21,7 +21,7 @@
                 </thead>
                 <tbody>
                     @forelse($documents as $index => $doc)
-                        <tr class="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                        <tr class="border-b border-gray-100 dark:border-gray-700 hover:bg-primary/20 dark:hover:bg-gray-700/50 transition-colors">
                             <td class="py-3 px-4 text-gray-400 dark:text-gray-500 font-inter">{{ $index + 1 }}</td>
                             <td class="py-3 px-4 font-inter text-gray-800 dark:text-gray-200">{{ $doc['judul'] }}</td>
                             <td class="py-3 px-4 text-gray-500 dark:text-gray-400 whitespace-nowrap font-inter">

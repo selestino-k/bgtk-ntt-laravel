@@ -11,7 +11,7 @@
             <p class="text-sm text-base-content/60">Role: {{ ucfirst($routePrefix) }}</p>
             <h1 class="text-3xl sm:text-4xl font-bold text-primary">Ubah Profil</h1>
         </div>
-        <a href="{{ route($routePrefix . '.profiles.index') }}" class="btn btn-outline gap-2">
+        <a href="{{ route($routePrefix . '.profil.index') }}" class="btn btn-outline gap-2">
             <i class="fa-solid fa-arrow-left"></i>
             <span class="hidden sm:inline">Kembali</span>
         </a>
@@ -19,7 +19,7 @@
 
     <div class="card border border-base-300 shadow-sm bg-base-100">
         <div class="card-body">
-            <form action="{{ route($routePrefix . '.profiles.update', $profile) }}" method="POST" enctype="multipart/form-data" class="space-y-5">
+            <form action="{{ route($routePrefix . '.profil.update', $profile) }}" method="POST" enctype="multipart/form-data" class="space-y-5">
                 @csrf
                 @method('PATCH')
 
@@ -52,7 +52,7 @@
 
                 <div class="flex flex-wrap gap-3 pt-2">
                     <button type="submit" class="btn btn-primary">Perbarui</button>
-                    <a href="{{ route($routePrefix . '.profiles.index') }}" class="btn btn-outline">Batal</a>
+                    <a href="{{ route($routePrefix . '.profil.index') }}" class="btn btn-outline">Batal</a>
                 </div>
             </form>
         </div>
