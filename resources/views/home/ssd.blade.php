@@ -1,6 +1,6 @@
 @extends('home.layouts.app')
 
-@section('title', 'SSD - FAQ')
+@section('title', 'SSD - Soal Sering Ditanya')
 
 @section('content')
     @include('home.partials.header')
