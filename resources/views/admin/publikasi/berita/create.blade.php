@@ -63,11 +63,9 @@
                 </div>
 
                 <div class="form-control">
-                    <label class="label"><span class="label-text font-medium">Dokumen (URL atau upload)</span></label>
-                    <input type="text" name="dokumen" value="{{ old('dokumen') }}" placeholder="URL dokumen" class="input input-bordered w-full" />
-                    <input type="file" name="dokumen_file" accept=".pdf,.doc,.docx,.txt" class="file-input file-input-bordered w-full mt-2" />
-                    @error('dokumen')<p class="mt-1 text-sm text-error">{{ $message }}</p>@enderror
-                    @error('dokumen_file')<p class="mt-1 text-sm text-error">{{ $message }}</p>@enderror
+                    <label class="label"><span class="label-text font-medium">Dokumen (URL)</span></label>
+                    <input type="text" name="dokumen_url" value="{{ old('dokumen_url') }}" placeholder="Masukkan URL dokumen" class="input input-bordered w-full" />
+                    @error('dokumen_url')<p class="mt-1 text-sm text-error">{{ $message }}</p>@enderror
                 </div>
 
                 <div class="form-control">

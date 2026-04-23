@@ -19,7 +19,7 @@ class Berita extends Model
         'slug',
         'isi',
         'gambar',
-        'dokumen',
+        'dokumen_url',
         'author_id',
         'published',
     ];
@@ -49,5 +49,20 @@ class Berita extends Model
         }
 
         return Storage::url($this->gambar);
+    }
+
+    public function getDokumenUrlAttribute(): ?string
+    {
+        $value = $this->attributes['dokumen_url'] ?? null;
+
+        if (! $value) {
+            return null;
+        }
+
+        if (Str::startsWith($value, ['http://', 'https://'])) {
+            return $value;
+        }
+
+        return Storage::url($value);
     }
 }

@@ -41,9 +41,9 @@
 
             {{-- Table --}}
             <div class="w-full flex-wrap font-inter overflow-x-auto">
-                <table class="table w-full text-sm border-collapse" id="dokumen-table">
+                <table class="table w-full text-sm border border-base-300 rounded-lg" id="dokumen-table">
                     <thead>
-                        <tr class="border-b-2 border-base-300 bg-base-200">
+                        <tr class="border border-base-300 bg-base-200">
                             <th class="py-3 px-4 text-left font-montserrat font-semibold text-base-content w-10">No.</th>
                             <th class="py-3 px-4 text-left font-montserrat font-semibold text-base-content">Judul Dokumen</th>
                             <th class="py-3 px-4 text-left font-montserrat font-semibold text-base-content whitespace-nowrap hidden sm:table-cell">Tanggal Unggah</th>

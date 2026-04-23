@@ -7,11 +7,11 @@
 
     {{-- Header --}}
     <div class="flex items-center justify-between mb-6">
-        <div>
+        <div class="space-y-1 w-4/5">
             <p class="text-sm text-base-content/60">Detail Berita</p>
             <h1 class="text-2xl sm:text-3xl font-bold text-primary">{{ $berita->judul }}</h1>
         </div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-2 w-1/5 justify-end">
             @auth
             <div class="flex flex-wrap gap-2">
                 @if(in_array(auth()->user()->role, ['admin', 'operator']))
@@ -45,7 +45,7 @@
 
     {{-- Tags --}}
     @if($berita->tags->isNotEmpty())
-        <div class="flex flex-wrap gap-2 mb-6">
+        <div class="flex flex-wrap gap-2 px-2 mb-6">
             @foreach($berita->tags as $tag)
                 <span class="badge badge-outline">{{ $tag->tagline }}</span>
             @endforeach
@@ -53,11 +53,11 @@
     @endif
 
     {{-- Dokumen --}}
-    @if($berita->dokumen)
+    @if($berita->dokumen_url)
         @php
-            $dokumenUrl = \Illuminate\Support\Str::startsWith($berita->dokumen, ['http://', 'https://'])
-                ? $berita->dokumen
-                : asset('storage/' . $berita->dokumen);
+            $dokumenUrl = \Illuminate\Support\Str::startsWith($berita->dokumen_url, ['http://', 'https://'])
+                ? $berita->dokumen_url
+                : asset('storage/' . $berita->dokumen_url);
         @endphp
         <div class="card border border-base-300 bg-base-100 mb-6">
             <div class="card-body p-5">

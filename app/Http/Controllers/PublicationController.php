@@ -206,7 +206,7 @@ class PublicationController extends Controller
             'kategori' => $validated['kategori'] ?? null,
         ]);
 
-        return redirect()->route('dokumen.index')->with('success', 'Dokumen berhasil ditambahkan.');
+        return redirect()->route('admin.publikasi.dokumen.index')->with('success', 'Dokumen berhasil ditambahkan.');
     }
 
     public function dokumenEdit(Dokumen $dokumen)
@@ -306,8 +306,7 @@ class PublicationController extends Controller
             'gambar' => 'nullable|string|max:255',
             'gambar_file' => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:2048',
             'remove_gambar' => 'nullable|boolean',
-            'dokumen' => 'nullable|string|max:255',
-            'dokumen_file' => 'nullable|file|mimes:pdf,doc,docx,txt|max:5120',
+            'dokumen_url' => 'nullable|string|max:255',
             'published' => 'boolean',
             'tags' => 'nullable|array',
             'tags.*' => 'integer|exists:tag,id',
@@ -333,9 +332,6 @@ class PublicationController extends Controller
             $gambarPath = null;
         }
 
-        if ($request->hasFile('dokumen_file')) {
-            $validated['dokumen'] = $request->file('dokumen_file')->store('dokumen', 'public');
-        }
 
         $slug = Str::slug($validated['judul']);
         if ($slug === '') {
@@ -355,7 +351,7 @@ class PublicationController extends Controller
             'slug' => $slug,
             'isi' => $validated['isi'],
             'gambar' => $gambarPath,
-            'dokumen' => $validated['dokumen'] ?? $berita->dokumen,
+            'dokumen_url' => $validated['dokumen_url'] ?? $berita->dokumen_url,
             'published' => $validated['published'] ?? false,
         ]);
 
@@ -446,8 +442,7 @@ class PublicationController extends Controller
             'isi' => 'required|string',
             'gambar' => 'nullable|string|max:255',
             'gambar_file' => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:2048',
-            'dokumen' => 'nullable|string|max:255',
-            'dokumen_file' => 'nullable|file|mimes:pdf,doc,docx,txt|max:5120',
+            'dokumen_url' => 'nullable|string|max:255',
             'published' => 'boolean',
             'tags' => 'nullable|array',
             'tags.*' => 'integer|exists:tag,id',
@@ -460,10 +455,7 @@ class PublicationController extends Controller
             $gambarPath = $request->input('gambar');
         }
 
-        if ($request->hasFile('dokumen_file')) {
-            $validated['dokumen'] = $request->file('dokumen_file')->store('dokumen', 'public');
-        }
-
+    
         $slug = Str::slug($validated['judul']);
         if ($slug === '') {
             $slug = 'berita';
@@ -482,7 +474,7 @@ class PublicationController extends Controller
             'slug' => $slug,
             'isi' => $validated['isi'],
             'gambar' => $gambarPath,
-            'dokumen' => $validated['dokumen'] ?? null,
+            'dokumen_url' => $validated['dokumen_url'] ?? null,
             'published' => $validated['published'] ?? false,
             'author_id' => Auth::id(),
         ]);

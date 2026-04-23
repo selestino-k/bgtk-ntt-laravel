@@ -89,6 +89,21 @@
                     {!! nl2br(e($berita->isi)) !!}
                 </div>
 
+                {{-- Dokumen --}}
+                @if($berita->dokumen_url)
+                    @php
+                        $dokumenUrl = \Illuminate\Support\Str::startsWith($berita->dokumen_url, ['http://', 'https://'])
+                            ? $berita->dokumen_url
+                            : asset('storage/' . $berita->dokumen_url);
+                    @endphp
+                    <div class="my-8">
+                        <a href="{{ $dokumenUrl }}" target="_blank" rel="noopener" class="btn btn-primary">
+                            <i class="fa-solid fa-file-lines mr-2"></i>
+                            Lihat / Unduh dokumen
+                        </a>
+                    </div>
+                @endif
+
             </article>
 
             {{-- Sidebar --}}

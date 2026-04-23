@@ -11,7 +11,7 @@
             <p class="text-sm text-base-content/60">Publikasi: Berita Terkini</p>
             <h1 class="text-3xl sm:text-4xl font-bold text-primary">Edit Berita</h1>
         </div>
-        <a href="{{ route('admin.publikasi.berita.show', $berita) }}" class="btn btn-outline gap-2">
+        <a href="{{ route('admin.publikasi.berita.detail', $berita) }}" class="btn btn-outline gap-2">
             <i class="fa-solid fa-arrow-left"></i>
             <span class="hidden sm:inline">Kembali</span>
         </a>
@@ -91,7 +91,7 @@
                             @endphp
                             @forelse($tags as $tag)
                                 <label class="flex items-center gap-3 cursor-pointer">
-                                    <input type="checkbox" name="tags[]" value="{{ $tag->id }}" {{ in_array($tag->id, $selectedTags) ? 'checked' : '' }} class="checkbox checkbox-sm" />
+                                    <input type="checkbox" name="tags[]" value="{{ $tag->id }}" {{ in_array($tag->id, $selectedTags) ? 'checked' : '' }} class="checkbox checkbox-xs checkbox-primary" />
                                     <span class="text-sm">{{ $tag->tagline }}</span>
                                 </label>
                             @empty
@@ -105,14 +105,14 @@
 
                 <div class="form-control">
                     <label class="label cursor-pointer justify-start gap-3">
-                        <input type="checkbox" name="published" value="1" {{ old('published', $berita->published) ? 'checked' : '' }} class="checkbox" />
+                        <input type="checkbox" name="published" value="1" {{ old('published', $berita->published) ? 'checked' : '' }} class="checkbox checkbox-success" />
                         <span class="label-text">Terbitkan sekarang</span>
                     </label>
                 </div>
 
                 <div class="flex flex-wrap gap-3 pt-2">
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                    <a href="{{ route('admin.publikasi.berita.show', $berita) }}" class="btn btn-outline">Batal</a>
+                    <a href="{{ route('admin.publikasi.berita.detail', $berita) }}" class="btn btn-outline">Batal</a>
                 </div>
             </form>
         </div>
