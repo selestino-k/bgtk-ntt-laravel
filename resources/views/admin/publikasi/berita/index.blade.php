@@ -76,6 +76,12 @@
                 </div>
             @endforeach
         </div>
+
+        @if($beritas->hasPages())
+            <div class="mt-8 flex justify-center">
+                {{ $beritas->links() }}
+            </div>
+        @endif
     @endif
 
 </div>
