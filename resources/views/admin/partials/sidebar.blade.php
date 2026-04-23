@@ -107,12 +107,25 @@
         </div>
     </div>
 
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit"
-            class="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm font-medium text-error hover:bg-error/10 transition-colors">
-            <i class="fa-solid fa-right-from-bracket w-4 text-center"></i>
-            <span>Keluar</span>
-        </button>
-    </form>
+    <label for="modal-logout" class="btn btn-ghost btn-sm w-full text-alert">
+        <i class="fa-solid fa-right-from-bracket w-4"></i>
+        <span>Keluar</span>
+    </label>
+
+    {{-- logout confirmation modal --}}
+    <input type="checkbox" id="modal-logout" class="modal-toggle" />
+    <div class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg">Konfirmasi Keluar</h3>
+            <p class="py-4">Apakah Anda yakin ingin keluar? Pastikan untuk menyimpan pekerjaan Anda sebelum keluar.</p>
+            <div class="modal-action">
+                <label for="modal-logout" class="btn btn-ghost">Batal</label>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-error">Keluar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>

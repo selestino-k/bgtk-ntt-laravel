@@ -24,6 +24,13 @@
         </div>
     @endif
 
+    @if(session('error'))
+        <div class="alert alert-error mb-6">
+            <i class="fa-solid fa-circle-xmark"></i>
+            <span>{{ session('error') }}</span>
+        </div>
+     @endif
+
     @if($slideshows->isEmpty())
         <div class="card border border-base-300 bg-base-100">
             <div class="card-body items-center text-center py-12">
@@ -69,24 +76,39 @@
 
                         <div class="card-actions justify-end mt-4 gap-2">
                             <a href="{{ route('admin.slideshow.edit', $slide) }}"
-                               class="btn btn-sm btn-outline btn-info gap-1">
+                               class="btn btn-sm btn-outline gap-1">
                                 <i class="fa-solid fa-pen-to-square"></i>
                                 <span class="hidden sm:inline">Edit</span>
                             </a>
-                            <form action="{{ route('admin.slideshow.destroy', $slide) }}" method="POST"
-                                  onsubmit="return confirm('Hapus slide ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline btn-error gap-1">
-                                    <i class="fa-solid fa-trash"></i>
-                                    <span class="hidden sm:inline">Hapus</span>
-                                </button>
-                            </form>
+                            <label for="modal-delete-{{ $slide->id }}" class="btn btn-sm btn-error gap-1">
+                                <i class="fa-solid fa-trash"></i>
+                                <span class="hidden sm:inline">Hapus</span>
+                            </label>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
+
+        {{-- Delete confirmation modals --}}
+        @foreach($slideshows as $slide)
+            <input type="checkbox" id="modal-delete-{{ $slide->id }}" class="modal-toggle" />
+            <div class="modal">
+                <div class="modal-box">
+                    <h3 class="font-bold text-lg">Konfirmasi Hapus</h3>
+                    <p class="py-4">Hapus slide <strong>{{ $slide->judul ?? 'Urutan ' . $slide->urutan }}</strong>? Tindakan ini tidak dapat dibatalkan.</p>
+                    <div class="modal-action">
+                        <label for="modal-delete-{{ $slide->id }}" class="btn">Batal</label>
+                        <form action="{{ route('admin.slideshow.destroy', $slide) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-error">Hapus</button>
+                        </form>
+                    </div>
+                </div>
+                <label class="modal-backdrop" for="modal-delete-{{ $slide->id }}"></label>
+            </div>
+        @endforeach
     @endif
 
 </div>

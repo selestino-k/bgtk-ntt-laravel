@@ -22,6 +22,13 @@
         </div>
     @endif
 
+    @if (session('error'))
+        <div class="alert alert-error mb-6">
+            <i class="fa-solid fa-circle-xmark"></i>
+            <span>{{ session('error') }}</span>
+        </div>
+     @endif
+
     @if ($profiles->isEmpty())
         <div class="card border border-base-300 bg-base-100">
             <div class="card-body items-center text-center">
@@ -49,11 +56,7 @@
                                 <td>
                                     <div class="flex gap-2">
                                         <a href="{{ route($routePrefix . '.profil.edit', $profile) }}" class="btn btn-sm btn-outline dark:outline-taupe-50">Edit</a>
-                                        <form action="{{ route($routePrefix . '.profil.destroy', $profile->id) }}" method="POST" onsubmit="return confirm('Hapus profil ini?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-error">Hapus</button>
-                                        </form>
+                                        <label for="modal-delete-{{ $profile->id }}" class="btn btn-sm btn-error">Hapus</label>
                                     </div>
                                 </td>
                             </tr>
@@ -66,6 +69,26 @@
         <div class="mt-6">
             {{ $profiles->links() }}
         </div>
+
+        {{-- Delete confirmation modals --}}
+        @foreach ($profiles as $profile)
+            <input type="checkbox" id="modal-delete-{{ $profile->id }}" class="modal-toggle" />
+            <div class="modal">
+                <div class="modal-box">
+                    <h3 class="font-bold text-lg">Konfirmasi Hapus</h3>
+                    <p class="py-4">Hapus profil <strong>{{ $profile->judul }}</strong>? Tindakan ini tidak dapat dibatalkan.</p>
+                    <div class="modal-action">
+                        <label for="modal-delete-{{ $profile->id }}" class="btn">Batal</label>
+                        <form action="{{ route($routePrefix . '.profil.destroy', $profile->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-error">Hapus</button>
+                        </form>
+                    </div>
+                </div>
+                <label class="modal-backdrop" for="modal-delete-{{ $profile->id }}"></label>
+            </div>
+        @endforeach
     @endif
 </div>
 @endsection

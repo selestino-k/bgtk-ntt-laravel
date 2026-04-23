@@ -27,6 +27,20 @@
         @endauth
     </div>
 
+    @if(session('success'))
+        <div class="alert alert-success mb-6">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>{{ session('success') }}</span>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-error mb-6">
+            <i class="fa-solid fa-circle-xmark"></i>
+            <span>{{ session('error') }}</span>
+        </div>
+    @endif
+
     @if($beritas->isEmpty())
         <div class="card border border-base-300 bg-base-100">
             <div class="card-body items-center text-center">
@@ -39,7 +53,7 @@
                 <div class="card border border-base-300 shadow-sm bg-base-100 transition hover:-translate-y-1">
                     <div class="card-body p-5">
                         <div class="flex items-center justify-between gap-3 mb-3">
-                            <span class="badge {{ $berita->published ? 'badge-success' : 'badge-ghost' }} badge-sm font-semibold uppercase">{{ $berita->published ? 'Published' : 'Draft' }}</span>
+                            <span class="badge {{ $berita->published ? 'badge-success' : 'badge-ghost' }} badge-sm font-semibold uppercase">{{ $berita->published ? 'Diterbitkan' : 'Draft' }}</span>
                             <span class="text-xs text-base-content/60">{{ $berita->created_at->format('d M Y') }}</span>
                         </div>
                         <h2 class="card-title text-base mb-2">{{ $berita->judul }}</h2>
@@ -55,7 +69,7 @@
                             </div>
                         @endif
                         <div class="card-actions justify-between items-center mt-auto">
-                            <a href="{{ route('admin.publikasi.berita.index', $berita) }}" class="btn btn-sm btn-outline">Lihat Detail</a>
+                            <a href="{{ route('admin.publikasi.berita.detail', $berita) }}" class="btn btn-sm btn-outline">Lihat Detail</a>
                             <span class="text-xs text-base-content/50 truncate">{{ $berita->slug }}</span>
                         </div>
                     </div>

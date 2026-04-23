@@ -91,16 +91,11 @@
                                                         <i class="fas fa-download"></i>
                                                         Unduh
                                                     </a>
-                                                    <form action="{{ route('admin.publikasi.dokumen.destroy', $dokumen) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" onclick="return confirm('Hapus dokumen ini?')"
-                                                            class="btn btn-sm btn-error">
-                                                            <i class="fas fa-trash"></i>
-                                                            Hapus
-                                                        </button>
-                                                    </form>
+                                                    <label for="modal-delete-{{ $dokumen->id }}"
+                                                        class="btn btn-sm btn-error">
+                                                        <i class="fas fa-trash"></i>
+                                                        Hapus
+                                                    </label>
 
                                                 </div>
                                             </td>
@@ -112,6 +107,30 @@
                     </table>
                 </div>
             </div>
+
+            {{-- Delete confirmation modals --}}
+            @foreach ($dokumens as $dokumen)
+                @auth
+                    @if (in_array(auth()->user()->role, ['admin', 'operator']))
+                        <input type="checkbox" id="modal-delete-{{ $dokumen->id }}" class="modal-toggle" />
+                        <div class="modal">
+                            <div class="modal-box">
+                                <h3 class="font-bold text-lg">Konfirmasi Hapus</h3>
+                                <p class="py-4">Hapus dokumen <strong>{{ $dokumen->judul }}</strong>? Tindakan ini tidak dapat dibatalkan.</p>
+                                <div class="modal-action">
+                                    <label for="modal-delete-{{ $dokumen->id }}" class="btn">Batal</label>
+                                    <form action="{{ route('admin.publikasi.dokumen.destroy', $dokumen) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-error">Hapus</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <label class="modal-backdrop" for="modal-delete-{{ $dokumen->id }}"></label>
+                        </div>
+                    @endif
+                @endauth
+            @endforeach
         @endif
 
     </div>

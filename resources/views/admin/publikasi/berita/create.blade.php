@@ -45,7 +45,7 @@
 
                 <div class="form-control">
                     <label class="label"><span class="label-text font-medium">Isi Berita</span></label>
-                    <textarea name="isi" rows="8" required class="textarea textarea-bordered w-full">{{ old('isi') }}</textarea>
+                    <textarea name="isi" rows="8" required class="textarea textarea-bordered w-full font-inter">{{ old('isi') }}</textarea>
                     @error('isi')<p class="mt-1 text-sm text-error">{{ $message }}</p>@enderror
                 </div>
 
@@ -74,15 +74,39 @@
                     <label class="label"><span class="label-text font-medium">Tags</span></label>
                     <details class="collapse collapse-arrow border border-base-300 bg-base-200">
                         <summary class="collapse-title text-sm font-medium">Pilih tag</summary>
-                        <div class="collapse-content space-y-2 pt-2">
-                            @forelse($tags as $tag)
-                                <label class="flex items-center gap-3 cursor-pointer">
-                                    <input type="checkbox" name="tags[]" value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }} class="checkbox checkbox-xs border-gray-800" />
-                                    <span class="text-sm">{{ $tag->tagline }}</span>
-                                </label>
-                            @empty
+                        <div class="collapse-content pt-2">
+                            @php
+                                $pengumumanTags = $tags->filter(fn($t) => strtolower($t->tagline) === 'pengumuman');
+                                $otherTags = $tags->filter(fn($t) => strtolower($t->tagline) !== 'pengumuman');
+                            @endphp
+                            @if($tags->isEmpty())
                                 <p class="text-sm text-base-content/60">Belum ada tag. Tambahkan tag terlebih dahulu.</p>
-                            @endforelse
+                            @else
+                                @if($pengumumanTags->isNotEmpty())
+                                    <div class="space-y-2">
+                                        <p class="text-sm font-medium text-primary">Buat sebagai Pengumuman</p>
+                                        @foreach($pengumumanTags as $tag)
+                                            <label class="flex items-center gap-3 cursor-pointer">
+                                                <input type="checkbox" name="tags[]" value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }} class="checkbox checkbox-primary checkbox-xs" />
+                                                <span class="text-sm font-medium">{{ $tag->tagline }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                    @if($otherTags->isNotEmpty())
+                                        <div class="divider my-3"></div>
+                                    @endif
+                                @endif
+                                @if($otherTags->isNotEmpty())
+                                    <div class="space-y-2">
+                                        @foreach($otherTags as $tag)
+                                            <label class="flex items-center gap-3 cursor-pointer">
+                                                <input type="checkbox" name="tags[]" value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }} class="checkbox checkbox-primary checkbox-xs" />
+                                                <span class="text-sm">{{ $tag->tagline }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            @endif
                         </div>
                     </details>
                     @error('tags')<p class="mt-1 text-sm text-error">{{ $message }}</p>@enderror
@@ -91,7 +115,7 @@
 
                 <div class="form-control">
                     <label class="label cursor-pointer justify-start gap-3">
-                        <input type="checkbox" name="published" value="1" {{ old('published') ? 'checked' : '' }} class="checkbox checked:text-success border-2 border-success" />
+                        <input type="checkbox" name="published" value="1" {{ old('published') ? 'checked' : '' }} class="checkbox checkbox-success" />
                         <span class="label-text">Terbitkan sekarang</span>
                     </label>
                 </div>

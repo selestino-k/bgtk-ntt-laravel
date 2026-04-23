@@ -19,14 +19,10 @@
                         <i class="fa-solid fa-pen"></i>
                         <span class="hidden sm:inline">Edit</span>
                     </a>
-                    <form action="{{ route('admin.publikasi.berita.destroy', $berita) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus berita ini?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-error gap-2">
-                            <i class="fa-solid fa-trash"></i>
-                            <span class="hidden sm:inline">Hapus</span>
-                        </button>
-                    </form>
+                   <label for="modal-delete-{{ $berita->id }}" class="btn btn-error gap-2">
+                        <i class="fa-solid fa-trash"></i>
+                        <span class="hidden sm:inline">Hapus</span>
+                    </label>
                 @endif
                 </div>
             @endauth
@@ -83,6 +79,24 @@
                 {!! nl2br(e($berita->isi)) !!}
             </div>
         </div>
+    </div>
+
+    {{-- delete confirmation modal --}}
+    <input type="checkbox" id="modal-delete-{{ $berita->id }}" class="modal-toggle" />
+    <div class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg">Konfirmasi Hapus</h3>
+            <p class="py-4">Apakah Anda yakin ingin menghapus berita ini? Tindakan ini tidak dapat dibatalkan.</p>
+            <div class="modal-action">
+                <label for="modal-delete-{{ $berita->id }}" class="btn btn-ghost">Batal</label>
+                <form action="{{ route('admin.publikasi.berita.destroy', $berita) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-error">Hapus</button>
+                </form>
+            </div>
+        </div>
+        <label class="modal-backdrop" for="modal-delete-{{ $berita->id }}"></label>
     </div>
 
 </div>

@@ -69,15 +69,10 @@
                                             <span class="hidden sm:inline">Edit</span>
                                         </a>
                                         @if($user->id !== auth()->id())
-                                            <form action="{{ route('admin.user.destroy', $user) }}" method="POST"
-                                                onsubmit="return confirm('Hapus pengguna {{ $user->username }}? Tindakan ini tidak dapat dibatalkan.')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-error gap-1">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                    <span class="hidden sm:inline">Hapus</span>
-                                                </button>
-                                            </form>
+                                            <label for="modal-delete-{{ $user->id }}" class="btn btn-sm btn-error gap-1">
+                                                <i class="fa-solid fa-trash"></i>
+                                                <span class="hidden sm:inline">Hapus</span>
+                                            </label>
                                         @endif
                                     </div>
                                 </td>
@@ -98,6 +93,28 @@
     <div class="mt-6">
         {{ $users->links() }}
     </div>
+
+    {{-- Delete confirmation modals --}}
+    @foreach($users as $user)
+        @if($user->id !== auth()->id())
+            <input type="checkbox" id="modal-delete-{{ $user->id }}" class="modal-toggle" />
+            <div class="modal">
+                <div class="modal-box">
+                    <h3 class="font-bold text-lg">Konfirmasi Hapus</h3>
+                    <p class="py-4">Hapus pengguna <strong>{{ $user->username }}</strong>? Tindakan ini tidak dapat dibatalkan.</p>
+                    <div class="modal-action">
+                        <label for="modal-delete-{{ $user->id }}" class="btn">Batal</label>
+                        <form action="{{ route('admin.user.destroy', $user) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-error">Hapus</button>
+                        </form>
+                    </div>
+                </div>
+                <label class="modal-backdrop" for="modal-delete-{{ $user->id }}"></label>
+            </div>
+        @endif
+    @endforeach
 
 </div>
 @endsection

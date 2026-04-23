@@ -30,7 +30,7 @@
                 <article class="card border border-base-300 shadow-sm bg-base-100">
                     <div class="card-body">
                         <div class="flex items-center justify-between gap-3 mb-2">
-                            <span class="badge badge-sm {{ $berita->published ? 'badge-success' : 'badge-ghost' }} font-semibold uppercase">{{ $berita->published ? 'Published' : 'Draft' }}</span>
+                            <span class="badge badge-sm {{ $berita->published ? 'badge-success' : 'badge-ghost' }} font-semibold uppercase">{{ $berita->published ? 'Diterbitkan' : 'Draft' }}</span>
                             <span class="text-xs text-base-content/60">{{ $berita->created_at->format('d M Y') }}</span>
                         </div>
                         <h2 class="card-title text-lg">{{ $berita->judul }}</h2>
@@ -39,7 +39,7 @@
                         @endif
                         <p class="text-sm leading-relaxed">{{ \Illuminate\Support\Str::limit($berita->isi, 140, '...') }}</p>
                         <div class="card-actions justify-between items-center mt-2">
-                            <a href="{{ route('admin.publikasi.berita.index', $berita) }}" class="link link-primary text-sm font-semibold">Lihat Detail</a>
+                            <a href="{{ route('admin.publikasi.berita.detail', $berita) }}" class="btn btn-sm btn-outline">Lihat Detail</a>
                             <span class="text-xs text-base-content/60">{{ $berita->slug }}</span>
                         </div>
                     </div>
