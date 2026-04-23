@@ -30,7 +30,7 @@ class PublicationController extends Controller
             ->paginate(15);
         
 
-        return view('admin.publikasi.berita.show', compact('beritas'));
+        return view('admin.publikasi.berita.index', compact('beritas'));
     }
 
     public function beritaDetail(Berita $berita)
@@ -80,7 +80,7 @@ class PublicationController extends Controller
             $query->whereRaw('LOWER(tagline) = ?', ['pengumuman']);
         })->latest()->with(['author', 'tags'])->get();
 
-        return view('admin.publikasi.pengumuman.show', compact('beritas'));
+        return view('admin.publikasi.pengumuman.index', compact('beritas'));
     }
 
     public function pengumumanPublic()
@@ -160,7 +160,7 @@ class PublicationController extends Controller
     {
         $dokumens = Dokumen::latest()->get();
 
-        return view('admin.publikasi.dokumen.show', compact('dokumens'));
+        return view('admin.publikasi.dokumen.index', compact('dokumens'));
     }
 
     public function dokumenCreate()
@@ -361,7 +361,7 @@ class PublicationController extends Controller
 
         $berita->tags()->sync($validated['tags'] ?? []);
 
-        return redirect()->route('admin.publikasi.berita.show', $berita)->with('success', 'Berita berhasil diperbarui.');
+        return redirect()->route('admin.publikasi.berita.index')->with('success', 'Berita berhasil diperbarui.');
     }
 
     public function destroy(Berita $berita)
@@ -384,14 +384,14 @@ class PublicationController extends Controller
 
         $tags = Tag::latest()->get();
 
-        return view('admin.publikasi.berita.tagline.show', compact('tags'));
+        return view('admin.publikasi.tag.index', compact('tags'));
     }
 
     public function tagCreate()
     {
         $this->ensureAdminOrOperator();
 
-        return view('admin.publikasi.berita.tagline.create');
+        return view('admin.publikasi.tag.create');
     }
 
     public function tagStore(Request $request)
@@ -413,7 +413,7 @@ class PublicationController extends Controller
     {
         $this->ensureAdminOrOperator();
 
-        return view('admin.publikasi.berita.tagline.edit', compact('tag'));
+        return view('admin.publikasi.tag.edit', compact('tag'));
     }
 
     public function tagUpdate(Request $request, Tag $tag)

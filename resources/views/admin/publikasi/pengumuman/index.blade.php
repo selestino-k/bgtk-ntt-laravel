@@ -39,7 +39,7 @@
                         @endif
                         <p class="text-sm leading-relaxed">{{ \Illuminate\Support\Str::limit($berita->isi, 140, '...') }}</p>
                         <div class="card-actions justify-between items-center mt-2">
-                            <a href="{{ route('admin.publikasi.berita.show', $berita) }}" class="link link-primary text-sm font-semibold">Lihat Detail</a>
+                            <a href="{{ route('admin.publikasi.berita.index', $berita) }}" class="link link-primary text-sm font-semibold">Lihat Detail</a>
                             <span class="text-xs text-base-content/60">{{ $berita->slug }}</span>
                         </div>
                     </div>

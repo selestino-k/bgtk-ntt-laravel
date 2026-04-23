@@ -8,7 +8,8 @@
     {{-- Header --}}
     <div class="flex items-center justify-between mb-6">
         <div>
-            <p class="text-sm text-base-content/60">Admin</p>
+            {{-- current role --}}
+            <p class="text-sm text-base-content/60">Role: {{ ucfirst(auth()->user()->role) }}</p>
             <h1 class="text-3xl sm:text-4xl font-bold text-primary">Manajemen Pengguna</h1>
         </div>
         @if(auth()->user()->role === 'admin')
@@ -38,7 +39,7 @@
             <table class="table table-zebra w-full">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>No.</th>
                         <th>Username</th>
                         <th>Email</th>
                         <th>Role</th>

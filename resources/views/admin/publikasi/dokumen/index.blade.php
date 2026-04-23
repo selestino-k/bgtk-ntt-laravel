@@ -8,7 +8,6 @@
         {{-- Header --}}
         <div class="flex items-center justify-between mb-6">
             <div>
-                <p class="text-sm text-base-content/60">Publikasi: Dokumen</p>
                 <h1 class="text-3xl sm:text-4xl font-bold text-primary">Daftar Dokumen</h1>
             </div>
             @auth
@@ -42,7 +41,6 @@
                             <tr>
                                 <th>Judul</th>
                                 <th>Deskripsi</th>
-                                <th>File</th>
                                 <th>Nama File</th>
                                 <th>Ukuran</th>
                                 <th>Tipe</th>
@@ -75,10 +73,6 @@
                                 <tr>
                                     <td class="font-medium">{{ $dokumen->judul }}</td>
                                     <td class="text-base-content/70">{{ $dokumen->deskripsi ?? '-' }}</td>
-                                    <td>
-                                        <a href="{{ $fileUrl }}" target="_blank" rel="noopener"
-                                            class="link link-primary">Unduh</a>
-                                    </td>
                                     <td class="text-base-content/70">{{ $dokumen->file_name }}</td>
                                     <td class="text-base-content/70">{{ $fileSize }}</td>
                                     <td class="text-base-content/70">{{ $dokumen->file_type }}</td>
@@ -88,13 +82,26 @@
                                             <td>
                                                 <div class="flex gap-2">
                                                     <a href="{{ route('admin.publikasi.dokumen.edit', $dokumen) }}"
-                                                        class="btn btn-sm btn-outline">Edit</a>
-                                                    <form action="{{ route('admin.publikasi.dokumen.destroy', $dokumen) }}" method="POST">
+                                                        class="btn btn-sm btn-outline">
+                                                        <i class="fas fa-edit"></i>
+                                                        Edit
+                                                    </a>
+                                                    <a href="{{ $fileUrl }}" target="_blank" rel="noopener"
+                                                        class="btn btn-sm btn-primary">
+                                                        <i class="fas fa-download"></i>
+                                                        Unduh
+                                                    </a>
+                                                    <form action="{{ route('admin.publikasi.dokumen.destroy', $dokumen) }}"
+                                                        method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" onclick="return confirm('Hapus dokumen ini?')"
-                                                            class="btn btn-sm btn-error">Hapus</button>
+                                                            class="btn btn-sm btn-error">
+                                                            <i class="fas fa-trash"></i>
+                                                            Hapus
+                                                        </button>
                                                     </form>
+
                                                 </div>
                                             </td>
                                         @endif

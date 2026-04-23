@@ -10,8 +10,10 @@
             <h1 class="text-3xl sm:text-4xl font-bold text-primary">Daftar Tag</h1>
         </div>
         <div class="flex flex-wrap gap-3">
-            <a href="{{ route('admin.publikasi.tag.create') }}" class="btn btn-primary">Tambah Tag</a>
-            <a href="{{ route('admin.dashboard') }}" class="btn btn-outline">Kembali</a>
+            <a href="{{ route('admin.publikasi.tag.create') }}" class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i>
+                Tambah Tag
+            </a>
         </div>
     </div>
 
@@ -46,11 +48,17 @@
                                     <td>{{ $tag->created_at->format('d M Y') }}</td>
                                     <td>
                                         <div class="flex flex-wrap gap-2">
-                                            <a href="{{ route('admin.publikasi.tag.edit', $tag) }}" class="btn btn-sm btn-outline">Edit</a>
+                                            <a href="{{ route('admin.publikasi.tag.edit', $tag) }}" class="btn btn-sm btn-outline">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                                Edit
+                                            </a>
                                             <form action="{{ route('admin.publikasi.tag.destroy', $tag) }}" method="POST" class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" onclick="return confirm('Hapus tag ini?')" class="btn btn-sm btn-error">Hapus</button>
+                                                <button type="submit" onclick="return confirm('Hapus tag ini?')" class="btn btn-sm btn-error">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                    Hapus
+                                                </button>
                                             </form>
                                         </div>
                                     </td>

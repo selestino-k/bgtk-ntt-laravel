@@ -8,7 +8,7 @@
     {{-- Header --}}
     <div class="flex items-center justify-between mb-6">
         <div>
-            <p class="text-sm text-base-content/60">Publikasi: Berita Terkini</p>
+            <p class="text-sm text-base-content/60">Publikasi</p>
             <h1 class="text-3xl sm:text-4xl font-bold text-primary">Berita Terkini</h1>
         </div>
         @auth
@@ -55,7 +55,7 @@
                             </div>
                         @endif
                         <div class="card-actions justify-between items-center mt-auto">
-                            <a href="{{ route('admin.publikasi.berita.show', $berita) }}" class="btn btn-sm btn-outline">Lihat Detail</a>
+                            <a href="{{ route('admin.publikasi.berita.index', $berita) }}" class="btn btn-sm btn-outline">Lihat Detail</a>
                             <span class="text-xs text-base-content/50 truncate">{{ $berita->slug }}</span>
                         </div>
                     </div>

@@ -12,6 +12,9 @@
     <link href="https://fonts.bunny.net/css?family=montserrat:400,500,600,700|inter:400,500,600,700" rel="stylesheet">
     <script src="https://kit.fontawesome.com/33409da17b.js" crossorigin="anonymous"></script>
 
+    <meta name="theme-color" content="#297bbf">
+
+
     <script>
         const t = localStorage.getItem('theme');
         if (t) document.documentElement.setAttribute('data-theme', t);

@@ -56,7 +56,7 @@
                             <span class="badge {{ $slide->is_active ? 'badge-success' : 'badge-ghost' }} badge-sm font-semibold uppercase">
                                 {{ $slide->is_active ? 'Aktif' : 'Nonaktif' }}
                             </span>
-                            <span class="text-xs text-base-content/60">Urutan: {{ $slide->urutan }}</span>
+                            <span class="text-xs text-base-content/60">Urutan: <span class="font-semibold text-primary text-lg">{{ $slide->urutan }}</span></span>
                         </div>
 
                         @if($slide->judul)

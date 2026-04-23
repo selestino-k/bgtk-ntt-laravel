@@ -7,7 +7,6 @@
     {{-- Header --}}
     <div class="flex items-center justify-between mb-6">
         <div>
-            <p class="text-sm text-base-content/60">Role: {{ ucfirst($routePrefix) }}</p>
             <h1 class="text-3xl sm:text-4xl font-bold text-primary">Kelola Profil</h1>
         </div>
         <a href="{{ route($routePrefix . '.profil.create') }}" class="btn btn-primary gap-2">

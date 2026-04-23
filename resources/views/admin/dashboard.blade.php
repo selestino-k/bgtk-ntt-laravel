@@ -138,6 +138,9 @@
 
         </div>
     </section>
+    <div class="mt-8 text-xs text-end">
+        &copy; {{ date('Y') }} BGTK Provinsi NTT
+    </div>
 
 </div>
 @endsection
