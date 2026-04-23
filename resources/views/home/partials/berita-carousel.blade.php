@@ -24,18 +24,19 @@
                             @else
                                 <div class="w-full h-40 bg-linear-to-br from-blue-50 to-blue-100"></div>
                             @endif
-                            <div class="p-4 flex flex-col flex-1">
-                                @if ($beritas->tags->first())
-                                    <span
-                                        class="text-xs font-montserrat font-semibold text-blue-600 uppercase tracking-wide mb-2">
-                                        {{ $beritas->tags->first()->tagline }}
-                                    </span>
+                            <div class="p-4 flex flex-col flex-1 font-montserrat">
+                                @if ($beritas->tags->isNotEmpty())
+                                    <div class="flex flex-wrap gap-1 mb-2">
+                                        @foreach ($beritas->tags->take(3) as $tag)
+                                            <span class="badge badge-sm badge-outline">{{ $tag->tagline }}</span>
+                                        @endforeach
+                                    </div>
                                 @endif
                                 <h3
                                     class="font-montserrat font-semibold text-sm text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
                                     {{ $beritas->judul }}
                                 </h3>
-                                <p class="font-inter text-gray-400 dark:text-gray-500 text-xs mt-auto">
+                                <p class="text-base-content/60 text-xs mt-auto">
                                     {{ \Carbon\Carbon::parse($beritas->created_at)->locale('id')->isoFormat('D MMMM YYYY') }}
                                 </p>
                             </div>
@@ -88,29 +89,29 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            @forelse($latestPosts as $berita)
-                <a href="{{ route('publikasi.berita.show', $berita->slug) }}"
-                    class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 flex flex-col group">
-                    @if ($berita->gambar_url)
-                        <img src="{{ $berita->gambar_url }}" alt="{{ $berita->judul }}"
+            @forelse($latestPosts as $beritas)
+                <a href="{{ route('publikasi.berita.show', $beritas->slug) }}"
+                    class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white dark:bg-base-200 border border-gray-100 dark:border-gray-700 flex flex-col group">
+                    @if ($beritas->gambar_url)
+                        <img src="{{ $beritas->gambar_url }}" alt="{{ $beritas->judul }}"
                             class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
                     @else
                         <div class="w-full h-40 bg-linear-to-br from-blue-50 to-blue-100"></div>
                     @endif
-                    <div class="p-4 flex flex-col flex-1">
-                        @if ($berita->tags->isNotEmpty())
+                    <div class="p-4 flex flex-col flex-1 font-montserrat">
+                        @if ($beritas->tags->isNotEmpty())
                             <div class="flex flex-wrap gap-1 mb-1">
-                                @foreach ($berita->tags->take(3) as $tag)
+                                @foreach ($beritas->tags->take(3) as $tag)
                                     <span class="badge badge-sm badge-outline">{{ $tag->tagline }}</span>
                                 @endforeach
                             </div>
                         @endif
                         <h3
                             class="font-montserrat font-semibold text-sm text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                            {{ $berita->judul }}
+                            {{ $beritas->judul }}
                         </h3>
                         <p class="font-inter text-gray-400 dark:text-gray-500 text-xs mt-auto">
-                            {{ \Carbon\Carbon::parse($berita->created_at)->locale('id')->isoFormat('D MMMM YYYY') }}
+                            {{ \Carbon\Carbon::parse($beritas->created_at)->locale('id')->isoFormat('D MMMM YYYY') }}
                         </p>
                     </div>
                 </a>

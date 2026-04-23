@@ -1,4 +1,4 @@
-<footer class="bg-primary dark:bg-base-300 w-full">
+<footer class="bg-primary dark:bg-base-200 w-full">
     <div class="container mx-auto px-4 py-12 md:px-6 max-w-7xl font-montserrat">
         <div class="grid sm:grid-cols-1 gap-8 md:grid-cols-3 place-items-center md:place-items-start">
 
@@ -84,7 +84,7 @@
             <i class="fa-solid fa-moon text-white"></i>
         </div>
 
-        <div class="lg:hidden mt-8 pt-8 justify-items-center text-sm text-white grid grid-cols-2 gap-4 md:flex md:items-center md:justify-between">
+        <div class="lg:hidden mt-8 pt-8 justify-items-center text-sm text-white grid grid-cols-2 gap-4 sm:flex sm:items-center sm:justify-between">
             <img src="/images/assets/ramah-ori-bordered.webp" alt="Kemendikdasmen Ramah" width="120" height="40">
             <img src="/images/assets/pendidikan-ori-bordered.webp" alt="Pendidikan Bermutu Untuk Semua" width="120" height="40">
         </div>

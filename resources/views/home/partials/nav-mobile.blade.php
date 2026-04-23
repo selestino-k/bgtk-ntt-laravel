@@ -13,15 +13,23 @@
 <div id="nav-overlay" class="fixed inset-0 bg-black/40 z-40 hidden xl:hidden" onclick="closeNavSheet()"></div>
 
 {{-- Mobile slide-in sheet --}}
-<div id="nav-sheet" class="fixed top-0 left-0 h-full w-72 bg-white dark:bg-black z-50 shadow-xl overflow-y-auto transform -translate-x-full transition-transform duration-300 xl:hidden">
+<div id="nav-sheet" class="fixed top-0 left-0 h-full w-72 bg-white dark:bg-base-200 z-50 shadow-xl overflow-y-auto transform -translate-x-full transition-transform duration-300 xl:hidden">
     <div class="flex items-center justify-between px-4 py-4">
-        <img src="/images/assets/logo-web-bgtk-ntt.webp" alt="Balai GTK Logo" class="h-10 w-auto"
+        <img src="/images/assets/logo-web-bgtk-ntt.webp" alt="Balai GTK Logo" class="h-10 w-auto dark:hidden"
+            onerror="this.style.display='none'">
+        <img src="/images/assets/logo-web-bgtk-ntt-dark.webp" alt="Balai GTK Logo" class="h-10 w-auto hidden dark:block"
             onerror="this.style.display='none'">
         <button onclick="closeNavSheet()" class="btn btn-ghost btn-sm btn-circle">
             <i class="fa-solid fa-xmark text-lg"></i>
         </button>
     </div>
-    <ul class="menu w-full font-montserrat text-sm font-medium text-primary dark:text-primary px-2 py-4 gap-4">
+    {{-- dark mode toggle --}}
+        <div id="dark-mode-toggle" class="flex items-center gap-2 ml-2 px-4 py-2">
+            <i class="fa-solid fa-sun text-gray-800 dark:text-primary"></i>
+            <input type="checkbox" checked="unchecked" class="toggle toggle-sm" />
+            <i class="fa-solid fa-moon text-gray-800 dark:text-primary"></i>
+        </div>
+    <ul class="menu w-full font-montserrat text-sm font-medium text-primary dark:text-primary px-2 py-4 gap-6">
         <li>
             <details>
                 <summary class="font-semibold text-primary">Profil</summary>

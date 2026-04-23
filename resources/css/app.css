@@ -111,7 +111,7 @@
 :root {
     font-family: var(--font-sans);
     --color-hover: oklch(84.832% 0.0001 271.152);
-    --color-black: oklch(28.502% 0.00003 271.152);
+    --color-black: oklch(27.274% 0.00003 271.152);
 }
 
 @theme {
