@@ -1,16 +1,20 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserContoller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicationController;
 use App\Models\Berita;
 use App\Models\Dokumen;
 use App\Models\Slideshow;
+use App\Services\ViewCounterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/', function (Request $request, ViewCounterService $counter) {
+    $counter->record('homepage', $request->ip());
+
     $slideshowPhotos = Slideshow::where('is_active', true)->orderBy('urutan')->get();
     $documents       = Dokumen::latest()->take(5)->get();
 
@@ -96,7 +100,7 @@ Route::middleware('auth')->prefix('admin/publikasi')->name('admin.publikasi.')->
     Route::get('/berita', [PublicationController::class, 'beritaIndex'])->name('berita.index');
     Route::get('/berita/create', [PublicationController::class, 'create'])->name('berita.create');
     Route::post('/berita', [PublicationController::class, 'store'])->name('berita.store');
-    Route::get('/berita/{berita:slug}', [PublicationController::class, 'beritaDetail'])->name('berita.show');
+    Route::get('/berita/{berita:slug}', [PublicationController::class, 'beritaDetail'])->name('berita.detail');
     Route::get('/berita/{berita:slug}/edit', [PublicationController::class, 'edit'])->name('berita.edit');
     Route::patch('/berita/{berita:slug}', [PublicationController::class, 'update'])->name('berita.update');
     Route::delete('/berita/{berita:slug}', [PublicationController::class, 'destroy'])->name('berita.destroy');
@@ -136,4 +140,13 @@ Route::middleware('auth')->prefix('admin/slideshow')->name('admin.slideshow.')->
     Route::get('/{slideshow}/edit', [\App\Http\Controllers\SlideshowController::class, 'edit'])->name('edit');
     Route::patch('/{slideshow}', [\App\Http\Controllers\SlideshowController::class, 'update'])->name('update');
     Route::delete('/{slideshow}', [\App\Http\Controllers\SlideshowController::class, 'destroy'])->name('destroy');
+});
+
+Route::middleware('auth')->prefix('admin/user')->name('admin.user.')->group(function () {
+    Route::get('/', [UserContoller::class, 'index'])->name('index');
+    Route::get('/create', [UserContoller::class, 'create'])->name('create');
+    Route::post('/', [UserContoller::class, 'store'])->name('store');
+    Route::get('/{user}/edit', [UserContoller::class, 'edit'])->name('edit');
+    Route::patch('/{user}', [UserContoller::class, 'update'])->name('update');
+    Route::delete('/{user}', [UserContoller::class, 'destroy'])->name('destroy');
 });

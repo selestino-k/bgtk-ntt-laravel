@@ -68,7 +68,7 @@
         </h2>
         <div class="card border border-base-300 shadow-sm bg-base-100">
             <div class="card-body p-5">
-                <canvas id="visitorChart" height="100" aria-label="Grafik kunjungan 30 hari terakhir"></canvas>
+                <canvas id="visitorChart" height="100" aria-label="Grafik kunjungan unik 30 hari terakhir"></canvas>
             </div>
         </div>
     </section>
@@ -161,7 +161,7 @@
             data: {
                 labels,
                 datasets: [{
-                    label: 'Kunjungan',
+                    label: 'Pengunjung Unik',
                     data: values,
                     borderColor: 'oklch(0.5675 0.1305 247.94)',
                     backgroundColor: 'oklch(0.5675 0.1305 247.94 / 0.15)',

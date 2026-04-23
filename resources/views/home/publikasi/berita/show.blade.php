@@ -63,6 +63,12 @@
                         <span>&bull;</span>
                     @endif
                     <span>{{ $berita->created_at->translatedFormat('d F Y') }}</span>
+                    @if (($viewCounts['total'] ?? 0) > 0)
+                        <span>&bull;</span>
+                        <span title="{{ ($viewCounts['desktop'] ?? 0) }} desktop &bull; {{ ($viewCounts['mobile'] ?? 0) }} mobile">
+                            <i class="fa-regular fa-eye mr-1"></i>{{ number_format($viewCounts['total'] ?? 0) }} kali dilihat
+                        </span>
+                    @endif
                 </div>
 
                 {{-- Image --}}

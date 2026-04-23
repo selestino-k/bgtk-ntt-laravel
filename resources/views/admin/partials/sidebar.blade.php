@@ -77,6 +77,13 @@
         <span>Slideshow</span>
     </a>
 
+    {{-- User Management --}}
+    <a href="{{ route('admin.user.index') }}"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
+               {{ request()->routeIs('admin.user.*') ? 'bg-primary text-primary-content' : 'text-base-content hover:bg-base-300' }}">
+        <i class="fa-solid fa-users w-4 text-center"></i>
+        <span>User</span>
+    </a>
 
 </nav>
 

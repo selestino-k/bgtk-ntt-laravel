@@ -28,5 +28,19 @@ class DatabaseSeeder extends Seeder
             'role' => 'operator',
             'password' => 'operator123',
         ]);
+
+        // Also seed users that appear in the old berita dump
+        foreach (['adminweb', 'devlp'] as $username) {
+            User::firstOrCreate(
+                ['username' => $username],
+                [
+                    'email'    => $username . '@example.com',
+                    'role'     => 'operator',
+                    'password' => 'password',
+                ]
+            );
+        }
+
+        $this->call(BeritaSeeder::class);
     }
 }

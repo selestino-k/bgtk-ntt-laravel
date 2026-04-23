@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Berita;
 use App\Models\Dokumen;
 use App\Models\Tag;
+use App\Services\ViewCounterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -122,9 +123,11 @@ class PublicationController extends Controller
         return view('home.publikasi.berita', compact('beritas', 'tags', 'tagId'));
     }
 
-    public function beritaTerkiniDetailPublic(Berita $berita)
+    public function beritaTerkiniDetailPublic(Request $request, Berita $berita, ViewCounterService $counter)
     {
         abort_if(! $berita->published, 404);
+
+        $counter->record('berita:' . $berita->id, $request->ip());
 
         $berita->load(['author', 'tags']);
 
@@ -140,7 +143,9 @@ class PublicationController extends Controller
 
         $tags = Tag::whereRaw('LOWER(tagline) != ?', ['pengumuman'])->orderBy('tagline')->get();
 
-        return view('home.publikasi.berita.show', compact('berita', 'recentBeritas', 'tags'));
+        $viewCounts = $counter->getPageViews('berita:' . $berita->id);
+
+        return view('home.publikasi.berita.show', compact('berita', 'recentBeritas', 'tags', 'viewCounts'));
     }
 
     public function dokumenPublic()
