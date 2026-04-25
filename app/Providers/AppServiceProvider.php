@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('home.partials.header', function ($view) {
-            $view->with('profiles', Profile::latest()->get());
+            $view->with('profiles', Profile::orderBy('id')->get());
         });
 
         View::composer('home.partials.footer', function ($view) {
