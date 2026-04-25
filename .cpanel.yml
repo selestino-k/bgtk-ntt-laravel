@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/$USER/public_html
+    - export DEPLOYPATH=/home/vllwdwqk/public_html
 
     # Install PHP dependencies (vendor/ is already committed by GitHub Actions)
     - /usr/local/bin/php /usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist

@@ -13,7 +13,7 @@ jobs:
 
     env:
       DEPLOY_BRANCH: ${{ github.ref_name == 'master' && 'deploy' || 'deploy-dev' }}
-      DEPLOY_PATH: ${{ github.ref_name == 'master' && '/home/$USER/public_html' || '/home/$USER/public_html/dev' }}
+      DEPLOY_PATH: ${{ github.ref_name == 'master' && '/home/vllwdwqk/public_html' || '/home/vllwdwqk/public_html/dev' }}
       WEBHOOK_URL: ${{ github.ref_name == 'master' && secrets.CPANEL_WEBHOOK_URL || secrets.CPANEL_WEBHOOK_URL_DEV }}
 
     steps:
