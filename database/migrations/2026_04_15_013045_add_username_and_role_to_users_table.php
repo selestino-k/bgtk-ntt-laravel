@@ -12,18 +12,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('username')->nullable()->after('email');
-            $table->string('role')->default('operator')->after('username');
-        });
+        if (!Schema::hasColumn('users', 'username')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('username')->nullable()->after('email');
+                $table->string('role')->default('operator')->after('username');
+            });
 
-        DB::table('users')
-            ->whereNull('username')
-            ->update(['username' => DB::raw('email')]);
+            DB::table('users')
+                ->whereNull('username')
+                ->update(['username' => DB::raw('email')]);
 
-        Schema::table('users', function (Blueprint $table) {
-            $table->unique('username');
-        });
+            Schema::table('users', function (Blueprint $table) {
+                $table->unique('username');
+            });
+        }
     }
 
     /**
