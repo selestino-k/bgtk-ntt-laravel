@@ -10,43 +10,47 @@
                 <h2 class="text-5xl font-semibold font-montserrat text-primary mb-3">
                     Berita Terkini
                 </h2>
-                <p class="text-lg text-gray-500 mb-6 font-inter">
+                <p class="text-lg text-gray-500 dark:text-gray-400 mb-6 font-inter">
                     Dapatkan informasi terbaru seputar kegiatan, program, dan inovasi BGTK Provinsi NTT.
                 </p>
 
                 <div class="grid grid-cols-3 gap-4">
-                    @forelse($latestPosts as $post)
-                        <a href="/berita/{{ $post['slug'] ?? '#' }}"
-                           class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white border border-gray-100 flex flex-col group">
-                            @if(!empty($post['featured_image']))
-                                <img src="{{ $post['featured_image'] }}" alt="{{ $post['title'] }}"
-                                     class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
+                    @forelse($latestPosts as $beritas)
+                        <a href="{{ route('publikasi.berita.show', $beritas->slug) }}"
+                            class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 flex flex-col group">
+                            @if ($beritas->gambar_url)
+                                <img src="{{ $beritas->gambar_url }}" alt="{{ $beritas->judul }}"
+                                    class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
                             @else
                                 <div class="w-full h-40 bg-linear-to-br from-blue-50 to-blue-100"></div>
                             @endif
-                            <div class="p-4 flex flex-col flex-1">
-                                @if(!empty($post['tags'][0]['tag']['name']))
-                                    <span class="text-xs font-montserrat font-semibold text-blue-600 uppercase tracking-wide mb-2">
-                                        {{ $post['tags'][0]['tag']['name'] }}
-                                    </span>
+                            <div class="p-4 flex flex-col flex-1 font-montserrat">
+                                @if ($beritas->tags->isNotEmpty())
+                                    <div class="flex flex-wrap gap-1 mb-2">
+                                        @foreach ($beritas->tags->take(3) as $tag)
+                                            <span class="badge badge-sm badge-outline">{{ $tag->tagline }}</span>
+                                        @endforeach
+                                    </div>
                                 @endif
-                                <h3 class="font-montserrat font-semibold text-sm text-gray-900 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                                    {{ $post['title'] }}
+                                <h3
+                                    class="font-montserrat font-semibold text-sm text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                                    {{ $beritas->judul }}
                                 </h3>
-                                <p class="font-inter text-gray-400 text-xs mt-auto">
-                                    {{ \Carbon\Carbon::parse($post['created_at'])->locale('id')->isoFormat('D MMMM YYYY') }}
+                                <p class="text-base-content/60 text-xs mt-auto">
+                                    {{ \Carbon\Carbon::parse($beritas->created_at)->locale('id')->isoFormat('D MMMM YYYY') }}
                                 </p>
                             </div>
                         </a>
                     @empty
                         {{-- Skeleton placeholders --}}
-                        @for($i = 0; $i < 3; $i++)
-                            <div class="rounded-xl overflow-hidden bg-white border border-gray-100">
-                                <div class="w-full h-40 bg-gray-100 animate-pulse"></div>
+                        @for ($i = 0; $i < 3; $i++)
+                            <div
+                                class="rounded-xl overflow-hidden bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
+                                <div class="w-full h-40 bg-gray-100 dark:bg-gray-700 animate-pulse"></div>
                                 <div class="p-4 space-y-2">
-                                    <div class="h-3 bg-gray-100 rounded w-1/3 animate-pulse"></div>
-                                    <div class="h-4 bg-gray-100 rounded w-full animate-pulse"></div>
-                                    <div class="h-4 bg-gray-100 rounded w-2/3 animate-pulse"></div>
+                                    <div class="h-3 bg-gray-100 dark:bg-gray-700 rounded w-1/3 animate-pulse"></div>
+                                    <div class="h-4 bg-gray-100 dark:bg-gray-700 rounded w-full animate-pulse"></div>
+                                    <div class="h-4 bg-gray-100 dark:bg-gray-700 rounded w-2/3 animate-pulse"></div>
                                 </div>
                             </div>
                         @endfor
@@ -54,11 +58,11 @@
                 </div>
 
                 <div class="mt-6">
-                    <a href="/berita"
-                       class="inline-flex items-center gap-2 text-primary font-montserrat font-semibold hover:underline text-sm">
+                    <a href="/publikasi/berita-terkini"
+                        class="inline-flex items-center gap-2 text-primary font-montserrat font-semibold hover:underline text-sm">
                         Lihat Semua Berita
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
                     </a>
                 </div>
@@ -85,40 +89,43 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            @forelse($latestPosts as $post)
-                <a href="/berita/{{ $post['slug'] ?? '#' }}"
-                   class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white border border-gray-100 flex flex-col group">
-                    @if(!empty($post['featured_image']))
-                        <img src="{{ $post['featured_image'] }}" alt="{{ $post['title'] }}"
-                             class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
+            @forelse($latestPosts as $beritas)
+                <a href="{{ route('publikasi.berita.show', $beritas->slug) }}"
+                    class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white dark:bg-base-200 border border-gray-100 dark:border-gray-700 flex flex-col group">
+                    @if ($beritas->gambar_url)
+                        <img src="{{ $beritas->gambar_url }}" alt="{{ $beritas->judul }}"
+                            class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
                     @else
                         <div class="w-full h-40 bg-linear-to-br from-blue-50 to-blue-100"></div>
                     @endif
-                    <div class="p-4 flex flex-col flex-1">
-                        @if(!empty($post['tags'][0]['tag']['name']))
-                            <span class="text-xs font-montserrat font-semibold text-blue-600 uppercase tracking-wide mb-2">
-                                {{ $post['tags'][0]['tag']['name'] }}
-                            </span>
+                    <div class="p-4 flex flex-col flex-1 font-montserrat">
+                        @if ($beritas->tags->isNotEmpty())
+                            <div class="flex flex-wrap gap-1 mb-1">
+                                @foreach ($beritas->tags->take(3) as $tag)
+                                    <span class="badge badge-sm badge-outline">{{ $tag->tagline }}</span>
+                                @endforeach
+                            </div>
                         @endif
-                        <h3 class="font-montserrat font-semibold text-sm text-gray-900 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                            {{ $post['title'] }}
+                        <h3
+                            class="font-montserrat font-semibold text-sm text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                            {{ $beritas->judul }}
                         </h3>
-                        <p class="font-inter text-gray-400 text-xs mt-auto">
-                            {{ \Carbon\Carbon::parse($post['created_at'])->locale('id')->isoFormat('D MMMM YYYY') }}
+                        <p class="font-inter text-gray-400 dark:text-gray-500 text-xs mt-auto">
+                            {{ \Carbon\Carbon::parse($beritas->created_at)->locale('id')->isoFormat('D MMMM YYYY') }}
                         </p>
                     </div>
                 </a>
             @empty
-                <p class="font-inter text-gray-400 text-center col-span-2 py-8">Belum ada berita.</p>
+                <p class="font-inter text-gray-400 dark:text-gray-500 text-center col-span-2 py-8">Belum ada berita.</p>
             @endforelse
         </div>
 
         <div class="text-center mt-4">
             <a href="/berita"
-               class="inline-flex items-center gap-2 text-primary font-montserrat font-semibold hover:underline text-sm">
+                class="inline-flex items-center gap-2 text-primary font-montserrat font-semibold hover:underline text-sm">
                 Lihat Semua Berita
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
             </a>
         </div>

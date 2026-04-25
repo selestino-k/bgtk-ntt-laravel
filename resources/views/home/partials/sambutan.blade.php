@@ -12,12 +12,12 @@
                                 loading="eager">
                             <div id="kepala-name-card" class="py-4 text-center font-inter text-gray-700 leading-relaxed text-sm md:text-base space-y-3 bg-primary rounded-b-md">
                                 <h4 class="font-montserrat text-white font-semibold text-md mb-1">Dr. Teguh Rahayu Slamet, M.Si.</h4>
-                                <p class="text-xs font-montserrat text-white mt-2">Kepala BGTK NTT</p>
+                                <p class="text-xs font-montserrat text-white mt-2">Kepala BGTK Provinsi NTT</p>
                             </div>
                         </div>
                     </div>
                     <div class="text-justify">
-                        <div class="font-inter text-gray-700 leading-relaxed text-sm md:text-base space-y-3">
+                        <div class="font-inter text-gray-700 dark:text-gray-200 leading-relaxed text-sm md:text-base space-y-3">
                             <p>
                                 Selamat datang di laman resmi Balai Guru dan Tenaga Kependidikan (BGTK) Provinsi Nusa
                                 Tenggara Timur (NTT). Sebagai wujud komitmen kami dalam mendukung peningkatan kualitas

@@ -1,58 +1,272 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Balai Guru dan Tenaga Kependidikan (BGTK) Provinsi NTT - Website
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Website resmi Balai Guru dan Tenaga Kependidikan Provinsi Nusa Tenggara Timur yang dikembangkan dengan Laravel 13 untuk mendukung pengembangan dan pemberdayaan guru, tenaga kependidikan, dan pemangku kepentingan pendidikan.
 
-## About Laravel
+## 🚀 Tentang Proyek
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Website ini merupakan platform digital utama BGTK NTT yang menyediakan:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Informasi Profil Lembaga** — Visi misi, struktur organisasi, dan tugas pokok fungsi
+- **Portal Publikasi** — Berita terkini, pengumuman, dan dokumen yang dapat diunduh
+- **Sistem Pelayanan** — ULT (Unit Layanan Terpadu), ZI-WBK, dan SSD
+- **Admin Panel** — Dashboard untuk manajemen konten website
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 📋 Teknologi yang Digunakan
 
-## Learning Laravel
+### Framework & Libraries Utama
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Laravel 13** — PHP framework untuk backend dan routing
+- **PHP 8.3+** — Bahasa pemrograman server-side
+- **Vite** — Frontend build tool untuk asset bundling
+- **Blade** — Laravel templating engine
+- **Pest PHP** — Testing framework modern untuk PHP
+- **jenssegers/agent** — User agent detection untuk device-aware rendering
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Database & Cache
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+- **MySQL** — Relational database utama
+- **Redis** (via Predis) — Cache dan session storage
 
-## Agentic Development
+---
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## 📁 Struktur Direktori Penting
 
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```
+app/
+├── Http/
+│   └── Controllers/          # Controller untuk semua fitur
+├── Models/                   # Model Eloquent
+│   ├── Berita.php
+│   ├── Dokumen.php
+│   ├── Profile.php
+│   ├── Publication.php
+│   ├── Slideshow.php
+│   ├── Tag.php
+│   └── User.php
+└── Services/
+    └── ViewCounterService.php  # Layanan penghitung kunjungan
+resources/
+└── views/
+    ├── home/                 # Template halaman publik
+    └── admin/                # Template panel administrasi
+routes/
+└── web.php                   # Definisi semua rute aplikasi
+database/
+└── migrations/               # File migrasi skema database
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## 🎨 Fitur Utama
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Halaman Publik
 
-## Code of Conduct
+- **Beranda** — Slideshow foto, berita terkini, pengumuman, dan dokumen terbaru
+- **Profil** — Halaman profil dinamis berdasarkan slug (visi-misi, struktur organisasi, dll.)
+- **Publikasi Berita** — Daftar dan detail berita terkini dengan sistem tag
+- **Pengumuman** — Daftar pengumuman resmi lembaga
+- **Dokumen / PPID** — Dokumen publik yang dikelompokkan berdasarkan kategori
+- **Sarana Prasarana** — Informasi fasilitas ULT
+- **ZI-WBK** — Halaman area perubahan Zona Integritas
+- **SSD** — Halaman informasi SSD
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Panel Admin (Terproteksi Login)
 
-## Security Vulnerabilities
+- **Dashboard** — Ringkasan statistik dan aktivitas
+- **Manajemen Berita** — CRUD berita lengkap dengan gambar dan dokumen lampiran
+- **Manajemen Pengumuman** — Pengelolaan pengumuman melalui sistem tag
+- **Manajemen Dokumen** — Upload dan kategorisasi dokumen
+- **Manajemen Tag** — CRUD tag untuk berita
+- **Manajemen Slideshow** — Upload dan pengaturan urutan foto slideshow
+- **Manajemen Profil** — CRUD halaman profil lembaga
+- **Manajemen Pengguna** — Pengelolaan akun admin
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 🎯 Halaman Utama
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Halaman | Route | Deskripsi |
+|---------|-------|-----------|
+| Beranda | `/` | Halaman utama dengan slideshow dan berita |
+| Profil | `/profil/{slug}` | Halaman profil dinamis lembaga |
+| Berita | `/berita` | Daftar berita terkini |
+| Detail Berita | `/berita/{slug}` | Halaman detail berita |
+| Pengumuman | `/pengumuman` | Daftar pengumuman resmi |
+| Dokumen / PPID | `/dokumen` | Dokumen publik per kategori |
+| ZI-WBK | `/zi-wbk` | Informasi Zona Integritas |
+| SSD | `/ssd` | Halaman informasi SSD |
+| Admin Panel | `/admin` | Dashboard manajemen konten |
+
+---
+
+## 🛠️ Instalasi & Pengaturan
+
+### Prasyarat
+
+- **PHP** >= 8.3
+- **Composer**
+- **Node.js** & NPM
+- **SQLite**
+- **Redis** (opsional, untuk cache)
+
+### Langkah Instalasi
+
+1. **Clone repositori**
+
+```bash
+git clone https://github.com/selestino-k/bgtk-ntt-laravel.git
+cd bgtk-ntt-laravel
+```
+
+2. **Setup otomatis** (menggunakan script composer)
+
+```bash
+composer run setup
+```
+
+Script ini akan menjalankan secara otomatis:
+- `composer install`
+- Menyalin `.env.example` ke `.env`
+- Generate application key
+- Menjalankan migrasi database
+- `npm install` dan `npm run build`
+
+3. **Atau setup manual**
+
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+npm install
+npm run build
+```
+
+4. **Konfigurasi environment**
+
+Sesuaikan file `.env` dengan konfigurasi lokal Anda:
+
+```env
+APP_NAME="BGTK NTT"
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=bgtk_ntt
+DB_USERNAME=root
+DB_PASSWORD=
+
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+```
+
+5. **Buat symlink storage**
+
+```bash
+php artisan storage:link
+```
+
+---
+
+## 📝 Scripts Tersedia
+
+```bash
+# Development server (Laravel + Queue + Vite secara bersamaan)
+composer run dev
+
+# Production server
+php artisan serve
+
+# Build frontend assets untuk production
+npm run build
+
+# Jalankan semua pengujian
+php artisan test
+
+# Atau menggunakan Pest langsung
+./vendor/bin/pest
+
+# Jalankan migrasi database
+php artisan migrate
+
+# Rollback migrasi
+php artisan migrate:rollback
+
+# Seed database
+php artisan db:seed
+```
+
+---
+
+## 🚢 Deployment
+
+### Deploy ke Shared Hosting / cPanel
+
+1. Upload semua file ke server (gunakan `public/` sebagai document root)
+2. Jalankan `composer install --no-dev --optimize-autoloader`
+3. Sesuaikan `.env` untuk environment production
+4. Jalankan `php artisan migrate --force`
+5. Jalankan `php artisan config:cache` dan `php artisan route:cache`
+
+### Deploy ke VPS / Server Dedicated
+
+```bash
+# Optimasi untuk production
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan event:cache
+
+# Build frontend
+npm run build
+```
+
+---
+
+## 🤝 Kontribusi
+
+Untuk berkontribusi pada proyek ini:
+
+1. Fork repository
+2. Clone fork Anda: `git clone https://github.com/username/bgtk-ntt-laravel.git`
+3. Buat branch feature: `git checkout -b feature/AmazingFeature`
+4. Commit changes: `git commit -m 'Add: AmazingFeature'`
+5. Push ke branch: `git push origin feature/AmazingFeature`
+6. Buat Pull Request ke branch `dev`
+
+### Branching Strategy
+
+- **master** — Production branch
+- **dev** — Development branch
+
+---
+
+## 📞 Hubungi Kami
+
+**BGTK Provinsi NTT**
+
+- 📍 Alamat: Jl. Perintis Kemerdekaan I, Kayu Putih, Kec. Oebobo, Kota Kupang, NTT
+- 📧 Email: bgtkntt@kemendikdasmen.go.id
+- 🌐 Website: [https://bgtkntt.kemendikdasmen.go.id](https://bgtkntt.kemendikdasmen.go.id)
+- 📱 Media Sosial:
+  - Facebook: [@balaigurupenggerakntt](https://www.facebook.com/balaigurupenggerakntt/)
+  - Twitter: [@BGTK_NTT](https://twitter.com/BGTK_NTT)
+  - Instagram: [@bgtkntt](https://www.instagram.com/bgtkntt/)
+  - YouTube: [@bgtkntt](https://www.youtube.com/@bgtkntt/)
+  - TikTok: [@bgtkntt](https://www.tiktok.com/@bgtkntt)
+
+---
+
+## 📄 Lisensi
+
+GNU General Public License v3.0
+
+---
+
+**Dibuat dengan ❤️ oleh Tim Pengembang BGTK NTT**
+
+**Repository:** [github.com/selestino-k/bgtk-ntt-laravel](https://github.com/selestino-k/bgtk-ntt-laravel)
+
+**Terakhir Diperbarui:** April 2026
+
