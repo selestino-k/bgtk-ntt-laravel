@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Profile;
 use App\Models\Tag;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::defaultView('vendor.pagination.tailwind');
+
         View::composer('home.partials.header', function ($view) {
             $view->with('profiles', Profile::orderBy('id')->get());
         });
