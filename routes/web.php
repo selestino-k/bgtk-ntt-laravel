@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserContoller;
 use App\Http\Controllers\ProfileController;
@@ -9,7 +10,6 @@ use App\Models\Dokumen;
 use App\Models\Slideshow;
 use App\Services\ViewCounterService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function (Request $request, ViewCounterService $counter) {
@@ -57,33 +57,9 @@ Route::get('/ssd', function () {
     return view('home.ssd');
 })->name('ssd');
 
-Route::view('/login', 'auth.login')->name('login');
-
-Route::post('/login', function (Request $request) {
-    $credentials = $request->validate([
-        'username' => 'required|string',
-        'password' => 'required|string',
-    ]);
-
-    if (Auth::attempt($credentials)) {
-        $request->session()->regenerate();
-
-        return redirect()->intended('/admin');
-    }
-
-    return back()->withErrors([
-        'username' => 'Username atau password tidak valid.',
-    ])->onlyInput('username');
-});
-
-Route::post('/logout', function (Request $request) {
-    Auth::logout();
-
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-
-    return redirect()->route('login');
-})->name('logout');
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 

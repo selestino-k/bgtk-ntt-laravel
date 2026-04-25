@@ -11,9 +11,13 @@
         {{-- Breadcrumb --}}
         <div class="text-sm text-base-content/50">
             <a href="{{ route('home') }}" class="hover:text-primary">Beranda</a>
-            <span class="mx-2">/</span>
+            <span class="mx-2">
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </span>
             <span>ULT</span>
-            <span class="mx-2">/</span>
+            <span class="mx-2">
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </span>
             <span class="text-primary">Sarana dan Prasarana</span>
         </div>
 

@@ -62,22 +62,22 @@
                     </a>
                 </div>
                 <h1 class="text-3xl font-bold text-primary mb-1">Selamat Datang</h1>
-                <h2 class="text-base text-gray-900 dark:text-gray-100">Panel Admin CMS <br />BGTK Provinsi NTT</h2>
+                <h2 class="text-base text-gray-900 dark:text-gray-100">di Panel Admin CMS</h2>
             </div>
 
             {{-- Login Form --}}
             <form method="POST" action="/login" class="space-y-4">
                 @csrf
 
-                {{-- Username --}}
+                {{-- Email atau Username --}}
                 <div class="space-y-1  text-gray-900 dark:text-gray-100 ">
-                    <label for="username" class="block text-sm font-medium">
-                        Username
+                    <label for="identifier" class="block text-sm font-medium">
+                        Email atau Username
                     </label>
-                    <input id="username" type="text" name="username" value="{{ old('username') }}" required
-                        autofocus autocomplete="username" placeholder="Masukkan username"
-                        class="input input-bordered w-full @error('username') input-error @enderror bg-white! dark:bg-gray-800! rounded-lg" />
-                    @error('username')
+                    <input id="identifier" type="text" name="identifier" value="{{ old('identifier') }}" required
+                        autofocus autocomplete="username" placeholder="Masukkan email atau username"
+                        class="input input-bordered w-full @error('identifier') input-error @enderror bg-white! dark:bg-gray-800! rounded-lg" />
+                    @error('identifier')
                         <p class="text-sm text-error">{{ $message }}</p>
                     @enderror
                 </div>
