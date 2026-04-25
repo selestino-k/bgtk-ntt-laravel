@@ -14,6 +14,22 @@
                 Berita Terkini
             </h1>
 
+            {{-- Search Bar --}}
+            <form method="GET" action="{{ route('publikasi.berita.berita') }}" class="mb-8">
+                @if($tagId)
+                    <input type="hidden" name="tag" value="{{ $tagId }}">
+                @endif
+                <div class="join w-full max-w-lg">
+                    <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Cari judul berita..." class="input input-bordered join-item w-full" />
+                    <button type="submit" class="btn btn-primary join-item">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                    @if(!empty($search))
+                        <a href="{{ route('publikasi.berita.berita', $tagId ? ['tag' => $tagId] : []) }}" class="btn btn-ghost join-item">Reset</a>
+                    @endif
+                </div>
+            </form>
+
             @if($beritas->isEmpty())
                 <div class="flex flex-col items-center justify-center py-20 text-base-content/50">
                     <i class="fa-regular fa-newspaper text-5xl mb-4"></i>

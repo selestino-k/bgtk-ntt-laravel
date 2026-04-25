@@ -1,4 +1,4 @@
 *.sqlite*
 *.sql*
 *.csv*
-*.xslx*
+*.xlsx

@@ -20,9 +20,22 @@
         </div>
     </div>
 
+    {{-- Search Bar --}}
+    <form method="GET" action="{{ route('admin.publikasi.pengumuman.index') }}" class="mb-6">
+        <div class="join w-full max-w-md">
+            <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Cari judul pengumuman..." class="input input-bordered join-item w-full" />
+            <button type="submit" class="btn btn-primary join-item">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            @if(!empty($search))
+                <a href="{{ route('admin.publikasi.pengumuman.index') }}" class="btn btn-ghost join-item">Reset</a>
+            @endif
+        </div>
+    </form>
+
     @if($beritas->isEmpty())
         <div class="alert">
-            <span>Belum ada pengumuman. Pastikan ada berita dengan tag <strong>pengumuman</strong>.</span>
+            <span>Belum ada pengumuman. Pastikan ada berita dengan tag <strong>Pengumuman</strong>.</span>
         </div>
     @else
         <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
@@ -46,6 +59,12 @@
                 </article>
             @endforeach
         </div>
+
+        @if($beritas->hasPages())
+            <div class="mt-8 flex justify-center">
+                {{ $beritas->links() }}
+            </div>
+        @endif
     @endif
 
 </div>

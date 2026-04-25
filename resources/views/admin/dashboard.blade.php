@@ -50,7 +50,7 @@
             {{-- Total Admin --}}
             <div class="card border border-base-300 shadow-sm bg-base-100">
                 <div class="card-body p-5">
-                    <p class="text-sm text-base-content/60 font-medium">Total Admin</p>
+                    <p class="text-sm text-base-content/60 font-medium">Total Admin & Operator</p>
                     <div class="flex items-center gap-3 mt-1">
                         <i class="fa-solid fa-user text-primary text-xl"></i>
                         <span class="text-4xl font-bold text-base-content">{{ $totalAdmins ?? 0 }}</span>

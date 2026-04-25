@@ -27,6 +27,19 @@
         @endauth
     </div>
 
+    {{-- Search Bar --}}
+    <form method="GET" action="{{ route('admin.publikasi.berita.index') }}" class="mb-6">
+        <div class="join w-full max-w-md">
+            <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Cari judul berita..." class="input input-bordered join-item w-full" />
+            <button type="submit" class="btn btn-primary join-item">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            @if(!empty($search))
+                <a href="{{ route('admin.publikasi.berita.index') }}" class="btn btn-ghost join-item">Reset</a>
+            @endif
+        </div>
+    </form>
+
     @if(session('success'))
         <div class="alert alert-success mb-6">
             <i class="fa-solid fa-circle-check"></i>

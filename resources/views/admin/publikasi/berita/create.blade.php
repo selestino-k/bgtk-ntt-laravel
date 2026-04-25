@@ -74,7 +74,7 @@
                         <summary class="collapse-title text-sm font-medium">Pilih tag</summary>
                         <div class="collapse-content pt-2">
                             @php
-                                $pengumumanTags = $tags->filter(fn($t) => strtolower($t->tagline) === 'pengumuman');
+                                $pengumumanTags = $tags->filter(fn($t) => strtolower($t->tagline) === 'pengumuman' || strtolower($t->tagline) === 'Pengumuman');
                                 $otherTags = $tags->filter(fn($t) => strtolower($t->tagline) !== 'pengumuman');
                             @endphp
                             @if($tags->isEmpty())

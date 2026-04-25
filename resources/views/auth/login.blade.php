@@ -87,15 +87,35 @@
                     <label for="password" class="block text-sm font-medium">
                         Password
                     </label>
-                    <input id="password" type="password" name="password" required autocomplete="current-password"
-                        placeholder="Masukkan password"
-                        class="input input-bordered w-full @error('password') input-error @enderror bg-white! dark:bg-gray-800! rounded-lg" />
+                    <div class="relative">
+                        <input id="password" type="password" name="password" required autocomplete="current-password"
+                            placeholder="Masukkan password"
+                            class="input input-bordered w-full @error('password') input-error @enderror bg-white! dark:bg-gray-800! rounded-lg pr-10" />
+                        <button type="button" id="toggle-password"
+                            class="absolute inset-y-0 right-3 flex items-center text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                            aria-label="Toggle password visibility">
+                            <i id="toggle-password-icon" class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
                     @error('password')
                         <p class="text-sm text-error">{{ $message }}</p>
                     @enderror
                 </div>
 
                 {{-- Submit --}}
+                <script>
+                    document.getElementById('toggle-password').addEventListener('click', function () {
+                        const input = document.getElementById('password');
+                        const icon = document.getElementById('toggle-password-icon');
+                        if (input.type === 'password') {
+                            input.type = 'text';
+                            icon.classList.replace('fa-eye', 'fa-eye-slash');
+                        } else {
+                            input.type = 'password';
+                            icon.classList.replace('fa-eye-slash', 'fa-eye');
+                        }
+                    });
+                </script>
                 <button type="submit" class="btn btn-primary w-full mt-2">
                     Masuk
                 </button>

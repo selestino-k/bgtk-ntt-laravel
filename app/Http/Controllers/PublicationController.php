@@ -18,19 +18,30 @@ class PublicationController extends Controller
         abort_if(! Auth::check() || ! in_array(Auth::user()->role, ['admin', 'operator']), 403);
     }
 
-    public function beritaIndex()
+    protected function ensureAdmin()
+    {
+        abort_if(! Auth::check() || Auth::user()->role !== 'admin', 403);
+    }
+
+    public function beritaIndex(Request $request)
     {
         $this->ensureAdminOrOperator();
 
-        $beritas = Berita::with(['author', 'tags'])
+        $search = $request->input('search');
+
+        $query = Berita::with(['author', 'tags'])
             ->whereDoesntHave('tags', function ($q) {
                 $q->whereRaw('LOWER(tagline) = ?', ['pengumuman']);
             })
-            ->latest()
-            ->paginate(15);
-        
+            ->latest();
 
-        return view('admin.publikasi.berita.index', compact('beritas'));
+        if ($search) {
+            $query->where('judul', 'like', '%' . $search . '%');
+        }
+
+        $beritas = $query->paginate(15)->withQueryString();
+
+        return view('admin.publikasi.berita.index', compact('beritas', 'search'));
     }
 
     public function beritaDetail(Berita $berita)
@@ -68,38 +79,53 @@ class PublicationController extends Controller
             });
         }
 
-        $beritas = $query->paginate(9)->withQueryString();
+        $beritas = $query->paginate(11)->withQueryString();
         $tags = Tag::whereRaw('LOWER(tagline) != ?', ['pengumuman'])->orderBy('tagline')->get();
 
         return view('home.publikasi.berita', compact('beritas', 'tags', 'tagId'));
     }
 
-    public function pengumuman()
+    public function pengumuman(Request $request)
     {
-        $beritas = Berita::whereHas('tags', function ($query) {
-            $query->whereRaw('LOWER(tagline) = ?', ['pengumuman']);
-        })->latest()->with(['author', 'tags'])->get();
+        $search = $request->input('search');
 
-        return view('admin.publikasi.pengumuman.index', compact('beritas'));
+        $query = Berita::whereHas('tags', function ($q) {
+            $q->whereRaw('LOWER(tagline) = ?', ['pengumuman']);
+        })->latest()->with(['author', 'tags']);
+
+        if ($search) {
+            $query->where('judul', 'like', '%' . $search . '%');
+        }
+
+        $beritas = $query->paginate(15)->withQueryString();
+
+        return view('admin.publikasi.pengumuman.index', compact('beritas', 'search'));
     }
 
-    public function pengumumanPublic()
+    public function pengumumanPublic(Request $request)
     {
-        $beritas = Berita::where('published', true)
+        $search = $request->input('search');
+
+        $query = Berita::where('published', true)
             ->whereHas('tags', function ($q) {
                 $q->whereRaw('LOWER(tagline) = ?', ['pengumuman']);
             })
             ->latest()
-            ->with(['author', 'tags'])
-            ->paginate(10)
-            ->withQueryString();
+            ->with(['author', 'tags']);
 
-        return view('home.publikasi.pengumuman', compact('beritas'));
+        if ($search) {
+            $query->where('judul', 'like', '%' . $search . '%');
+        }
+
+        $beritas = $query->paginate(10)->withQueryString();
+
+        return view('home.publikasi.pengumuman', compact('beritas', 'search'));
     }
 
     public function beritaTerkiniPublic(Request $request)
     {
         $tagId = $request->query('tag') ? (int) $request->query('tag') : null;
+        $search = $request->input('search');
 
         $query = Berita::where('published', true)
             ->whereDoesntHave('tags', function ($q) {
@@ -114,13 +140,17 @@ class PublicationController extends Controller
             });
         }
 
+        if ($search) {
+            $query->where('judul', 'like', '%' . $search . '%');
+        }
+
         $beritas = $query->paginate(10)->withQueryString();
 
         $tags = Tag::whereRaw('LOWER(tagline) != ?', ['pengumuman'])
             ->orderBy('tagline')
             ->get();
 
-        return view('home.publikasi.berita', compact('beritas', 'tags', 'tagId'));
+        return view('home.publikasi.berita', compact('beritas', 'tags', 'tagId', 'search'));
     }
 
     public function beritaTerkiniDetailPublic(Request $request, Berita $berita, ViewCounterService $counter)
@@ -376,7 +406,7 @@ class PublicationController extends Controller
 
     public function tagIndex()
     {
-        $this->ensureAdminOrOperator();
+        $this->ensureAdmin();
 
         $tags = Tag::latest()->get();
 
@@ -385,14 +415,14 @@ class PublicationController extends Controller
 
     public function tagCreate()
     {
-        $this->ensureAdminOrOperator();
+        $this->ensureAdmin();
 
         return view('admin.publikasi.tag.create');
     }
 
     public function tagStore(Request $request)
     {
-        $this->ensureAdminOrOperator();
+        $this->ensureAdmin();
 
         $validated = $request->validate([
             'tagline' => 'required|string|max:255|unique:tag,tagline',
@@ -407,14 +437,14 @@ class PublicationController extends Controller
 
     public function tagEdit(Tag $tag)
     {
-        $this->ensureAdminOrOperator();
+        $this->ensureAdmin();
 
         return view('admin.publikasi.tag.edit', compact('tag'));
     }
 
     public function tagUpdate(Request $request, Tag $tag)
     {
-        $this->ensureAdminOrOperator();
+        $this->ensureAdmin();
 
         $validated = $request->validate([
             'tagline' => 'required|string|max:255|unique:tag,tagline,' . $tag->id,
@@ -427,7 +457,7 @@ class PublicationController extends Controller
 
     public function tagDestroy(Tag $tag)
     {
-        $this->ensureAdminOrOperator();
+        $this->ensureAdmin();
 
         $tag->beritas()->detach();
         $tag->delete();

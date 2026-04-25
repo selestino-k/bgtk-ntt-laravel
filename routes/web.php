@@ -57,8 +57,6 @@ Route::get('/ssd', function () {
     return view('home.ssd');
 })->name('ssd');
 
-Route::get('/admin/profil/{profile:slug}', [ProfileController::class, 'show'])->name('profil.show.admin');
-
 Route::view('/login', 'auth.login')->name('login');
 
 Route::post('/login', function (Request $request) {
@@ -125,14 +123,6 @@ Route::middleware('auth')->prefix('admin/publikasi')->name('admin.publikasi.')->
     Route::delete('/tag/{tag}', [PublicationController::class, 'tagDestroy'])->name('tag.destroy');
 });
 
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('profil', ProfileController::class)->except(['show'])->parameters(['profil' => 'profile']);
-});
-
-Route::middleware('auth')->prefix('operator')->name('operator.')->group(function () {
-    Route::resource('profil', ProfileController::class)->except(['show'])->parameters(['profil' => 'profile']);
-});
-
 Route::middleware('auth')->prefix('admin/slideshow')->name('admin.slideshow.')->group(function () {
     Route::get('/', [\App\Http\Controllers\SlideshowController::class, 'index'])->name('index');
     Route::get('/create', [\App\Http\Controllers\SlideshowController::class, 'create'])->name('create');
@@ -149,4 +139,14 @@ Route::middleware('auth')->prefix('admin/user')->name('admin.user.')->group(func
     Route::get('/{user}/edit', [UserContoller::class, 'edit'])->name('edit');
     Route::patch('/{user}', [UserContoller::class, 'update'])->name('update');
     Route::delete('/{user}', [UserContoller::class, 'destroy'])->name('destroy');
+});
+
+Route::middleware('auth')->prefix('admin/profil')->name('admin.profil.')->group(function () {
+    Route::get('/', [ProfileController::class, 'index'])->name('index');
+    Route::get('/create', [ProfileController::class, 'create'])->name('create');
+    Route::post('/', [ProfileController::class, 'store'])->name('store');
+    Route::get('/{profile:slug}', [ProfileController::class, 'show'])->name('show');
+    Route::get('/{profile:slug}/edit', [ProfileController::class, 'edit'])->name('edit');
+    Route::patch('/{profile:slug}', [ProfileController::class, 'update'])->name('update');
+    Route::delete('/{profile:slug}', [ProfileController::class, 'destroy'])->name('destroy');
 });

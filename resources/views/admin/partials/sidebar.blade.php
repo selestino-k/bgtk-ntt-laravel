@@ -53,6 +53,7 @@
         <p class="text-xs font-semibold uppercase tracking-wider text-base-content/50">Manajemen</p>
     </div>
 
+    @if(Auth::user()->role === 'admin')
     {{-- Tag --}}
     <a href="{{ route('admin.publikasi.tag.index') }}"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
@@ -76,6 +77,7 @@
         <i class="fa-solid fa-images w-4 text-center"></i>
         <span>Slideshow</span>
     </a>
+    @endif
 
     {{-- User Management --}}
     <a href="{{ route('admin.user.index') }}"

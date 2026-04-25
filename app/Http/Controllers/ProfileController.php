@@ -36,7 +36,7 @@ class ProfileController extends Controller
 
     private function viewPath(string $view): string
     {
-        return 'admin.profil.' . $view;
+        return $this->routePrefix() . '.profil.' . $view;
     }
 
     private function routeName(string $name): string
@@ -46,7 +46,7 @@ class ProfileController extends Controller
 
     private function authorizeRole(): void
     {
-        if (Auth::user()->role !== $this->routePrefix()) {
+        if (!Auth::check() || Auth::user()->role !== 'admin') {
             abort(403);
         }
     }
