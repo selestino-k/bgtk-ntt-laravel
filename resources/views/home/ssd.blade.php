@@ -54,7 +54,9 @@
                         <div class="collapse-content font-inter text-base-content">
                             <p>
                                 BGTK NTT berlokasi di Jl. Perintis Kemerdekaan I, Kayu Putih, Kec. Oebobo, Kota Kupang,
-                                Nusa Tenggara Timur.
+                                Nusa Tenggara Timur. <br/>
+                                Lokasi di Google Maps dapat dilihat <a href="https://maps.app.goo.gl/fR76vqUh6ESDNZ8Z6" target="_blank"
+                                    class="text-primary hover:underline font-bold">di sini</a>
                             </p>
                         </div>
                     </div>

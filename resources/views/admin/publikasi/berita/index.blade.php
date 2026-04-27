@@ -77,7 +77,7 @@
                         @if($berita->tags->isNotEmpty())
                             <div class="flex flex-wrap gap-1 mb-3">
                                 @foreach($berita->tags as $tag)
-                                    <span class="badge badge-outline badge-sm">{{ $tag->tagline }}</span>
+                                    <span class="badge badge-outline badge-sm font-medium">{{ $tag->tagline }}</span>
                                 @endforeach
                             </div>
                         @endif

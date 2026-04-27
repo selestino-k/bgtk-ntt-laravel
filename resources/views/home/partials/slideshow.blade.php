@@ -47,7 +47,7 @@
                 @endforeach
             </div>
 
-            <script>
+            <script nonce="{{ $cspNonce }}">
             (function () {
                 const carousel = document.getElementById('heroCarousel');
                 const dots     = Array.from(document.querySelectorAll('.carousel-dot'));
@@ -96,7 +96,7 @@
     @else
         {{-- Fallback banner when no slideshow photos are active --}}
         <div class="w-full h-[70vh] flex items-center justify-center">
-            <img src="/images/assets/carousel-home-light.avif" alt="BGTK NTT" class="w-full h-full object-cover">
+            <img src="/images/assets/carousel-home-light.png" alt="BGTK NTT" class="w-full h-full object-cover">
         </div>
     @endif
 

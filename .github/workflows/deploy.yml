@@ -7,24 +7,30 @@ on:
 
 jobs:
   build-and-deploy:
-    name: Build & Deploy
+    name: Build & Push Deploy Branch
     runs-on: ubuntu-latest
+
+    env:
+      DEPLOY_BRANCH: deploy
+      DEPLOY_PATH: /home/vllwdwqk/public_html
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           extensions: mbstring, bcmath, pdo, pdo_sqlite, zip, gd
           coverage: none
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install Composer dependencies
@@ -36,48 +42,24 @@ jobs:
       - name: Build frontend assets
         run: npm run build
 
-      - name: Create SQLite database file
-        run: touch database/database.sqlite
-
-      - name: Create .env file
+      - name: Push build artifacts to deploy branch
         run: |
-          cp .env.example .env
-          php artisan key:generate
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: ${{ secrets.FTP_PORT }}
-          local-dir: ./
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/tests/**
-            **/.env
-            **/storage/logs/**
-            **/storage/framework/cache/**
-            **/storage/framework/sessions/**
-            **/storage/framework/views/**
-            **/.github/**
-            **/database/*.sql
-            **/database/*.csv
-            **/database/database.sqlite
+          # Rewrite DEPLOYPATH in .cpanel.yml for this environment
+          sed -i "s|export DEPLOYPATH=.*|export DEPLOYPATH=${{ env.DEPLOY_PATH }}|" .cpanel.yml
 
-      - name: Run migrations via SSH
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            cd ${{ secrets.DEPLOY_PATH }}
-            php artisan migrate --force
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
+          # Switch to (or create) the deploy branch
+          git checkout -B ${{ env.DEPLOY_BRANCH }}
+
+          # Force-add build artifacts that are normally gitignored
+          git add -f vendor/ public/build/ .cpanel.yml
+
+          git commit -m "Deploy build artifacts from ${{ github.ref_name }} [skip ci]" || echo "Nothing to commit"
+          git push origin ${{ env.DEPLOY_BRANCH }} --force
+
+      - name: Trigger cPanel Git pull webhook
+        run: |
+          curl -s --max-time 30 \
+            "${{ secrets.CPANEL_WEBHOOK_URL }}" || echo "Webhook called"

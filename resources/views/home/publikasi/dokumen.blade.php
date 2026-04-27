@@ -116,7 +116,7 @@
 @include('home.partials.footer')
 
 @push('scripts')
-<script>
+<script nonce="{{ $cspNonce }}">
     function filterDokumen() {
         const input = document.getElementById('dokumen-search').value.toLowerCase();
         const rows = document.querySelectorAll('.dokumen-row');

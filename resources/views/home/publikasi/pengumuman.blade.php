@@ -104,7 +104,7 @@
 
             {{-- Pagination --}}
             @if($beritas->lastPage() > 1)
-                <div class="flex justify-center gap-2 mt-10 font-semibold flex-wrap">
+                <div class="flex flex-wrap justify-center gap-2 mt-10 font-semibold">
                     @if($beritas->onFirstPage())
                         <button class="btn btn-sm btn-outline" disabled>Sebelumnya</button>
                     @else

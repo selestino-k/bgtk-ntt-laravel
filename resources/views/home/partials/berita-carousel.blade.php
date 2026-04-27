@@ -10,10 +10,6 @@
                 <h2 class="text-5xl font-semibold font-montserrat text-primary mb-3">
                     Berita Terkini
                 </h2>
-                <p class="text-lg text-gray-500 dark:text-gray-400 mb-6 font-inter">
-                    Dapatkan informasi terbaru seputar kegiatan, program, dan inovasi BGTK Provinsi NTT.
-                </p>
-
                 <div class="grid grid-cols-3 gap-4">
                     @forelse($latestPosts as $beritas)
                         <a href="{{ route('publikasi.berita.show', $beritas->slug) }}"

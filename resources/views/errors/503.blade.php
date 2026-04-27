@@ -1,6 +1,6 @@
 @extends('errors.layout')
 
-@section('title', '403 Forbidden')
+@section('title', 'Sedang Dalam Pemeliharaan')
 
 @section('content')
 <div class="grid w-full">
@@ -31,29 +31,19 @@
             />
 
             <div class="text-center mt-2 max-w-full">
-                <h1 class="text-5xl sm:text-7xl lg:text-9xl font-bold font-montserrat text-primary">
-                    403
+                <div class="flex justify-center mb-4">
+                    <i class="fa-solid fa-wrench text-primary text-5xl sm:text-7xl lg:text-9xl"></i>
+                </div>
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-bold font-montserrat text-primary mt-4">
+                    Pemeliharaan
                 </h1>
-                <h2 class="text-2xl lg:text-4xl mt-2 text-primary font-bold font-montserrat">
-                    Forbidden
+                <h2 class="text-xl lg:text-3xl mt-2 text-primary font-bold font-montserrat">
+                    Sistem Sedang Diperbaiki
                 </h2>
                 <p class="text-lg mt-4 mb-6 font-semibold text-black dark:text-white font-montserrat">
-                    Maaf, Anda tidak memiliki izin untuk mengakses halaman ini.
+                    Mohon maaf atas ketidaknyamanannya. Website BGTK Provinsi NTT<br>
+                    sedang dalam proses pemeliharaan. Silakan kembali beberapa saat lagi.
                 </p>
-            </div>
-
-            <div class="flex items-center gap-4 font-montserrat">
-                <a
-                    onclick="history.back()"
-                    class="btn btn-md btn-outline text-md px-6 cursor-pointer"
-                >
-                    <i class="fa-solid fa-arrow-left"></i>
-                    Kembali
-                </a>
-                <a href="{{ url('/') }}" class="btn btn-md btn-primary text-md px-6">
-                    <i class="fa-solid fa-house"></i>
-                    Beranda
-                </a>
             </div>
 
         </main>

@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @push('styles')
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" integrity="sha384-JUh163oCRItcbPme8pYnROHQMC6fNKTBWtRG3I3I0erJkzNgL7uxKlNwcrcFKeqF" crossorigin="anonymous"></script>
 @endpush
 
 @section('content')
@@ -146,7 +146,7 @@
 @endsection
 
 @push('scripts')
-<script>
+<script nonce="{{ $cspNonce }}">
     (function () {
         const chartData = @json($chartData ?? []);
         const labels = chartData.map(d => d.date);

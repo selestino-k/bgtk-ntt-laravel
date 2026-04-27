@@ -3,32 +3,32 @@
         [
             'title' => 'Program Pembelajaran Mendalam (PM)',
             'link'  => '/program/ppm',
-            'image' => '/images/assets/pm.webp',
+            'image' => '/images/assets/program/pm.png',
         ],
         [
             'title' => 'Koding dan Kecerdasan Artifisial (KKA)',
             'link'  => '/program/kka',
-            'image' => '/images/assets/kka.webp',
+            'image' => '/images/assets/program/kka.png',
         ],
         [
             'title' => 'Program Pendidikan Profesi Guru (PPG)',
             'link'  => '/program/ppg',
-            'image' => '/images/assets/ppg.webp',
+            'image' => '/images/assets/program/ppg.png',
         ],
         [
             'title' => 'Program Pengembangan Keprofesian Guru (PKG) - Bahasa Inggris',
             'link'  => '/program/pkb',
-            'image' => '/images/assets/pkg-bi.webp',
+            'image' => '/images/assets/program/pkg-bi.png',
         ],
         [
             'title' => 'Program Pengembangan Keprofesian Guru (PKG) - Bimbingan Konseling',
             'link'  => '/program/pkm',
-            'image' => '/images/assets/pkg-bk.webp',
+            'image' => '/images/assets/program/pkg-bk.png',
         ],
         [
             'title' => 'Program Bakal Calon Kepala Sekolah (BCKS)',
             'link'  => '/program/bcks',
-            'image' => '/images/assets/bcks.webp',
+            'image' => '/images/assets/program/bcks.png',
         ],
     ];
 
@@ -91,7 +91,7 @@
 </section>
 
 @push('scripts')
-<script>
+<script nonce="{{ $cspNonce }}">
 (function () {
     const carousel = document.getElementById('program-carousel');
     if (!carousel) return;

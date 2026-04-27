@@ -59,7 +59,7 @@
 </div>
 
 @push('scripts')
-<script>
+<script nonce="{{ $cspNonce }}">
     document.getElementById('gambar_file_input').addEventListener('change', function () {
         const maxSize = 2 * 1024 * 1024; // 2MB
         const errorEl = document.getElementById('gambar_file_size_error');

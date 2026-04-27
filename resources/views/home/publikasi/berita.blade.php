@@ -67,7 +67,7 @@
                                 @if($berita->tags->isNotEmpty())
                                     <div class="flex flex-wrap gap-1 mb-1">
                                         @foreach($berita->tags->take(3) as $tag)
-                                            <span class="badge badge-sm badge-outline">{{ $tag->tagline }}</span>
+                                            <span class="badge badge-sm badge-outline font-medium">{{ $tag->tagline }}</span>
                                         @endforeach
                                     </div>
                                 @endif
@@ -96,7 +96,7 @@
 
                 {{-- Pagination --}}
                 @if($beritas->lastPage() > 1)
-                    <div class="flex justify-center gap-2 mt-10 font-semibold">
+                    <div class="flex flex-wrap justify-center gap-2 mt-10 font-semibold">
                         {{-- Previous --}}
                         @if($beritas->onFirstPage())
                             <button class="btn btn-sm btn-outline" disabled>Sebelumnya</button>

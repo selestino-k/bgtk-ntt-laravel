@@ -208,8 +208,15 @@ class PublicationController extends Controller
             'judul' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
             'file_url' => 'nullable|required_without:file|url|max:255',
-            'file' => 'nullable|required_without:file_url|file|mimes:pdf,doc,docx,txt|max:5120',
+            'file' => 'nullable|required_without:file_url|file|mimes:pdf,doc,docx,txt|max:2048',
             'kategori' => 'nullable|string|max:255',
+        ], [
+            'file.max' => 'Ukuran file tidak boleh melebihi 2 MB.',
+            'file.uploaded' => 'File gagal diunggah. Pastikan ukuran file tidak melebihi 2 MB.',
+            'file.mimes' => 'Format file tidak valid. Hanya PDF, DOC, DOCX, dan TXT yang diizinkan.',
+            'file.required_without' => 'Upload file atau masukkan tautan file.',
+            'file_url.required_without' => 'Masukkan tautan file atau upload file.',
+            'file_url.url' => 'Tautan file harus berupa URL yang valid.',
         ]);
 
         if ($request->hasFile('file')) {
@@ -254,7 +261,7 @@ class PublicationController extends Controller
             'judul' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
             'file_url' => 'nullable|url|max:255',
-            'file' => 'nullable|file|mimes:pdf,doc,docx,txt|max:5120',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,txt|max:2048',
             'kategori' => 'nullable|string|max:255',
         ]);
 
@@ -286,7 +293,7 @@ class PublicationController extends Controller
             'kategori' => $validated['kategori'] ?? null,
         ]);
 
-        return redirect()->route('dokumen.index')->with('success', 'Dokumen berhasil diperbarui.');
+        return redirect()->route('admin.publikasi.dokumen.index')->with('success', 'Dokumen berhasil diperbarui.');
     }
 
     public function dokumenDestroy(Dokumen $dokumen)
@@ -295,7 +302,7 @@ class PublicationController extends Controller
 
         $dokumen->delete();
 
-        return redirect()->route('dokumen.index')->with('success', 'Dokumen berhasil dihapus.');
+        return redirect()->route('admin.publikasi.dokumen.index')->with('success', 'Dokumen berhasil dihapus.');
     }
 
     public function show(Berita $berita)
