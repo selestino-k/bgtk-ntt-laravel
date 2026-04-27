@@ -2,7 +2,7 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/vllwdwqk/public_html
-
+    
     # Create .env from example if it doesn't exist yet
     - '[ -f .env ] || cp .env.example .env'
 
