@@ -21,13 +21,13 @@
             <img
                 src="{{ asset('images/assets/logo-web-bgtk-ntt.webp') }}"
                 alt="Logo BGTK"
-                class="max-w-md dark:hidden"
+                class="w-full max-w-md dark:hidden"
             />
             {{-- Logo dark --}}
             <img
                 src="{{ asset('images/assets/logo-web-bgtk-ntt-dark.webp') }}"
                 alt="Logo BGTK"
-                class="max-w-md hidden dark:block"
+                class="w-full max-w-md hidden dark:block"
             />
 
             <div class="text-center mt-2 max-w-full">

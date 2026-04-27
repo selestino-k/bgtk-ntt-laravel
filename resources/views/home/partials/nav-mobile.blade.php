@@ -17,10 +17,12 @@
 <div id="nav-sheet"
     class="fixed top-0 left-0 h-full w-72 bg-white dark:bg-base-200 z-50 shadow-xl overflow-y-auto transform -translate-x-full transition-transform duration-300 xl:hidden">
     <div class="flex items-center justify-between px-4 py-4">
+        <a href="/" class="flex items-center gap-2">
         <img src="/images/assets/logo-web-bgtk-ntt.webp" alt="Balai GTK Logo" class="h-10 w-auto dark:hidden"
             onerror="this.style.display='none'">
         <img src="/images/assets/logo-web-bgtk-ntt-dark.webp" alt="Balai GTK Logo" class="h-10 w-auto hidden dark:block"
             onerror="this.style.display='none'">
+         </a>
         <button onclick="closeNavSheet()" class="btn btn-ghost btn-sm btn-circle">
             <i class="fa-solid fa-xmark text-lg"></i>
         </button>

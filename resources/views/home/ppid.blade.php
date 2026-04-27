@@ -27,7 +27,7 @@
                         <h3 class="text-md lg:text-2xl font-semibold font-montserrat tracking-tight mb-3 md:mb-5 pr-3 text-primary">
                             Balai Guru dan Tenaga Kependidikan (BGTK) Provinsi NTT
                         </h3>
-                        <a href="/maklumat-pelayanan-ppid-bbgtk-ntt"
+                        <a href="{{ asset('images/assets/maklumat-pelayanan-template.jpg') }}"
                            class="inline-flex items-center gap-2 w-max px-4 py-2 bg-primary text-white rounded-lg font-montserrat text-sm lg:text-base hover:bg-primary/90 transition-colors duration-200">
                             <i class="fa-solid fa-download"></i>
                             Unduh Maklumat Pelayanan
@@ -133,8 +133,42 @@
                                                     <td class="hidden md:table-cell text-base-content/70 text-sm">
                                                         {{ $dok->deskripsi ?? '-' }}
                                                     </td>
-                                                    <td class="hidden sm:table-cell text-sm uppercase text-base-content/60">
-                                                        {{ strtoupper($dok->file_type) }}
+                                                    <td class="hidden sm:table-cell text-sm text-base-content/60">
+                                                        @php
+                                                            $mimeToExt = [
+                                                                'application/pdf'                                                          => 'PDF',
+                                                                'application/msword'                                                       => 'Word',
+                                                                'application/vnd.openxmlformats-officedocument.wordprocessingml.document'  => 'Word',
+                                                                'application/vnd.ms-excel'                                                 => 'Excel',
+                                                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'        => 'Excel',
+                                                                'application/vnd.ms-powerpoint'                                            => 'PowerPoint',
+                                                                'application/vnd.openxmlformats-officedocument.presentationml.presentation'=> 'PowerPoint',
+                                                                'image/jpeg'                                                               => 'Gambar',
+                                                                'image/png'                                                                => 'Gambar',
+                                                                'image/gif'                                                                => 'Gambar',
+                                                                'image/webp'                                                               => 'Gambar',
+                                                                'application/zip'                                                          => 'ZIP',
+                                                                'application/x-zip-compressed'                                             => 'ZIP',
+                                                                'application/x-rar-compressed'                                             => 'RAR',
+                                                                'application/vnd.rar'                                                      => 'RAR',
+                                                                // plain extensions as fallback
+                                                                'pdf'  => 'PDF',
+                                                                'doc'  => 'Word',
+                                                                'docx' => 'Word',
+                                                                'xls'  => 'Excel',
+                                                                'xlsx' => 'Excel',
+                                                                'ppt'  => 'PowerPoint',
+                                                                'pptx' => 'PowerPoint',
+                                                                'jpg'  => 'Gambar',
+                                                                'jpeg' => 'Gambar',
+                                                                'png'  => 'Gambar',
+                                                                'zip'  => 'ZIP',
+                                                                'rar'  => 'RAR',
+                                                            ];
+                                                            $rawType = strtolower($dok->file_type);
+                                                            $fileLabel = $mimeToExt[$rawType] ?? strtoupper(last(explode('/', $rawType)));
+                                                        @endphp
+                                                        {{ $fileLabel }}
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="{{ asset('storage/' . $dok->file_url) }}"
