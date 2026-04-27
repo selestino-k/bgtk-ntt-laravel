@@ -1,0 +1,65 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    name: Build & Push Deploy Branch
+    runs-on: ubuntu-latest
+
+    env:
+      DEPLOY_BRANCH: deploy
+      DEPLOY_PATH: /home/vllwdwqk/public_html
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, bcmath, pdo, pdo_sqlite, zip, gd
+          coverage: none
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+
+      - name: Install NPM dependencies
+        run: npm ci
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Push build artifacts to deploy branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Rewrite DEPLOYPATH in .cpanel.yml for this environment
+          sed -i "s|export DEPLOYPATH=.*|export DEPLOYPATH=${{ env.DEPLOY_PATH }}|" .cpanel.yml
+
+          # Switch to (or create) the deploy branch
+          git checkout -B ${{ env.DEPLOY_BRANCH }}
+
+          # Force-add build artifacts that are normally gitignored
+          git add -f vendor/ public/build/ .cpanel.yml
+
+          git commit -m "Deploy build artifacts from ${{ github.ref_name }} [skip ci]" || echo "Nothing to commit"
+          git push origin ${{ env.DEPLOY_BRANCH }} --force
+
+      - name: Trigger cPanel Git pull webhook
+        run: |
+          curl -s --max-time 30 \
+            "${{ secrets.CPANEL_WEBHOOK_URL }}" || echo "Webhook called"
