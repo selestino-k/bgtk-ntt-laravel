@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserContoller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicationController;
+use App\Http\Controllers\SitemapController;
 use App\Models\Berita;
 use App\Models\Dokumen;
 use App\Models\Slideshow;
@@ -58,6 +59,8 @@ Route::get('/ssd', function () {
 })->name('ssd');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 

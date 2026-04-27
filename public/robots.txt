@@ -5,4 +5,9 @@ Disallow: /logout
 Disallow: /password/
 Disallow: /auth/
 Disallow: /admin/ 
+Disallow: /admin/*
+Disallow: /admin
+
+Sitemap: https://bgtkntt.kemendikdasmen.go.id/sitemap.xml
+
  
