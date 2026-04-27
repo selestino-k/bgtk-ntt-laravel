@@ -47,7 +47,7 @@
                 @endforeach
             </div>
 
-            <script>
+            <script nonce="{{ $cspNonce }}">
             (function () {
                 const carousel = document.getElementById('heroCarousel');
                 const dots     = Array.from(document.querySelectorAll('.carousel-dot'));

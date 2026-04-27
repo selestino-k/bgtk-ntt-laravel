@@ -176,7 +176,7 @@
 @endsection
 
 @push('scripts')
-    <script>
+    <script nonce="{{ $cspNonce }}">
         function slugify(value) {
             return value.toString().toLowerCase()
                 .trim()

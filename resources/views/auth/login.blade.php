@@ -13,8 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
         rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://kit.fontawesome.com/33409da17b.js" crossorigin="anonymous"></script>
-    <style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css" integrity="sha384-nRgPTkuX86pH8yjPJUAFuASXQSSl2/bBUiNV47vSYpKFxHJhbcrGnmlYpYJMeD7a" crossorigin="anonymous">
+    <style nonce="{{ $cspNonce }}">
         .font-montserrat {
             font-family: 'Montserrat', sans-serif;
         }
@@ -103,7 +103,7 @@
                 </div>
 
                 {{-- Submit --}}
-                <script>
+                <script nonce="{{ $cspNonce }}">
                     document.getElementById('toggle-password').addEventListener('click', function () {
                         const input = document.getElementById('password');
                         const icon = document.getElementById('toggle-password-icon');

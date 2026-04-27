@@ -91,7 +91,7 @@
 </section>
 
 @push('scripts')
-<script>
+<script nonce="{{ $cspNonce }}">
 (function () {
     const carousel = document.getElementById('program-carousel');
     if (!carousel) return;

@@ -196,7 +196,7 @@
 @include('home.partials.footer')
 
 @push('scripts')
-<script>
+<script nonce="{{ $cspNonce }}">
     (function () {
         const tabBtns = document.querySelectorAll('.ppid-tab-btn');
         const tableWrapper = document.getElementById('ppid-dokumen-table');

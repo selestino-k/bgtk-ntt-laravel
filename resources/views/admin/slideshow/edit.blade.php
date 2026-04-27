@@ -114,7 +114,7 @@
 @endsection
 
 @push('scripts')
-<script>
+<script nonce="{{ $cspNonce }}">
     function previewImage(input) {
         const wrapper = document.getElementById('image-preview-wrapper');
         const preview = document.getElementById('image-preview');

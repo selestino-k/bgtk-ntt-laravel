@@ -1,4 +1,4 @@
-<script>
+<script nonce="{{ $cspNonce }}">
     function openNavSheet() {
         document.getElementById('nav-sheet').classList.remove('-translate-x-full');
         document.getElementById('nav-overlay').classList.remove('hidden');

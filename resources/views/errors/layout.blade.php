@@ -9,10 +9,10 @@
     <link rel="icon" type="image/webp" href="{{ asset('images/assets/favicon.ico') }}">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=montserrat:400,500,600,700|inter:400,500,600,700" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/33409da17b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css" integrity="sha384-nRgPTkuX86pH8yjPJUAFuASXQSSl2/bBUiNV47vSYpKFxHJhbcrGnmlYpYJMeD7a" crossorigin="anonymous">
 
     {{-- Persist theme before first paint to avoid flash --}}
-    <script>
+    <script nonce="{{ $cspNonce }}">
         const t = localStorage.getItem('theme');
         if (t) document.documentElement.setAttribute('data-theme', t);
     </script>
