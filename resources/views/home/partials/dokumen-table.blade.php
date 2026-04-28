@@ -29,7 +29,12 @@
                             </td>
                             <td class="py-3 px-4">
                                 @if(!empty($doc['file_url']))
-                                    <a href="{{ $doc['file_url'] }}"
+                                    @php
+                                        $fileUrl = \Illuminate\Support\Str::startsWith($doc->file_url, ['http://', 'https://'])
+                                            ? $doc->file_url
+                                            : asset('storage/' . $doc->file_url);
+                                    @endphp
+                                    <a href="{{ $fileUrl }}"
                                        target="_blank"
                                        rel="noopener noreferrer"
                                        class="inline-flex items-center gap-1 text-primary hover:underline font-medium">
