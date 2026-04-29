@@ -145,7 +145,7 @@ return [
 
     'redis' => [
 
-        'client' => env('REDIS_CLIENT', 'predis'),
+        'client' => env('REDIS_CLIENT', 'phpredis'),
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
@@ -153,16 +153,28 @@ return [
             'persistent' => env('REDIS_PERSISTENT', false),
         ],
 
+        'local' => [
+            'scheme'   => 'tcp',
+            'host'     => env('REDIS_HOST', '127.0.0.1'),
+            'port'     => (int) env('REDIS_PORT', 6379),
+            'password' => env('REDIS_PASSWORD'),
+            'database' => (int) env('REDIS_DB', 0),
+            'timeout'  => 1.5,
+            'read_write_timeout' => 1.5,
+        ],
+
         'upstash' => [
-            'url' => env('UPSTASH_REDIS_URL'),
-            'host' => env('UPSTASH_REDIS_HOST', '127.0.0.1'),
-            'username' => env('UPSTASH_REDIS_USERNAME', 'default'),
-            'password' => env('UPSTASH_REDIS_PASSWORD'),
-            'port' => env('UPSTASH_REDIS_PORT', '6379'),
-            'database' => 0,
-            'scheme' => 'rediss',
-            'options' => [
-                'ssl' => ['verify_peer' => false],
+            'scheme'             => 'tls',
+            'host'               => env('UPSTASH_REDIS_HOST'),
+            'username'           => 'default',
+            'password'           => env('UPSTASH_REDIS_PASSWORD'),
+            'port'               => (int) env('UPSTASH_REDIS_PORT', 6379),
+            'database'           => 0,
+            'timeout'            => 1.5,
+            'read_write_timeout' => 1.5,
+            'ssl'                => [
+                'verify_peer'      => false,
+                'verify_peer_name' => false,
             ],
         ],
 

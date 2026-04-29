@@ -31,9 +31,13 @@
         {{-- Breadcrumb --}}
         <div class="text-sm text-base-content/50 mb-6">
             <a href="/" class="hover:text-primary">Beranda</a>
-            <span class="mx-2">/</span>
+            <span class="mx-2">
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </span>
             <a href="{{ route('publikasi.berita.berita') }}" class="hover:text-primary">Berita Terkini</a>
-            <span class="mx-2">/</span>
+            <span class="mx-2">
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </span>
             <span class="text-primary">{{ $berita->judul }}</span>
         </div>
 
