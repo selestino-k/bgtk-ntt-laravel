@@ -207,7 +207,7 @@ class PublicationController extends Controller
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
-            'file_url' => 'nullable|required_without:file|url|max:255',
+            'file_url' => ['nullable', 'required_without:file', 'max:255', 'regex:/^(https?:\/\/|\/).*/'],
             'file' => 'nullable|required_without:file_url|file|mimes:pdf,doc,docx,txt|max:2048',
             'kategori' => 'nullable|string|max:255',
         ], [
@@ -216,7 +216,7 @@ class PublicationController extends Controller
             'file.mimes' => 'Format file tidak valid. Hanya PDF, DOC, DOCX, dan TXT yang diizinkan.',
             'file.required_without' => 'Upload file atau masukkan tautan file.',
             'file_url.required_without' => 'Masukkan tautan file atau upload file.',
-            'file_url.url' => 'Tautan file harus berupa URL yang valid.',
+            'file_url.regex' => 'Tautan file harus berupa URL (https://...) atau path relatif (/storage/...).',
         ]);
 
         if ($request->hasFile('file')) {
@@ -260,12 +260,17 @@ class PublicationController extends Controller
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
-            'file_url' => 'nullable|url|max:255',
+            'file_url' => ['nullable', 'max:255', 'regex:/^(https?:\/\/|\/).*/'],
             'file' => 'nullable|file|mimes:pdf,doc,docx,txt|max:2048',
             'kategori' => 'nullable|string|max:255',
         ]);
 
         if ($request->hasFile('file')) {
+            // Delete old file if it was locally stored
+            if ($dokumen->file_url && !str_starts_with($dokumen->file_url, 'http')) {
+                Storage::disk('public')->delete($dokumen->file_url);
+            }
+
             $path = $request->file('file')->store('dokumen', 'public');
 
             $validated['file_url'] = $path;
@@ -299,6 +304,10 @@ class PublicationController extends Controller
     public function dokumenDestroy(Dokumen $dokumen)
     {
         $this->ensureAdminOrOperator();
+
+        if ($dokumen->file_url && !str_starts_with($dokumen->file_url, 'http')) {
+            Storage::disk('public')->delete($dokumen->file_url);
+        }
 
         $dokumen->delete();
 

@@ -34,7 +34,7 @@
         <div class="card-body p-5 gap-2">
             <div class="flex flex-wrap items-center gap-3">
                 <span class="badge {{ $berita->published ? 'badge-success' : 'badge-ghost' }} font-semibold uppercase">{{ $berita->published ? 'Published' : 'Draft' }}</span>
-                <span class="text-sm text-base-content/60">{{ $berita->created_at->format('d M Y H:i') }}</span>
+                <span class="text-sm text-base-content/60">{{ $berita->created_at->locale('id')->isoFormat('D MMMM YYYY HH:mm') }}</span>
             </div>
             @if($berita->author)
                 <p class="text-sm">Oleh <span class="font-semibold">{{ $berita->author->username }}</span></p>

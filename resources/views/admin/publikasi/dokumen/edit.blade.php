@@ -44,7 +44,7 @@
 
                 <div class="form-control">
                     <label class="label"><span class="label-text font-medium">Tautan File</span></label>
-                    <input type="url" name="file_url" value="{{ old('file_url', $dokumen->file_url) }}" placeholder="https://example.com/file.pdf" class="input input-bordered w-full" />
+                    <input type="text" name="file_url" value="{{ old('file_url', $dokumen->file_url) }}" placeholder="https://example.com/file.pdf atau /storage/dokumen/file.pdf" class="input input-bordered w-full" />
                     @error('file_url')<p class="mt-1 text-sm text-error">{{ $message }}</p>@enderror
                 </div>
 

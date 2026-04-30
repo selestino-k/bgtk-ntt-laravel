@@ -86,7 +86,7 @@
                                         <span class="text-xs text-base-content/50">{{ $berita->author->username }}</span>
                                     @endif
                                     <span class="text-xs text-base-content/50">
-                                        {{ $berita->created_at->translatedFormat('d M Y') }}
+                                        {{ $berita->created_at->locale('id')->isoFormat('D MMMM YYYY') }}
                                     </span>
                                 </div>
                             </div>
