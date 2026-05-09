@@ -6,7 +6,7 @@
 
         {{-- Hamburger button (mobile only) --}}
         <div class="xl:hidden flex">
-            <button onclick="openNavSheet()" class="btn btn-ghost btn-sm" aria-label="Open menu">
+            <button id="nav-open-btn" class="btn btn-ghost btn-sm" aria-label="Open menu">
                 <i class="fa-solid fa-bars text-xl text-primary"></i>
             </button>
         </div>

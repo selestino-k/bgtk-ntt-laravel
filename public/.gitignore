@@ -1,0 +1,5 @@
+index.php
+maintenance-index.php
+*.zip
+*.log
+*.sql

@@ -67,7 +67,7 @@
                     <div class="card-body p-5">
                         <div class="flex items-center justify-between gap-3 mb-3">
                             <span class="badge {{ $berita->published ? 'badge-success' : 'badge-ghost' }} badge-sm font-semibold uppercase">{{ $berita->published ? 'Diterbitkan' : 'Draft' }}</span>
-                            <span class="text-xs text-base-content/60">{{ $berita->created_at->format('d M Y') }}</span>
+                            <span class="text-xs text-base-content/60">{{ $berita->created_at->locale('id')->isoFormat('D MMMM YYYY') }}</span>
                         </div>
                         <h2 class="card-title text-base mb-2">{{ $berita->judul }}</h2>
                         @if($berita->author)

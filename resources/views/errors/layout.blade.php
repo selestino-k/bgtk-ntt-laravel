@@ -18,6 +18,13 @@
     </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <script nonce="{{ $cspNonce }}">
+        document.addEventListener('DOMContentLoaded', function () {
+            var backBtn = document.getElementById('btn-go-back');
+            if (backBtn) backBtn.addEventListener('click', function () { history.back(); });
+        });
+    </script>
 </head>
 
 <body class="font-inter antialiased">

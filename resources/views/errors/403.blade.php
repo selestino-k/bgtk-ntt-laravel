@@ -44,7 +44,7 @@
 
             <div class="flex items-center gap-4 font-montserrat">
                 <a
-                    onclick="history.back()"
+                    id="btn-go-back"
                     class="btn btn-md btn-outline text-md px-6 cursor-pointer"
                 >
                     <i class="fa-solid fa-arrow-left"></i>

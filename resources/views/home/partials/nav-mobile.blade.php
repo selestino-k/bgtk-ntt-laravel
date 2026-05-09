@@ -1,17 +1,28 @@
 <script nonce="{{ $cspNonce }}">
-    function openNavSheet() {
-        document.getElementById('nav-sheet').classList.remove('-translate-x-full');
-        document.getElementById('nav-overlay').classList.remove('hidden');
-    }
+    document.addEventListener('DOMContentLoaded', function () {
+        var sheet   = document.getElementById('nav-sheet');
+        var overlay = document.getElementById('nav-overlay');
+        var openBtn = document.getElementById('nav-open-btn');
+        var closeBtn = document.getElementById('nav-close-btn');
 
-    function closeNavSheet() {
-        document.getElementById('nav-sheet').classList.add('-translate-x-full');
-        document.getElementById('nav-overlay').classList.add('hidden');
-    }
+        function openNavSheet() {
+            sheet.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        }
+
+        function closeNavSheet() {
+            sheet.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        }
+
+        if (openBtn)  openBtn.addEventListener('click', openNavSheet);
+        if (closeBtn) closeBtn.addEventListener('click', closeNavSheet);
+        if (overlay)  overlay.addEventListener('click', closeNavSheet);
+    });
 </script>
 
 {{-- Mobile drawer overlay --}}
-<div id="nav-overlay" class="fixed inset-0 bg-black/40 z-40 hidden xl:hidden" onclick="closeNavSheet()"></div>
+<div id="nav-overlay" class="fixed inset-0 bg-black/40 z-40 hidden xl:hidden"></div>
 
 {{-- Mobile slide-in sheet --}}
 <div id="nav-sheet"
@@ -23,7 +34,7 @@
         <img src="/images/assets/logo-web-bgtk-ntt-dark.webp" alt="Balai GTK Logo" class="h-10 w-auto hidden dark:block"
             onerror="this.style.display='none'">
          </a>
-        <button onclick="closeNavSheet()" class="btn btn-ghost btn-sm btn-circle">
+        <button id="nav-close-btn" class="btn btn-ghost btn-sm btn-circle">
             <i class="fa-solid fa-xmark text-lg"></i>
         </button>
     </div>

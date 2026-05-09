@@ -31,9 +31,13 @@
         {{-- Breadcrumb --}}
         <div class="text-sm text-base-content/50 mb-6">
             <a href="/" class="hover:text-primary">Beranda</a>
-            <span class="mx-2">/</span>
+            <span class="mx-2">
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </span>
             <a href="{{ route('publikasi.berita.berita') }}" class="hover:text-primary">Berita Terkini</a>
-            <span class="mx-2">/</span>
+            <span class="mx-2">
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </span>
             <span class="text-primary">{{ $berita->judul }}</span>
         </div>
 
@@ -62,7 +66,7 @@
                         <span>{{ $berita->author->username ?? $berita->author->name }}</span>
                         <span>&bull;</span>
                     @endif
-                    <span>{{ $berita->created_at->translatedFormat('d F Y') }}</span>
+                    <span>{{ $berita->created_at->locale('id')->isoFormat('D MMMM YYYY') }}</span>
                     @if (($viewCounts['total'] ?? 0) > 0)
                         <span>&bull;</span>
                         <span title="{{ ($viewCounts['desktop'] ?? 0) }} desktop &bull; {{ ($viewCounts['mobile'] ?? 0) }} mobile">
@@ -129,7 +133,7 @@
                                             {{ $recent->judul }}
                                         </p>
                                         <p class="text-xs text-base-content/50 mt-1">
-                                            {{ $recent->created_at->translatedFormat('d F Y') }}
+                                            {{ $recent->created_at->locale('id')->isoFormat('D MMMM YYYY') }}
                                         </p>
                                     </div>
                                 </a>

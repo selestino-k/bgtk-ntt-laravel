@@ -26,8 +26,13 @@ class ViewCounterService
      */
     public function record(string $pageKey, string $ip): void
     {
+        // Capture device type now (needs active request context) then defer
+        // all Redis I/O to after the response is sent to the browser.
+        $device = $this->agent->isMobile() ? 'mobile' : 'desktop';
+
+        defer(function () use ($pageKey, $ip, $device): void {
         try {
-            $redis = Redis::connection('upstash');
+            $redis = Redis::connection('local');
 
             // Deduplicate: one count per IP per page per hour
             $dedupKey = 'viewed:' . $pageKey . ':' . md5($ip);
@@ -35,8 +40,6 @@ class ViewCounterService
                 return;
             }
             $redis->setex($dedupKey, self::DEDUP_TTL, 1);
-
-            $device  = $this->agent->isMobile() ? 'mobile' : 'desktop';
             $date    = now()->format('Y-m-d');
             $month   = now()->format('Y-m');
             $year    = now()->format('Y');
@@ -63,6 +66,7 @@ class ViewCounterService
         } catch (Throwable) {
             // Fail silently — never let analytics break the page
         }
+        });
     }
 
     /**
@@ -71,7 +75,7 @@ class ViewCounterService
     public function getPageViews(string $pageKey): array
     {
         try {
-            $redis = Redis::connection('upstash');
+            $redis = Redis::connection('local');
 
             return [
                 'total'   => (int) ($redis->get("views:{$pageKey}:total")   ?? 0),
@@ -89,7 +93,7 @@ class ViewCounterService
     public function getVisitorStats(): array
     {
         try {
-            $redis = Redis::connection('upstash');
+            $redis = Redis::connection('local');
 
             $today = now()->format('Y-m-d');
             $month = now()->format('Y-m');
@@ -129,7 +133,7 @@ class ViewCounterService
     public function getDailyChartData(int $days = 30): array
     {
         try {
-            $redis = Redis::connection('upstash');
+            $redis = Redis::connection('local');
             $data  = [];
 
             for ($i = $days - 1; $i >= 0; $i--) {
