@@ -5,43 +5,64 @@
             {{-- Photo + Text --}}
             <div class="flex-1 mb-6 xl:mb-0">
                 <div class="lg:px-4">
-                    <div id ="kepala-bgtk" class="font-inter">
-                        <div class="float-start mr-6 mb-4 w-[50vw] md:w-[20vw]">
-                            <img src="/images/assets/kepala-bgtk-ntt.webp" alt="Kepala BGTK NTT" width="400" height="400"
-                                class="rounded-t-lg w-full h-auto object-cover -mb-4"
-                                loading="eager">
-                            <div id="kepala-name-card" class="py-4 text-center font-inter text-gray-700 leading-relaxed text-sm md:text-base space-y-3 bg-primary rounded-b-md">
-                                <h4 class="font-montserrat text-white font-semibold text-md mb-1">Dr. Teguh Rahayu Slamet, M.Si.</h4>
-                                <p class="text-xs font-montserrat text-white mt-2">Kepala BGTK Provinsi NTT</p>
+                    @if ($sambutan && $sambutan->gambar)
+                        @php
+                            $gambarUrl = \Illuminate\Support\Str::startsWith($sambutan->gambar, ['http://', 'https://'])
+                                ? $sambutan->gambar
+                                : asset('storage/' . $sambutan->gambar);
+                        @endphp
+                        <div id="kepala-bgtk" class="prose prose-lg max-w-none">
+                            <img src="{{ $gambarUrl }}" alt="Sambutan Kepala BGTK NTT"
+                                class="float-start mr-6 mb-4 w-[50vw] md:w-[20vw] rounded-lg shadow-md object-cover">
+                        </div>
+                    @else
+                        <div id ="kepala-bgtk-fallback" class="font-inter">
+                            <div class="float-start mr-6 mb-4 w-[50vw] md:w-[20vw]">
+                                <img src="/images/assets/kepala-bgtk-ntt.webp" alt="Kepala BGTK NTT" width="400"
+                                    height="400" class="rounded-t-lg w-full h-auto object-cover -mb-4"
+                                    loading="eager">
+                                <div id="kepala-name-card"
+                                    class="py-4 text-center font-inter text-gray-700 leading-relaxed text-sm md:text-base space-y-3 bg-primary rounded-b-md">
+                                    <h4 class="font-montserrat text-white font-semibold text-md mb-1">Dr. Teguh Rahayu
+                                        Slamet, M.Si.</h4>
+                                    <p class="text-xs font-montserrat text-white mt-2">Kepala BGTK Provinsi NTT</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                     <div class="text-justify">
-                        <div class="font-inter text-gray-700 dark:text-gray-200 leading-relaxed text-sm md:text-base space-y-3">
-                            <p>
-                                Selamat datang di laman resmi Balai Guru dan Tenaga Kependidikan (BGTK) Provinsi Nusa
-                                Tenggara Timur (NTT). Sebagai wujud komitmen kami dalam mendukung peningkatan kualitas
-                                pendidikan di NTT, BGTK hadir sebagai mitra strategis bagi para pendidik, tenaga
-                                kependidikan, dan pemangku kepentingan pendidikan lainnya.
-                            </p>
-                            <p>
-                                Melalui website ini, kami menyediakan berbagai informasi layanan yang dapat diakses oleh
-                                seluruh guru, kepala sekolah, pengawas sekolah, dan masyarakat umum. Layanan kami
-                                dirancang untuk mendukung pengembangan kompetensi guru, inovasi pembelajaran, serta
-                                penguatan kepemimpinan pendidikan dalam rangka mewujudkan Pendidikan Bermutu Untuk
-                                Semua.
-                            </p>
-                            <p>
-                                Kami mengundang Anda untuk menjelajahi setiap layanan yang tersedia, mengikuti
-                                program-program unggulan, dan memanfaatkan sumber daya yang kami sediakan. Bersama-sama,
-                                mari kita wujudkan pendidikan NTT yang berkualitas, inovatif, dan berdaya saing.
-                            </p>
-                            <p>
-                                Terima kasih atas kunjungan Anda. Untuk informasi lebih lanjut, silakan hubungi kami
-                                melalui kontak yang tersedia.
-                            </p>
-
-
+                        <div
+                            class="font-inter text-gray-700 dark:text-gray-200 leading-relaxed text-sm md:text-base space-y-3">
+                            @if (!empty($sambutan->isi_konten))
+                                {!! nl2br(e($sambutan->isi_konten)) !!}
+                            @else
+                                <p>
+                                    Selamat datang di laman resmi Balai Guru dan Tenaga Kependidikan (BGTK) Provinsi
+                                    Nusa
+                                    Tenggara Timur (NTT). Sebagai wujud komitmen kami dalam mendukung peningkatan
+                                    kualitas
+                                    pendidikan di NTT, BGTK hadir sebagai mitra strategis bagi para pendidik, tenaga
+                                    kependidikan, dan pemangku kepentingan pendidikan lainnya.
+                                </p>
+                                <p>
+                                    Melalui website ini, kami menyediakan berbagai informasi layanan yang dapat diakses
+                                    oleh
+                                    seluruh guru, kepala sekolah, pengawas sekolah, dan masyarakat umum. Layanan kami
+                                    dirancang untuk mendukung pengembangan kompetensi guru, inovasi pembelajaran, serta
+                                    penguatan kepemimpinan pendidikan dalam rangka mewujudkan Pendidikan Bermutu Untuk
+                                    Semua.
+                                </p>
+                                <p>
+                                    Kami mengundang Anda untuk menjelajahi setiap layanan yang tersedia, mengikuti
+                                    program-program unggulan, dan memanfaatkan sumber daya yang kami sediakan.
+                                    Bersama-sama,
+                                    mari kita wujudkan pendidikan NTT yang berkualitas, inovatif, dan berdaya saing.
+                                </p>
+                                <p>
+                                    Terima kasih atas kunjungan Anda. Untuk informasi lebih lanjut, silakan hubungi kami
+                                    melalui kontak yang tersedia.
+                                </p>
+                            @endif
                         </div>
                     </div>
                 </div>

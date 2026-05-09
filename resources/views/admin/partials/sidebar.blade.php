@@ -77,6 +77,15 @@
         <i class="fa-solid fa-images w-4 text-center"></i>
         <span>Slideshow</span>
     </a>
+    {{-- ZI-WBK --}}
+    <a href="/"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
+               {{ request()->routeIs('admin.zi-wbk.*') ? 'bg-primary text-primary-content' : 'text-base-content hover:bg-base-300' }}">
+        <i class="fa-solid fa-shield-halved w-4 text-center"></i>
+        <span>ZI-WBK (Coming soon)</span>
+     </a>
+
+    {{--  --}}
     @endif
 
     {{-- User Management --}}

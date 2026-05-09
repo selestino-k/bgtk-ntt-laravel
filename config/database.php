@@ -153,15 +153,25 @@ return [
             'persistent' => env('REDIS_PERSISTENT', false),
         ],
 
-        'local' => [
-            'scheme'   => 'tcp',
-            'host'     => env('REDIS_HOST', '127.0.0.1'),
-            'port'     => (int) env('REDIS_PORT', 6379),
-            'password' => env('REDIS_PASSWORD'),
-            'database' => (int) env('REDIS_DB', 0),
-            'timeout'  => 1.5,
-            'read_write_timeout' => 1.5,
-        ],
+        // Supports both TCP (default) and Unix socket (set REDIS_SOCKET=/tmp/redis.sock on cPanel).
+        'local' => env('REDIS_SOCKET')
+            ? [
+                'scheme'             => 'unix',
+                'path'               => env('REDIS_SOCKET'),
+                'password'           => env('REDIS_PASSWORD'),
+                'database'           => (int) env('REDIS_DB', 0),
+                'timeout'            => 1.5,
+                'read_write_timeout' => 1.5,
+            ]
+            : [
+                'scheme'             => 'tcp',
+                'host'               => env('REDIS_HOST', '127.0.0.1'),
+                'port'               => (int) env('REDIS_PORT', 6379),
+                'password'           => env('REDIS_PASSWORD'),
+                'database'           => (int) env('REDIS_DB', 0),
+                'timeout'            => 1.5,
+                'read_write_timeout' => 1.5,
+            ],
 
         'upstash' => [
             'scheme'             => 'tls',

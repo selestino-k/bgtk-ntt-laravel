@@ -8,10 +8,33 @@ use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\SitemapController;
 use App\Models\Berita;
 use App\Models\Dokumen;
+use App\Models\Profile;
 use App\Models\Slideshow;
 use App\Services\ViewCounterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+// TEMPORARY: remove after use
+Route::get('/redis-diag', function () {
+    $probePaths = [
+        '/tmp/redis.sock',
+        '/var/run/redis/redis.sock',
+        '/var/run/redis.sock',
+        '/usr/local/var/run/redis.sock',
+        '/home/' . get_current_user() . '/redis.sock',
+    ];
+    $found = array_values(array_filter($probePaths, fn ($p) => file_exists($p)));
+
+    return response()->json([
+        'phpredis_loaded'  => extension_loaded('redis'),
+        'predis_available' => class_exists(\Predis\Client::class),
+        'sockets_found'    => $found ?: ['none found in common paths'],
+        'REDIS_HOST'       => env('REDIS_HOST', '127.0.0.1'),
+        'REDIS_PORT'       => env('REDIS_PORT', '6379'),
+        'current_user'     => get_current_user(),
+        'sys_temp_dir'     => sys_get_temp_dir(),
+    ]);
+});
 
 Route::get('/', function (Request $request, ViewCounterService $counter) {
     $counter->record('homepage', $request->ip());
@@ -36,7 +59,9 @@ Route::get('/', function (Request $request, ViewCounterService $counter) {
         ->take(5)
         ->get();
 
-    return view('home.home', compact('slideshowPhotos', 'latestPosts', 'documents', 'pengumuman'));
+    $sambutan = Profile::where('slug', 'sambutan-kata')->first();
+
+    return view('home.home', compact('slideshowPhotos', 'latestPosts', 'documents', 'pengumuman', 'sambutan'));
 })->name('home');
 
 Route::get('/ppid', function () {

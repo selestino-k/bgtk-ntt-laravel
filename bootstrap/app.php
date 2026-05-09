@@ -11,6 +11,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Ensures defer() callbacks flush after the HTTP response on cPanel PHP-FPM.
+        $middleware->append(\Illuminate\Foundation\Http\Middleware\InvokeDeferredCallbacks::class);
         $middleware->append(\App\Http\Middleware\ContentSecurityPolicy::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
