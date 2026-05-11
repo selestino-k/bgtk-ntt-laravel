@@ -75,20 +75,8 @@ Route::get('/ult/sarana-prasarana', function () {
     return view('home.sarana');
 })->name('ult.sarana-prasarana');
 
-Route::get('/zi-wbk/', function () {
-    $ziWbkKategori = [
-        'Manajemen Perubahan',
-        'Penataan Tata Laksana',
-        'Penataan Sistem Manajemen SDM',
-        'Penguatan Akuntabilitas Kinerja',
-        'Penguatan Pengawasan',
-        'Peningkatan Kualitas Pelayanan Publik',
-    ];
-    $dokumens = Dokumen::whereIn('kategori', $ziWbkKategori)
-        ->orderBy('created_at', 'desc')
-        ->get()
-        ->groupBy('kategori');
-    return view('home.zi-wbk.zi-wbk', compact('dokumens'));
+Route::get('zi-wbk', function () {
+    return view('home.zi-wbk');
 })->name('zi-wbk');
 
 Route::get('/ssd', function () {
