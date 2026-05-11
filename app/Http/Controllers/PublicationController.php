@@ -208,12 +208,12 @@ class PublicationController extends Controller
             'judul' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
             'file_url' => ['nullable', 'required_without:file', 'max:255', 'regex:/^(https?:\/\/|\/).*/'],
-            'file' => 'nullable|required_without:file_url|file|mimes:pdf,doc,docx,txt|max:2048',
+            'file' => 'nullable|required_without:file_url|file|mimes:pdf,doc,docx,txt,jpg,jpeg,png|max:2048',
             'kategori' => 'nullable|string|max:255',
         ], [
             'file.max' => 'Ukuran file tidak boleh melebihi 2 MB.',
             'file.uploaded' => 'File gagal diunggah. Pastikan ukuran file tidak melebihi 2 MB.',
-            'file.mimes' => 'Format file tidak valid. Hanya PDF, DOC, DOCX, dan TXT yang diizinkan.',
+            'file.mimes' => 'Format file tidak valid. Hanya PDF, DOC, DOCX, TXT, JPG, dan PNG yang diizinkan.',
             'file.required_without' => 'Upload file atau masukkan tautan file.',
             'file_url.required_without' => 'Masukkan tautan file atau upload file.',
             'file_url.regex' => 'Tautan file harus berupa URL (https://...) atau path relatif (/storage/...).',
@@ -261,7 +261,7 @@ class PublicationController extends Controller
             'judul' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
             'file_url' => ['nullable', 'max:255', 'regex:/^(https?:\/\/|\/).*/'],
-            'file' => 'nullable|file|mimes:pdf,doc,docx,txt|max:2048',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,txt,jpg,jpeg,png|max:2048',
             'kategori' => 'nullable|string|max:255',
         ]);
 

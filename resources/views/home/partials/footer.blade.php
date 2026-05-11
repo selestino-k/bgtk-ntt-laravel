@@ -97,9 +97,6 @@
                 <a href="https://www.facebook.com/balaigurupenggerakntt/" target="_blank" rel="noopener noreferrer">
                     <i class="fa-brands fa-facebook text-white text-xl inline-block hover:opacity-80"></i>
                 </a>
-                <a href="https://x.com/BGTK_NTT" target="_blank" rel="noopener noreferrer">
-                    <i class="fa-brands fa-x-twitter text-white text-xl inline-block hover:opacity-80"></i>
-                </a>
                 <a href="https://www.instagram.com/bgtkntt/" target="_blank" rel="noopener noreferrer">
                     <i class="fa-brands fa-instagram text-white text-xl inline-block hover:opacity-80"></i>
                 </a>

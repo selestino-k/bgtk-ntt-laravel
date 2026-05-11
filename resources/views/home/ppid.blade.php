@@ -18,31 +18,7 @@
                     PPID adalah kepanjangan dari Pejabat Pengelola Informasi dan Dokumentasi. PPID berfungsi sebagai pengelola dan penyampai dokumen yang dimiliki oleh badan publik sesuai dengan amanat UU 14/2008 tentang Keterbukaan Informasi Publik. Dengan keberadaan PPID, maka masyarakat yang akan menyampaikan permohonan informasi lebih mudah dan tidak berbelit-belit karena dilayani melalui satu pintu.
                 </p>
 
-                <div class="w-full grid lg:flex mt-10 items-center gap-10">
-
-                    <div class="w-full md:w-1/2 pr-4 grid">
-                        <h2 class="text-2xl lg:text-5xl font-bold font-montserrat tracking-tight mb-1 text-primary">
-                            Maklumat Pelayanan
-                        </h2>
-                        <h3 class="text-md lg:text-2xl font-semibold font-montserrat tracking-tight mb-3 md:mb-5 pr-3 text-primary">
-                            Balai Guru dan Tenaga Kependidikan (BGTK) Provinsi NTT
-                        </h3>
-                        <a href="{{ asset('images/assets/maklumat-pelayanan-template.jpg') }}"
-                           class="inline-flex items-center gap-2 w-max px-4 py-2 bg-primary text-white rounded-lg font-montserrat text-sm lg:text-base hover:bg-primary/90 transition-colors duration-200">
-                            <i class="fa-solid fa-download"></i>
-                            Unduh Maklumat Pelayanan
-                        </a>
-                    </div>
-
-                    <div class="w-full md:w-1/2 flex justify-center mt-5 md:mt-0 mb-5 md:mb-0">
-                        <img
-                            src="{{ asset('images/assets/maklumat-pelayanan-template.jpg') }}"
-                            alt="Maklumat Pelayanan PPID BGTK NTT"
-                            class="w-[80vw] md:w-full h-auto rounded-lg shadow-md"
-                        >
-                    </div>
-
-                </div>
+                    
             </div>
 
             {{-- PPID Informasi Cards --}}

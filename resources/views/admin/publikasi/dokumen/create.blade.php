@@ -55,15 +55,29 @@
 
                 <div class="form-control">
                     <label class="label"><span class="label-text font-medium">Kategori</span></label>
-                    <select name="kategori" class="input input-bordered w-full">
-                        <option value="">
-                            Pilih Kategori 
-                        </option>
-                        <option value="Perjanjian Kinerja" {{ old('kategori') == 'Perjanjian Kinerja' ? 'selected' : '' }}>Perjanjian Kinerja</option>
-                        <option value="Laporan Kinerja" {{ old('kategori') == 'Laporan Kinerja' ? 'selected' : '' }}>Laporan Kinerja</option>
-                        <option value="Rencana Strategis" {{ old('kategori') == 'Rencana Strategis' ? 'selected' : '' }}>Rencana Strategis</option>
-                        <option value="Penghargaan" {{ old('kategori') == 'Penghargaan' ? 'selected' : '' }}>Penghargaan</option>
-                        <option value="Lainnya" {{ old('kategori') == 'Lainnya  ' ? 'selected' : '' }}>Lainnya</option>
+                    <select name="kategori" class="select select-bordered w-full">
+                        <option value="">Pilih Kategori</option>
+
+                        <optgroup label="Dokumen Umum">
+                            <option value="Perjanjian Kinerja" {{ old('kategori') == 'Perjanjian Kinerja' ? 'selected' : '' }}>Perjanjian Kinerja</option>
+                            <option value="Laporan Kinerja" {{ old('kategori') == 'Laporan Kinerja' ? 'selected' : '' }}>Laporan Kinerja</option>
+                            <option value="Rencana Strategis" {{ old('kategori') == 'Rencana Strategis' ? 'selected' : '' }}>Rencana Strategis</option>
+                            <option value="Maklumat Pelayanan" {{ old('kategori') == 'Maklumat Pelayanan' ? 'selected' : '' }}>Maklumat Pelayanan</option>
+                        </optgroup>
+
+                        <optgroup label="ZI-WBK">
+                            <option value="Manajemen Perubahan" {{ old('kategori') == 'Manajemen Perubahan' ? 'selected' : '' }}>Manajemen Perubahan</option>
+                            <option value="Penataan Tata Laksana" {{ old('kategori') == 'Penataan Tata Laksana' ? 'selected' : '' }}>Penataan Tata Laksana</option>
+                            <option value="Penataan Sistem Manajemen SDM" {{ old('kategori') == 'Penataan Sistem Manajemen SDM' ? 'selected' : '' }}>Penataan Sistem Manajemen SDM</option>
+                            <option value="Penguatan Akuntabilitas" {{ old('kategori') == 'Penguatan Akuntabilitas' ? 'selected' : '' }}>Penguatan Akuntabilitas</option>
+                            <option value="Penguatan Pengawasan" {{ old('kategori') == 'Penguatan Pengawasan' ? 'selected' : '' }}>Penguatan Pengawasan</option>
+                            <option value="Penguatan Kualitas Pelayanan Publik" {{ old('kategori') == 'Penguatan Kualitas Pelayanan Publik' ? 'selected' : '' }}>Penguatan Kualitas Pelayanan Publik</option>
+                        </optgroup>
+
+                        <optgroup label="Lainnya">
+                            <option value="Penghargaan" {{ old('kategori') == 'Penghargaan' ? 'selected' : '' }}>Penghargaan</option>
+                            <option value="Lainnya" {{ old('kategori') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                        </optgroup>
                     </select>
                     @error('kategori')<p class="mt-1 text-sm text-error">{{ $message }}</p>@enderror
                 </div>

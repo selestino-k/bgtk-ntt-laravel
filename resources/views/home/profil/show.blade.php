@@ -39,11 +39,12 @@
                 $isSambutan = \Illuminate\Support\Str::startsWith($profile->gambar, 'sambutan');
             @endphp
             @if ($isSambutan)
-                <div class="prose prose-lg max-w-none">
+                <div class="flex gap-6 items-start">
                     <img src="{{ $gambarUrl }}" alt="{{ $profile->judul }}"
-                         class="float-start mr-6 mb-4 w-full h-auto rounded-lg shadow-md object-cover"
-                         width="200" height="200">
-                    {!! nl2br(e($profile->isi_konten)) !!}
+                         class="shrink-0 w-48 h-auto rounded-lg shadow-md object-cover">
+                    <div class="prose prose-lg max-w-none">
+                        {!! nl2br(e($profile->isi_konten)) !!}
+                    </div>
                 </div>
             @else
                 <div class="mb-8">

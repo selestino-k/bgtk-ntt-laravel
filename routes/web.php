@@ -75,9 +75,21 @@ Route::get('/ult/sarana-prasarana', function () {
     return view('home.sarana');
 })->name('ult.sarana-prasarana');
 
-Route::get('/zi-wbk/area-perubahan', function () {
-    return view('home.zi-wbk');
-})->name('zi-wbk.area-perubahan');
+Route::get('/zi-wbk/', function () {
+    $ziWbkKategori = [
+        'Manajemen Perubahan',
+        'Penataan Tata Laksana',
+        'Penataan Sistem Manajemen SDM',
+        'Penguatan Akuntabilitas Kinerja',
+        'Penguatan Pengawasan',
+        'Peningkatan Kualitas Pelayanan Publik',
+    ];
+    $dokumens = Dokumen::whereIn('kategori', $ziWbkKategori)
+        ->orderBy('created_at', 'desc')
+        ->get()
+        ->groupBy('kategori');
+    return view('home.zi-wbk.zi-wbk', compact('dokumens'));
+})->name('zi-wbk');
 
 Route::get('/ssd', function () {
     return view('home.ssd');
@@ -93,6 +105,12 @@ Route::middleware('auth')->get('/admin', [DashboardController::class, 'index'])-
 
 Route::get('/publikasi/pengumuman', [PublicationController::class, 'pengumumanPublic'])->name('pengumuman.index');
 Route::get('/publikasi/dokumen', [PublicationController::class, 'dokumenPublic'])->name('dokumen.index');
+Route::get('/publikasi/maklumat-pelayanan', function () {
+    $dokumens = Dokumen::whereRaw('LOWER(kategori) = ?', ['maklumat pelayanan'])
+        ->orderBy('created_at', 'desc')
+        ->get();
+    return view('home.publikasi.maklumat', compact('dokumens'));
+})->name('publikasi.maklumat');
 
 Route::get('/publikasi/berita-terkini', [PublicationController::class, 'beritaTerkiniPublic'])->name('publikasi.berita.berita');
 Route::get('/publikasi/berita-terkini/{berita:slug}', [PublicationController::class, 'beritaTerkiniDetailPublic'])->name('publikasi.berita.show');
