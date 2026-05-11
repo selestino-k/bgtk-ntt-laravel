@@ -15,6 +15,39 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // TEMPORARY: remove after use
+Route::get('/clear-cache', function () {
+    $viewPath = storage_path('framework/views');
+    $deleted = 0;
+    foreach (glob($viewPath . '/*.php') as $file) {
+        if (@unlink($file)) {
+            $deleted++;
+        }
+    }
+
+    $cachePath = storage_path('framework/cache/data');
+    $cacheDeleted = 0;
+    if (is_dir($cachePath)) {
+        $it = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($cachePath, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+        foreach ($it as $file) {
+            if ($file->isFile()) {
+                @unlink($file->getPathname());
+                $cacheDeleted++;
+            }
+        }
+    }
+
+    return response()->json([
+        'status'           => 'ok',
+        'views_cleared'    => $deleted,
+        'cache_cleared'    => $cacheDeleted,
+        'message'          => 'View cache and application cache cleared.',
+    ]);
+});
+
+// TEMPORARY: remove after use
 Route::get('/redis-diag', function () {
     $probePaths = [
         '/tmp/redis.sock',
