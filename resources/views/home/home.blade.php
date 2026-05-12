@@ -33,6 +33,8 @@
 
     @include('home.partials.berita-carousel')
 
+    @include('home.partials.siaran-pers-carousel')
+
     @include('home.partials.dokumen-table')
 
 </div>{{-- end grid wrapper --}}

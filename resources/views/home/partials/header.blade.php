@@ -57,16 +57,16 @@
                     <li><a href="/publikasi/pengumuman"
                             class="text-sm font-medium text-black dark:text-white hover:text-primary hover:bg-gray-700/10">Pengumuman</a>
                     </li>
+                    <li><a href="/publikasi/siaran-pers"
+                            class="text-sm font-medium text-black dark:text-white hover:text-primary hover:bg-gray-700/10">Siaran Pers</a>
+                    </li>
                     <li><a href="/publikasi/dokumen"
                             class="text-sm font-medium text-black dark:text-white hover:text-primary hover:bg-gray-700/10">Dokumen</a>
                     </li>
                     <li><a href="/publikasi/maklumat-pelayanan"
                             class="text-sm font-medium text-black dark:text-white hover:text-primary hover:bg-gray-700/10">Maklumat Pelayanan</a>
                     </li>
-                    <li><a href="https://kemendikdasmen.go.id/pencarian/siaran-pers" target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-sm font-medium text-black dark:text-white hover:text-primary  hover:bg-gray-700/10">Siaran
-                            Pers Kemendikdasmen</a></li>
+                    
                 </ul>
             </div>
 

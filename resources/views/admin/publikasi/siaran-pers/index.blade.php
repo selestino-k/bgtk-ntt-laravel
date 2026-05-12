@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Pengumuman')
+@section('title', 'Siaran Pers')
 
 @section('content')
 <div class="p-6 md:p-8 font-montserrat">
@@ -8,34 +8,34 @@
     <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
             <p class="text-sm text-base-content/60">Publikasi</p>
-            <h1 class="text-3xl sm:text-4xl font-bold text-primary">Pengumuman</h1>
+            <h1 class="text-3xl sm:text-4xl font-bold text-primary">Siaran Pers</h1>
         </div>
         <div class="flex flex-wrap gap-3">
             <a href="{{ route('admin.publikasi.berita.index') }}" class="btn btn-outline">Berita Terkini</a>
             @auth
                 @if(in_array(auth()->user()->role, ['admin', 'operator']))
-                    <a href="{{ route('admin.publikasi.berita.create') }}" class="btn btn-primary">Tambah Baru</a>
+                    <a href="{{ route('admin.publikasi.berita.create') }}" class="btn btn-primary">Tambah Siaran Pers Baru</a>
                 @endif
             @endauth
         </div>
     </div>
 
     {{-- Search Bar --}}
-    <form method="GET" action="{{ route('admin.publikasi.pengumuman.index') }}" class="mb-6">
+    <form method="GET" action="{{ route('admin.publikasi.siaran-pers.index') }}" class="mb-6">
         <div class="join w-full max-w-md">
-            <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Cari judul pengumuman..." class="input input-bordered join-item w-full" />
+            <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Cari judul siaran pers..." class="input input-bordered join-item w-full" />
             <button type="submit" class="btn btn-primary join-item">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
             @if(!empty($search))
-                <a href="{{ route('admin.publikasi.pengumuman.index') }}" class="btn btn-ghost join-item">Reset</a>
+                <a href="{{ route('admin.publikasi.siaran-pers.index') }}" class="btn btn-ghost join-item">Reset</a>
             @endif
         </div>
     </form>
 
     @if($beritas->isEmpty())
         <div class="alert">
-            <span>Belum ada pengumuman. Pastikan ada berita dengan tag <strong>Pengumuman</strong>.</span>
+            <span>Belum ada siaran pers. Pastikan ada berita dengan tag <strong>Siaran Pers</strong>.</span>
         </div>
     @else
         <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">

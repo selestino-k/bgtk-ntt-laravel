@@ -63,10 +63,10 @@
                 <ul>
                     <li><a href="/publikasi/berita-terkini">Berita Terkini</a></li>
                     <li><a href="/publikasi/pengumuman">Pengumuman</a></li>
+                    <li><a href="/publikasi/siaran-pers">Siaran Pers</a></li>
                     <li><a href="/publikasi/dokumen">Dokumen</a></li>
-                    <li><a href="/publikasi/sakip">SAKIP</a></li>
-                    <li><a href="https://kemendikdasmen.go.id/pencarian/siaran-pers" target="_blank"
-                            rel="noopener noreferrer">Siaran Pers Kemendikdasmen</a></li>
+                    <li><a href="/publikasi/maklumat-pelayanan">Maklumat Pelayanan</a></li>
+                    
                 </ul>
             </details>
         </li>

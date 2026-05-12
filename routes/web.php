@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserContoller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicationController;
+use App\Http\Controllers\PertanyaanSSDController;
 use App\Http\Controllers\SitemapController;
 use App\Models\Berita;
 use App\Models\Dokumen;
@@ -77,11 +78,20 @@ Route::get('/', function (Request $request, ViewCounterService $counter) {
 
     $latestPosts = Berita::where('published', true)
         ->whereDoesntHave('tags', function ($q) {
-            $q->whereRaw('LOWER(tagline) = ?', ['pengumuman']);
+            $q->whereRaw('LOWER(tagline) IN (?, ?)', ['pengumuman', 'siaran pers']);
         })
         ->with(['author', 'tags'])
         ->latest()
-        ->take(3)
+        ->take(5)
+        ->get();
+
+    $siaranPers = Berita::where('published', true)
+        ->whereHas('tags', function ($q) {
+            $q->whereRaw('LOWER(tagline) = ?', ['siaran pers']);
+        })
+        ->with(['author', 'tags'])
+        ->latest()
+        ->take(5)
         ->get();
 
     $pengumuman = Berita::where('published', true)
@@ -94,7 +104,7 @@ Route::get('/', function (Request $request, ViewCounterService $counter) {
 
     $sambutan = Profile::where('slug', 'sambutan-kata')->first();
 
-    return view('home.home', compact('slideshowPhotos', 'latestPosts', 'documents', 'pengumuman', 'sambutan'));
+    return view('home.home', compact('slideshowPhotos', 'latestPosts', 'documents', 'pengumuman', 'siaranPers', 'sambutan'));
 })->name('home');
 
 Route::get('/ppid', function () {
@@ -113,8 +123,18 @@ Route::get('zi-wbk', function () {
 })->name('zi-wbk');
 
 Route::get('/ssd', function () {
-    return view('home.ssd');
+    $pertanyaans = \App\Models\PertanyaanSSD::where('is_active', true)->orderBy('urutan')->get();
+    return view('home.ssd', compact('pertanyaans'));
 })->name('ssd');
+
+Route::middleware('auth')->prefix('admin/ssd')->name('admin.ssd.')->group(function () {
+    Route::get('/', [PertanyaanSSDController::class, 'index'])->name('index');
+    Route::get('/create', [PertanyaanSSDController::class, 'create'])->name('create');
+    Route::post('/', [PertanyaanSSDController::class, 'store'])->name('store');
+    Route::get('/{ssd}/edit', [PertanyaanSSDController::class, 'edit'])->name('edit');
+    Route::patch('/{ssd}', [PertanyaanSSDController::class, 'update'])->name('update');
+    Route::delete('/{ssd}', [PertanyaanSSDController::class, 'destroy'])->name('destroy');
+});
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 
@@ -124,6 +144,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 
+Route::get('/publikasi/siaran-pers', [PublicationController::class, 'siaranPersPublic'])->name('siaran-pers.index');
 Route::get('/publikasi/pengumuman', [PublicationController::class, 'pengumumanPublic'])->name('pengumuman.index');
 Route::get('/publikasi/dokumen', [PublicationController::class, 'dokumenPublic'])->name('dokumen.index');
 Route::get('/publikasi/maklumat-pelayanan', function () {
@@ -149,6 +170,8 @@ Route::middleware('auth')->prefix('admin/publikasi')->name('admin.publikasi.')->
     // Pengumuman
     Route::get('/pengumuman', [PublicationController::class, 'pengumuman'])->name('pengumuman.index');
 
+    //Siaran Pers
+    Route::get('/siaran-pers', [PublicationController::class, 'siaranPers'])->name('siaran-pers.index');
     // Dokumen
     Route::get('/dokumen', [PublicationController::class, 'dokumenIndex'])->name('dokumen.index');
     Route::get('/dokumen/create', [PublicationController::class, 'dokumenCreate'])->name('dokumen.create');

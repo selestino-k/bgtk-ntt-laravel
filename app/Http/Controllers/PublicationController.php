@@ -69,6 +69,7 @@ class PublicationController extends Controller
         $query = Berita::where('published', true)
             ->whereDoesntHave('tags', function ($q) {
                 $q->whereRaw('LOWER(tagline) = ?', ['pengumuman']);
+                $q->whereRaw('LOWER(tagline) = ?', ['siaran pers']);
             })
             ->latest()
             ->with(['author', 'tags']);
@@ -80,7 +81,10 @@ class PublicationController extends Controller
         }
 
         $beritas = $query->paginate(11)->withQueryString();
-        $tags = Tag::whereRaw('LOWER(tagline) != ?', ['pengumuman'])->orderBy('tagline')->get();
+        $tags = Tag::whereRaw('LOWER(tagline) != ?', ['pengumuman'])
+            ->whereRaw('LOWER(tagline) != ?', ['siaran pers'])
+            ->orderBy('tagline')
+            ->get();
 
         return view('home.publikasi.berita', compact('beritas', 'tags', 'tagId'));
     }
@@ -122,6 +126,45 @@ class PublicationController extends Controller
         return view('home.publikasi.pengumuman', compact('beritas', 'search'));
     }
 
+    public function siaranPers(Request $request)
+    {
+        $this->ensureAdminOrOperator();
+
+        $search = $request->input('search');
+
+        $query = Berita::whereHas('tags', function ($q) {
+            $q->whereRaw('LOWER(tagline) = ?', ['siaran pers']);
+        })->latest()->with(['author', 'tags']);
+
+        if ($search) {
+            $query->where('judul', 'like', '%' . $search . '%');
+        }
+
+        $beritas = $query->paginate(15)->withQueryString();
+
+        return view('admin.publikasi.siaran-pers.index', compact('beritas', 'search'));
+    }
+
+    public function siaranPersPublic(Request $request)
+    {
+        $search = $request->input('search');
+
+        $query = Berita::where('published', true)
+            ->whereHas('tags', function ($q) {
+                $q->whereRaw('LOWER(tagline) = ?', ['siaran pers']);
+            })
+            ->latest()
+            ->with(['author', 'tags']);
+
+        if ($search) {
+            $query->where('judul', 'like', '%' . $search . '%');
+        }
+
+        $beritas = $query->paginate(10)->withQueryString();
+
+        return view('home.publikasi.siaran-pers', compact('beritas', 'search'));
+    }
+
     public function beritaTerkiniPublic(Request $request)
     {
         $tagId = $request->query('tag') ? (int) $request->query('tag') : null;
@@ -130,6 +173,7 @@ class PublicationController extends Controller
         $query = Berita::where('published', true)
             ->whereDoesntHave('tags', function ($q) {
                 $q->whereRaw('LOWER(tagline) = ?', ['pengumuman']);
+                $q->whereRaw('LOWER(tagline) = ?', ['siaran pers']);
             })
             ->with(['author', 'tags'])
             ->latest();
@@ -147,6 +191,7 @@ class PublicationController extends Controller
         $beritas = $query->paginate(10)->withQueryString();
 
         $tags = Tag::whereRaw('LOWER(tagline) != ?', ['pengumuman'])
+            ->whereRaw('LOWER(tagline) != ?', ['siaran pers'])
             ->orderBy('tagline')
             ->get();
 
@@ -165,13 +210,17 @@ class PublicationController extends Controller
             ->where('id', '!=', $berita->id)
             ->whereDoesntHave('tags', function ($q) {
                 $q->whereRaw('LOWER(tagline) = ?', ['pengumuman']);
+                $q->whereRaw('LOWER(tagline) = ?', ['siaran pers']);
             })
             ->with(['tags'])
             ->latest()
             ->take(5)
             ->get();
 
-        $tags = Tag::whereRaw('LOWER(tagline) != ?', ['pengumuman'])->orderBy('tagline')->get();
+        $tags = Tag::whereRaw('LOWER(tagline) != ?', ['pengumuman'])
+            ->whereRaw('LOWER(tagline) != ?', ['siaran pers'])
+            ->orderBy('tagline')
+            ->get();
 
         $viewCounts = $counter->getPageViews('berita:' . $berita->id);
 

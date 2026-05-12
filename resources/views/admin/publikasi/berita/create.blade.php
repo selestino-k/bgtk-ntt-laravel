@@ -96,7 +96,11 @@
                                         fn($t) => strtolower($t->tagline) === 'pengumuman' ||
                                             strtolower($t->tagline) === 'Pengumuman',
                                     );
-                                    $otherTags = $tags->filter(fn($t) => strtolower($t->tagline) !== 'pengumuman');
+                                    $siaranPersTags = $tags->filter(
+                                        fn($t) => strtolower($t->tagline) === 'siaran pers' ||
+                                            strtolower($t->tagline) === 'Siaran Pers',
+                                    );
+                                    $otherTags = $tags->filter(fn($t) => strtolower($t->tagline) !== 'pengumuman' && strtolower($t->tagline) !== 'siaran pers');
                                 @endphp
                                 @if ($tags->isEmpty())
                                     <p class="text-sm text-base-content/60">Belum ada tag. Tambahkan tag terlebih dahulu.
@@ -119,6 +123,23 @@
                                         <div class="space-y-2">
                                             <p class="text-sm font-semibold text-primary">Buat sebagai Pengumuman</p>
                                             @foreach ($pengumumanTags as $tag)
+                                                <label class="flex items-center gap-3 cursor-pointer">
+                                                    <input type="checkbox" name="tags[]" value="{{ $tag->id }}"
+                                                        {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}
+                                                        class="checkbox checkbox-primary checkbox-xs" />
+                                                    <span class="text-sm font-medium">{{ $tag->tagline }}</span>
+                                                </label>
+                                            @endforeach
+                                        </div>
+                                        @if ($otherTags->isNotEmpty())
+                                            <hr class="my-3 border-t border-base-300" />
+                                        @endif
+                                    @endif
+                                    @if ($siaranPersTags->isNotEmpty())
+                                        <div class="border-t border-base-300 my-2"></div>
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-semibold text-primary">Buat sebagai Siaran Pers</p>
+                                            @foreach ($siaranPersTags as $tag)
                                                 <label class="flex items-center gap-3 cursor-pointer">
                                                     <input type="checkbox" name="tags[]" value="{{ $tag->id }}"
                                                         {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}

@@ -116,6 +116,10 @@
                                         fn($t) => strtolower($t->tagline) === 'pengumuman' ||
                                             strtolower($t->tagline) === 'Pengumuman',
                                     );
+                                    $siaranPersTags = $tags->filter(
+                                        fn($t) => strtolower($t->tagline) === 'siaran pers' ||
+                                            strtolower($t->tagline) === 'Siaran Pers',
+                                    );
                                     $otherTags = $tags->filter(fn($t) => strtolower($t->tagline) !== 'pengumuman');
                                 @endphp
 
@@ -137,6 +141,19 @@
                                     <div class="border-t border-base-300 my-2"></div>
                                     <p class="text-sm font-semibold text-primary">Buat Sebagai Pengumuman</p>
                                     @foreach ($pengumumanTags as $tag)
+                                        <label class="flex items-center gap-3 cursor-pointer">
+                                            <input type="checkbox" name="tags[]" value="{{ $tag->id }}"
+                                                {{ in_array($tag->id, $selectedTags) ? 'checked' : '' }}
+                                                class="checkbox checkbox-xs checkbox-primary" />
+                                            <span class="text-sm font-medium">{{ $tag->tagline }}</span>
+                                        </label>
+                                    @endforeach
+                                @endif
+                                {{-- siaran pers tags separator --}}
+                                @if ($siaranPersTags->isNotEmpty())
+                                    <div class="border-t border-base-300 my-2"></div>
+                                    <p class="text-sm font-semibold text-primary">Buat Sebagai Siaran Pers</p>
+                                    @foreach ($siaranPersTags as $tag)
                                         <label class="flex items-center gap-3 cursor-pointer">
                                             <input type="checkbox" name="tags[]" value="{{ $tag->id }}"
                                                 {{ in_array($tag->id, $selectedTags) ? 'checked' : '' }}

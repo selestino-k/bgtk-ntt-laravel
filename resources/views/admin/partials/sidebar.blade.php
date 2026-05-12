@@ -32,12 +32,28 @@
         <span>Berita</span>
     </a>
 
+    {{-- SSD --}}
+    <a href="{{ route('admin.ssd.index') }}"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
+               {{ request()->routeIs('admin.ssd.*') ? 'bg-primary text-primary-content' : 'text-base-content hover:bg-base-300' }}">
+        <i class="fa-solid fa-circle-question w-4 text-center"></i>
+        <span>SSD</span>
+    </a>
+
     {{-- Pengumuman --}}
     <a href="{{ route('admin.publikasi.pengumuman.index') }}"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
                {{ request()->routeIs('admin.publikasi.pengumuman.*') ? 'bg-primary text-primary-content' : 'text-base-content hover:bg-base-300' }}">
         <i class="fa-solid fa-bullhorn w-4 text-center"></i>
         <span>Pengumuman</span>
+    </a>
+
+    {{-- Siaran Pers --}}
+    <a href="{{ route('admin.publikasi.siaran-pers.index') }}"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
+               {{ request()->routeIs('admin.publikasi.siaran-pers.*') ? 'bg-primary text-primary-content' : 'text-base-content hover:bg-base-300' }}">
+        <i class="fa-solid fa-microphone w-4 text-center"></i>
+        <span>Siaran Pers</span>
     </a>
 
     {{-- Dokumen --}}
@@ -77,13 +93,6 @@
         <i class="fa-solid fa-images w-4 text-center"></i>
         <span>Slideshow</span>
     </a>
-    {{-- ZI-WBK --}}
-    <a href="{{ route('admin.dashboard') }}"
-        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
-               {{ request()->routeIs('admin.zi-wbk.*') ? 'bg-primary text-primary-content' : 'text-base-content hover:bg-base-300' }}">
-        <i class="fa-solid fa-shield-halved w-4 text-center"></i>
-        <span>ZI-WBK (Coming soon)</span>
-     </a>
 
     {{--  --}}
     @endif

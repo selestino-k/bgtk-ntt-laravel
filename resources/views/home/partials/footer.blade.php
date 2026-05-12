@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-            <div class="space-y-4 text-center md:text-left mb-30 md:mb-0">
+            <div class="space-y-4 text-center md:text-left mb-10">
                 <h3 class="lg:text-xl text-sm font-bold text-white">Tag Berita</h3>
                 <div class="flex w-full flex-wrap gap-2 px-3 items-center md:items-start justify-center md:justify-start">
                     @isset($tags)
