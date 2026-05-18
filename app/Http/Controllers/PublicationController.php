@@ -31,7 +31,8 @@ class PublicationController extends Controller
 
         $query = Berita::with(['author', 'tags'])
             ->whereDoesntHave('tags', function ($q) {
-                $q->whereRaw('LOWER(tagline) = ?', ['pengumuman']);
+                $q->whereRaw('LOWER(tagline) = ?', ['pengumuman'])
+                  ->orWhereRaw('LOWER(tagline) = ?', ['siaran pers']);
             })
             ->latest();
 
@@ -69,7 +70,7 @@ class PublicationController extends Controller
         $query = Berita::where('published', true)
             ->whereDoesntHave('tags', function ($q) {
                 $q->whereRaw('LOWER(tagline) = ?', ['pengumuman']);
-                $q->whereRaw('LOWER(tagline) = ?', ['siaran pers']);
+               orWhereRaw('LOWER(tagline) = ?', ['siaran pers']);
             })
             ->latest()
             ->with(['author', 'tags']);
@@ -172,8 +173,8 @@ class PublicationController extends Controller
 
         $query = Berita::where('published', true)
             ->whereDoesntHave('tags', function ($q) {
-                $q->whereRaw('LOWER(tagline) = ?', ['pengumuman']);
-                $q->whereRaw('LOWER(tagline) = ?', ['siaran pers']);
+                $q->whereRaw('LOWER(tagline) = ?', ['pengumuman'])
+                  ->orWhereRaw('LOWER(tagline) = ?', ['siaran pers']);
             })
             ->with(['author', 'tags'])
             ->latest();
@@ -209,8 +210,8 @@ class PublicationController extends Controller
         $recentBeritas = Berita::where('published', true)
             ->where('id', '!=', $berita->id)
             ->whereDoesntHave('tags', function ($q) {
-                $q->whereRaw('LOWER(tagline) = ?', ['pengumuman']);
-                $q->whereRaw('LOWER(tagline) = ?', ['siaran pers']);
+                $q->whereRaw('LOWER(tagline) = ?', ['pengumuman'])
+                  ->orWhereRaw('LOWER(tagline) = ?', ['siaran pers']);
             })
             ->with(['tags'])
             ->latest()
@@ -500,9 +501,19 @@ class PublicationController extends Controller
         return redirect()->route('admin.publikasi.tag.index')->with('success', 'Tag berhasil dibuat.');
     }
 
+    protected function ensureTagNotProtected(Tag $tag)
+    {
+        abort_if(
+            in_array(strtolower($tag->tagline), ['pengumuman', 'siaran pers']),
+            403,
+            'Tag ini tidak dapat diubah atau dihapus.'
+        );
+    }
+
     public function tagEdit(Tag $tag)
     {
         $this->ensureAdmin();
+        $this->ensureTagNotProtected($tag);
 
         return view('admin.publikasi.tag.edit', compact('tag'));
     }
@@ -510,6 +521,7 @@ class PublicationController extends Controller
     public function tagUpdate(Request $request, Tag $tag)
     {
         $this->ensureAdmin();
+        $this->ensureTagNotProtected($tag);
 
         $validated = $request->validate([
             'tagline' => 'required|string|max:255|unique:tag,tagline,' . $tag->id,
@@ -523,6 +535,7 @@ class PublicationController extends Controller
     public function tagDestroy(Tag $tag)
     {
         $this->ensureAdmin();
+        $this->ensureTagNotProtected($tag);
 
         $tag->beritas()->detach();
         $tag->delete();

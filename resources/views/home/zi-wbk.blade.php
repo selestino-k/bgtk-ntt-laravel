@@ -36,11 +36,14 @@
             </div>
 
             <div id='zi-wbk-images' class="flex flex-wrap gap-24 justify-center items-center mb-10">
-                <img src="{{ asset('images/assets/berakhlak.png') }}" alt="ZI-WBK 1" class="w-48 h-auto object-contain">
+                <img src="{{ asset('images/assets/berakhlak.png') }}" alt="ZI-WBK 1" class="w-48 h-auto object-contain dark:hidden">
+                <img src="{{ asset('images/assets/berakhlak-dark.png') }}" alt="ZI-WBK 1" class="w-48 h-auto object-contain hidden dark:block">
                 <img src="{{ asset('images/assets/berani-jujur-hebat.png') }}" alt="ZI-WBK 2"
                     class="w-24 h-auto object-contain">
                 <img src="{{ asset('images/assets/sehat-tanpa-korupsi.png') }}" alt="ZI-WBK 2"
-                    class="w-32 h-auto object-contain">
+                    class="w-32 h-auto object-contain dark:hidden">
+                <img src="{{ asset('images/assets/sehat-tanpa-korupsi-dark.png') }}" alt="ZI-WBK 2"
+                    class="w-32 h-auto object-contain hidden dark:block">
                 <img src="{{ asset('images/assets/bangga-melayani-bangsa.png') }}" alt="ZI-WBK 3"
                     class="w-48 h-auto object-contain">
             </div>

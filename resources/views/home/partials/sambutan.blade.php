@@ -71,11 +71,18 @@
             {{-- YouTube Embed --}}
             <div class="flex justify-center items-start mb-6 xl:w-2/5 xl:ml-2 xl:shrink-0">
                 <div class="rounded-lg overflow-hidden shadow-lg">
-                    <iframe src="https://www.youtube.com/embed/kWEl6wepuO4" title="Video BGTK NTT"
+                    @if (!empty($youtubeEmbedUrl))
+                    <iframe src="{{ $youtubeEmbedUrl }}" title="Video BGTK NTT"
                         class="w-75 h-42.5 md:w-120 md:h-67.5 xl:w-120 xl:h-110" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy">
                     </iframe>
+                    @else
+                    <div class="flex flex-col items-center justify-center w-full h-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 p-6">
+                        <i class="fa-solid fa-video-slash text-4xl mb-4"></i>
+                        <p class="text-center">Video tidak tersedia</p>
+                    </div>
+                    @endif
                 </div>
             </div>
 

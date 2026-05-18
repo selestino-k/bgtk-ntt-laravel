@@ -32,14 +32,7 @@
         <span>Berita</span>
     </a>
 
-    {{-- SSD --}}
-    <a href="{{ route('admin.ssd.index') }}"
-        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
-               {{ request()->routeIs('admin.ssd.*') ? 'bg-primary text-primary-content' : 'text-base-content hover:bg-base-300' }}">
-        <i class="fa-solid fa-circle-question w-4 text-center"></i>
-        <span>SSD</span>
-    </a>
-
+    
     {{-- Pengumuman --}}
     <a href="{{ route('admin.publikasi.pengumuman.index') }}"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
@@ -63,6 +56,17 @@
         <i class="fa-solid fa-file-lines w-4 text-center"></i>
         <span>Dokumen</span>
     </a>
+
+    
+
+    {{-- SSD --}}
+    <a href="{{ route('admin.ssd.index') }}"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
+               {{ request()->routeIs('admin.ssd.*') ? 'bg-primary text-primary-content' : 'text-base-content hover:bg-base-300' }}">
+        <i class="fa-solid fa-circle-question w-4 text-center"></i>
+        <span>SSD</span>
+    </a>
+
 
     {{-- Manajemen section --}}
     <div class="pt-4 pb-1 px-3">
@@ -92,6 +96,14 @@
                {{ request()->routeIs('admin.slideshow.*') ? 'bg-primary text-primary-content' : 'text-base-content hover:bg-base-300' }}">
         <i class="fa-solid fa-images w-4 text-center"></i>
         <span>Slideshow</span>
+    </a>
+
+    {{-- Links --}}
+    <a href="{{ route('admin.links.index') }}"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
+               {{ request()->routeIs('admin.links.*') ? 'bg-primary text-primary-content' : 'text-base-content hover:bg-base-300' }}">
+        <i class="fa-solid fa-link w-4 text-center"></i>
+        <span>Links</span>
     </a>
 
     {{--  --}}

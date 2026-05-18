@@ -6,6 +6,8 @@ use App\Http\Controllers\UserContoller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\PertanyaanSSDController;
+use App\Http\Controllers\SlideshowController;
+use App\Http\Controllers\LinksController;
 use App\Http\Controllers\SitemapController;
 use App\Models\Berita;
 use App\Models\Dokumen;
@@ -157,6 +159,7 @@ Route::get('/publikasi/maklumat-pelayanan', function () {
 Route::get('/publikasi/berita-terkini', [PublicationController::class, 'beritaTerkiniPublic'])->name('publikasi.berita.berita');
 Route::get('/publikasi/berita-terkini/{berita:slug}', [PublicationController::class, 'beritaTerkiniDetailPublic'])->name('publikasi.berita.show');
 
+//Manajemen Publikasi
 Route::middleware('auth')->prefix('admin/publikasi')->name('admin.publikasi.')->group(function () {
     // Berita
     Route::get('/berita', [PublicationController::class, 'beritaIndex'])->name('berita.index');
@@ -189,6 +192,7 @@ Route::middleware('auth')->prefix('admin/publikasi')->name('admin.publikasi.')->
     Route::delete('/tag/{tag}', [PublicationController::class, 'tagDestroy'])->name('tag.destroy');
 });
 
+//Manajemen Slideshow
 Route::middleware('auth')->prefix('admin/slideshow')->name('admin.slideshow.')->group(function () {
     Route::get('/', [\App\Http\Controllers\SlideshowController::class, 'index'])->name('index');
     Route::get('/create', [\App\Http\Controllers\SlideshowController::class, 'create'])->name('create');
@@ -198,6 +202,7 @@ Route::middleware('auth')->prefix('admin/slideshow')->name('admin.slideshow.')->
     Route::delete('/{slideshow}', [\App\Http\Controllers\SlideshowController::class, 'destroy'])->name('destroy');
 });
 
+//Manajemen User
 Route::middleware('auth')->prefix('admin/user')->name('admin.user.')->group(function () {
     Route::get('/', [UserContoller::class, 'index'])->name('index');
     Route::get('/create', [UserContoller::class, 'create'])->name('create');
@@ -207,6 +212,7 @@ Route::middleware('auth')->prefix('admin/user')->name('admin.user.')->group(func
     Route::delete('/{user}', [UserContoller::class, 'destroy'])->name('destroy');
 });
 
+//Manajemen Profil 
 Route::middleware('auth')->prefix('admin/profil')->name('admin.profil.')->group(function () {
     Route::get('/', [ProfileController::class, 'index'])->name('index');
     Route::get('/create', [ProfileController::class, 'create'])->name('create');
@@ -215,4 +221,14 @@ Route::middleware('auth')->prefix('admin/profil')->name('admin.profil.')->group(
     Route::get('/{profile:slug}/edit', [ProfileController::class, 'edit'])->name('edit');
     Route::patch('/{profile:slug}', [ProfileController::class, 'update'])->name('update');
     Route::delete('/{profile:slug}', [ProfileController::class, 'destroy'])->name('destroy');
+});
+
+//Manajemen Links
+Route::middleware('auth')->prefix('admin/links')->name('admin.links.')->group(function () {
+    Route::get('/', [LinksController::class, 'index'])->name('index');
+    Route::get('/create', [LinksController::class, 'create'])->name('create');
+    Route::post('/', [LinksController::class, 'store'])->name('store');
+    Route::get('/{link}/edit', [LinksController::class, 'edit'])->name('edit');
+    Route::patch('/{link}', [LinksController::class, 'update'])->name('update');
+    Route::delete('/{link}', [LinksController::class, 'destroy'])->name('destroy');
 });

@@ -92,24 +92,15 @@
             <details>
                 <summary class="font-semibold text-primary">Aplikasi</summary>
                 <ul>
-                    <li><a href="https://mail.kemdikbud.go.id/" target="_blank" rel="noopener noreferrer">e-Mail
-                            Kemendikdasmen</a></li>
-                    <li><a href="https://data.kemendikdasmen.go.id/" target="_blank" rel="noopener noreferrer">Portal
-                            Data Kemendikdasmen</a></li>
-                    <li><a href="https://rumah.pendidikan.go.id/" target="_blank" rel="noopener noreferrer">Rumah
-                            Pendidikan</a></li>
-                    <li><a href="https://data-sdm.kemdikbud.go.id/" target="_blank"
-                            rel="noopener noreferrer">SIPdasmen</a></li>
-                    <li><a href="https://dapo.kemendikdasmen.go.id/" target="_blank"
-                            rel="noopener noreferrer">Dapodik</a></li>
-                    <li><a href="https://info.gtk.kemendikdasmen.go.id/" target="_blank" rel="noopener noreferrer">Info
-                            GTK</a></li>
-                    <li><a href="https://raporpendidikan.kemendikdasmen.go.id/login" target="_blank"
-                            rel="noopener noreferrer">Rapor Pendidikan</a></li>
-                    <li><a href="https://sinde.kemendikdasmen.go.id/" target="_blank"
-                            rel="noopener noreferrer">SINDE</a></li>
-                    <li><a href="https://skp.sdm.kemdikbud.go.id/skp/site/login.jsp" target="_blank"
-                            rel="noopener noreferrer">e-SKP</a></li>
+                    @forelse ($appLinks as $appLink)
+                        <li>
+                            <a href="{{ $appLink->url }}" target="_blank" rel="noopener noreferrer">
+                                {{ $appLink->nama }}
+                            </a>
+                        </li>
+                    @empty
+                        <li><a href="#">Belum ada aplikasi</a></li>
+                    @endforelse
                 </ul>
             </details>
         </li>

@@ -55,15 +55,26 @@
                                             <td>{{ $tag->created_at->format('d M Y') }}</td>
                                             <td>
                                                 <div class="flex flex-wrap gap-2">
-                                                    <a href="{{ route('admin.publikasi.tag.edit', $tag) }}"
-                                                        class="btn btn-sm btn-outline">
-                                                        <i class="fa-solid fa-pen-to-square"></i>
-                                                        Edit
-                                                    </a>
-                                                    <label for="modal-delete-{{ $tag->id }}" class="btn btn-sm btn-error">
-                                                        <i class="fa-solid fa-trash"></i>
-                                                        Hapus
-                                                    </label>
+                                                    @if (in_array(strtolower($tag->tagline), ['pengumuman', 'siaran pers']))
+                                                        <button class="btn btn-sm btn-outline" disabled>
+                                                            <i class="fa-solid fa-pen-to-square"></i>
+                                                            Edit
+                                                        </button>
+                                                        <button class="btn btn-sm btn-error" disabled>
+                                                            <i class="fa-solid fa-trash"></i>
+                                                            Hapus
+                                                        </button>
+                                                    @else
+                                                        <a href="{{ route('admin.publikasi.tag.edit', $tag) }}"
+                                                            class="btn btn-sm btn-outline">
+                                                            <i class="fa-solid fa-pen-to-square"></i>
+                                                            Edit
+                                                        </a>
+                                                        <label for="modal-delete-{{ $tag->id }}" class="btn btn-sm btn-error">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                            Hapus
+                                                        </label>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

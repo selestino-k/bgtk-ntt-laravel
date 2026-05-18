@@ -1,9 +1,9 @@
 {{-- ============================================================
-     BERITA TERKINI – Carousel (Desktop xl+ / Mobile)
+     BERITA TERKINI – Carousel (Desktop lg+ / Mobile)
      ============================================================ --}}
 
-{{-- ===== DESKTOP (xl+) ===== --}}
-<section id="berita" class="hidden xl:block relative mb-12 mt-10 max-w-7xl w-full px-4 sm:px-8">
+{{-- ===== DESKTOP (lg+) ===== --}}
+<section id="berita" class="hidden lg:block relative mb-12 mt-10 max-w-7xl w-full px-4 sm:px-8">
     <h2 class="text-5xl font-semibold font-montserrat text-primary mb-6">
         Berita Terkini
     </h2>
@@ -64,8 +64,8 @@
     </div>
 </section>
 
-{{-- ===== MOBILE (< xl) ===== --}}
-<section id="berita-mobile" class="xl:hidden relative mb-12 mt-10 w-full max-w-xs sm:max-w-xl md:max-w-3xl lg:max-w-5xl px-4">
+{{-- ===== MOBILE (< lg) ===== --}}
+<section id="berita-mobile" class="lg:hidden relative mb-12 mt-10 w-full max-w-xs sm:max-w-xl md:max-w-3xl lg:max-w-5xl px-4">
     <h2 class="text-3xl font-semibold font-montserrat text-primary mb-6 text-center">
         Berita Terkini
     </h2>

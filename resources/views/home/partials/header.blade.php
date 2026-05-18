@@ -110,35 +110,16 @@
                 </label>
                 <ul tabindex="0"
                     class="dropdown-content menu bg-white/90 dark:bg-black/90 backdrop-blur-sm rounded-box z-10 w-52 p-2 shadow-xl border border-base-200">
-                    <li><a href="https://mail.kemdikbud.go.id/" target="_blank" rel="noopener noreferrer"
-                            class="text-sm font-medium text-black dark:text-white hover:text-primary hover:bg-gray-700/10">e-Mail
-                            Kemendikdasmen</a></li>
-                    <li><a href="https://data.kemendikdasmen.go.id/" target="_blank" rel="noopener noreferrer"
-                            class="text-sm font-medium text-black dark:text-white hover:text-primary hover:bg-gray-700/10">Portal
-                            Data Kemendikdasmen</a></li>
-                    <li><a href="https://rumah.pendidikan.go.id/" target="_blank" rel="noopener noreferrer"
-                            class="text-sm font-medium text-black dark:text-white hover:text-primary hover:bg-gray-700/10">Rumah
-                            Pendidikan</a></li>
-                    <li><a href="https://data-sdm.kemdikbud.go.id/" target="_blank" rel="noopener noreferrer"
-                            class="text-sm font-medium text-black dark:text-white hover:text-primary hover:bg-gray-700/10">SIPdasmen</a>
-                    </li>
-                    <li><a href="https://dapo.kemendikdasmen.go.id/" target="_blank" rel="noopener noreferrer"
-                            class="text-sm font-medium text-black dark:text-white hover:text-primary hover:bg-gray-700/10">Dapodik</a>
-                    </li>
-                    <li><a href="https://info.gtk.kemendikdasmen.go.id/" target="_blank" rel="noopener noreferrer"
-                            class="text-sm font-medium text-black dark:text-white hover:text-primary hover:bg-gray-700/10">Info
-                            GTK</a></li>
-                    <li><a href="https://raporpendidikan.kemendikdasmen.go.id/login" target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-sm font-medium text-black dark:text-white hover:text-primary hover:bg-gray-700/10">Rapor
-                            Pendidikan</a></li>
-                    <li><a href="https://sinde.kemendikdasmen.go.id/" target="_blank" rel="noopener noreferrer"
-                            class="text-sm font-medium text-black dark:text-white hover:text-primary hover:bg-gray-700/10">SINDE</a>
-                    </li>
-                    <li><a href="https://skp.sdm.kemdikbud.go.id/skp/site/login.jsp" target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-sm font-medium text-black dark:text-white hover:text-primary hover:bg-gray-700/10">e-SKP</a>
-                    </li>
+                    @forelse ($appLinks as $appLink)
+                        <li>
+                            <a href="{{ $appLink->url }}" target="_blank" rel="noopener noreferrer"
+                                class="text-sm font-medium text-black dark:text-white hover:text-primary hover:bg-gray-700/10">
+                                {{ $appLink->nama }}
+                            </a>
+                        </li>
+                    @empty
+                        <li><a href="#">Belum ada aplikasi</a></li>
+                    @endforelse
                 </ul>
             </div>
 
