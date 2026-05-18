@@ -98,6 +98,14 @@
         <span>Slideshow</span>
     </a>
 
+    {{-- Program Prioritas --}}
+    <a href="{{ route('admin.program-prioritas.index') }}"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
+               {{ request()->routeIs('admin.program-prioritas.*') ? 'bg-primary text-primary-content' : 'text-base-content hover:bg-base-300' }}">
+        <i class="fa-solid fa-star w-4 text-center"></i>
+        <span>Program Prioritas</span>
+    </a>
+
     {{-- Links --}}
     <a href="{{ route('admin.links.index') }}"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors

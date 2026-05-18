@@ -1,39 +1,3 @@
-@php
-    $defaultPrograms = [
-        [
-            'title' => 'Program Pembelajaran Mendalam (PM)',
-            'link'  => '/program/ppm',
-            'image' => '/images/assets/program/pm.png',
-        ],
-        [
-            'title' => 'Koding dan Kecerdasan Artifisial (KKA)',
-            'link'  => '/program/kka',
-            'image' => '/images/assets/program/kka.png',
-        ],
-        [
-            'title' => 'Program Pendidikan Profesi Guru (PPG)',
-            'link'  => '/program/ppg',
-            'image' => '/images/assets/program/ppg.png',
-        ],
-        [
-            'title' => 'Program Pengembangan Keprofesian Guru (PKG) - Bahasa Inggris',
-            'link'  => '/program/pkb',
-            'image' => '/images/assets/program/pkg-bi.png',
-        ],
-        [
-            'title' => 'Program Pengembangan Keprofesian Guru (PKG) - Bimbingan Konseling',
-            'link'  => '/program/pkm',
-            'image' => '/images/assets/program/pkg-bk.png',
-        ],
-        [
-            'title' => 'Program Bakal Calon Kepala Sekolah (BCKS)',
-            'link'  => '/program/bcks',
-            'image' => '/images/assets/program/bcks.png',
-        ],
-    ];
-
-    $programs = $programs ?? $defaultPrograms;
-@endphp
 
 <section id="program" class="mt-10 mb-10 lg:mb-16 flex relative max-w-7xl w-full items-center px-4 sm:px-8">
     <div class="relative z-10 flex flex-col gap-3 justify-center w-full">
@@ -51,15 +15,15 @@
                 @foreach($programs as $index => $program)
                     <div id="program-slide-{{ $index }}"
                          class="carousel-item w-full max-w-xs basis-1/1 sm:basis-1/2 md:basis-1/3 xl:basis-1/4 shrink-0 snap-start place-items-center rounded border border-primary/30 h-64 flex items-center justify-center bg-white dark:bg-base-200 shadow-md">
-                        <a href="{{ $program['link'] ?? '#' }}"
+                        <a href="{{ $program->url ?? '#' }}" target="_blank" rel="noopener noreferrer"
                            class="rounded-xl shadow-md hover:shadow-xl flex flex-col w-full group h-64 items-center justify-center p-4">
-                            @if(!empty($program['image']))
-                                <img src="{{ asset($program['image']) }}"
-                                     alt="{{ $program['title'] }}"
+                            @if(!empty($program->gambar_url))
+                                <img src="{{ $program->gambar_url }}"
+                                     alt="{{ $program->nama_program }}"
                                      class="w-44 h-44 object-cover mx-auto group-hover:scale-105 transition-transform duration-300">
                             @else
                                 <div class="w-44 h-44 bg-linear-to-br from-blue-50 to-blue-100 dark:from-gray-800 dark:to-gray-900 flex items-center justify-center">
-                                    <span class="text-gray-500 dark:text-gray-400 text-lg font-inter">No Image Available</span>
+                                    <span class="text-gray-500 dark:text-gray-400 text-lg font-inter">{{ $program->nama_program }}</span>
                                 </div>
                             @endif
                            

@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserContoller;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProgramPrioritasController;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\PertanyaanSSDController;
 use App\Http\Controllers\SlideshowController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\SitemapController;
 use App\Models\Berita;
 use App\Models\Dokumen;
 use App\Models\Profile;
+use App\Models\ProgramPrioritas;
 use App\Models\Slideshow;
 use App\Services\ViewCounterService;
 use Illuminate\Http\Request;
@@ -104,9 +106,10 @@ Route::get('/', function (Request $request, ViewCounterService $counter) {
         ->take(5)
         ->get();
 
-    $sambutan = Profile::where('slug', 'sambutan-kata')->first();
+    $sambutan  = Profile::where('slug', 'sambutan-kata')->first();
+    $programs   = ProgramPrioritas::where('is_active', true)->get();
 
-    return view('home.home', compact('slideshowPhotos', 'latestPosts', 'documents', 'pengumuman', 'siaranPers', 'sambutan'));
+    return view('home.home', compact('slideshowPhotos', 'latestPosts', 'documents', 'pengumuman', 'siaranPers', 'sambutan', 'programs'));
 })->name('home');
 
 Route::get('/ppid', function () {
@@ -231,4 +234,14 @@ Route::middleware('auth')->prefix('admin/links')->name('admin.links.')->group(fu
     Route::get('/{link}/edit', [LinksController::class, 'edit'])->name('edit');
     Route::patch('/{link}', [LinksController::class, 'update'])->name('update');
     Route::delete('/{link}', [LinksController::class, 'destroy'])->name('destroy');
+});
+
+//Manajemen Program Prioritas
+Route::middleware('auth')->prefix('admin/program-prioritas')->name('admin.program-prioritas.')->group(function () {
+    Route::get('/', [ProgramPrioritasController::class, 'index'])->name('index');
+    Route::get('/create', [ProgramPrioritasController::class, 'create'])->name('create');
+    Route::post('/', [ProgramPrioritasController::class, 'store'])->name('store');
+    Route::get('/{programPrioritas}/edit', [ProgramPrioritasController::class, 'edit'])->name('edit');
+    Route::patch('/{programPrioritas}', [ProgramPrioritasController::class, 'update'])->name('update');
+    Route::delete('/{programPrioritas}', [ProgramPrioritasController::class, 'destroy'])->name('destroy');
 });
